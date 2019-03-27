@@ -1,14 +1,14 @@
 {
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "workbookId1": {
+        "SimpleTemplateEn": {
             "type": "string",
             "defaultValue": "[newGuid()]",
             "metadata": {
                 "description": "The unique guid for this workbook instance"
             }
         },
-        "workbookId2": {
+        "SimpleTemplateEs": {
             "type": "string",
             "defaultValue": "[newGuid()]",
             "metadata": {
@@ -18,7 +18,7 @@
     },
     "resources": [
         {
-            "name": "[parameters('workbookId1')]",
+            "name": "[parameters('SimpleTemplateEn')]",
             "type": "microsoft.insights/workbooks",
             "location": "[resourceGroup().location]",
             "apiVersion": "2018-06-17-preview",
@@ -33,7 +33,7 @@
             }
         },
         {
-            "name": "[parameters('workbookId2')]",
+            "name": "[parameters('SimpleTemplateEs')]",
             "type": "microsoft.insights/workbooks",
             "location": "[resourceGroup().location]",
             "apiVersion": "2018-06-17-preview",
@@ -50,8 +50,21 @@
     ],
     "outputs": {
         "workbookId": {
-            "type": "string",
-            "value": "[resourceId( 'microsoft.insights/workbooks', parameters('workbookId1'))]"
+            "type": "object",
+            "value": [
+                {
+                    "name": "Simple Template",
+                    "category": "Failures",
+                    "id": "[resourceId( 'microsoft.insights/workbooks', parameters('SimpleTemplateEn'))]",
+                    "localized": {
+                        "es-es": {
+                            "name": "Sencillo Template",
+                            "category": "Fallos",
+                            "id": "[resourceId( 'microsoft.insights/workbooks', parameters('SimpleTemplateEs'))]"
+                        }
+                    }
+                }
+            ]
         }
     },
     "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#"
