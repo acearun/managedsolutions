@@ -6,26 +6,8 @@
             {}
         ],
         "steps": [
-            {
-                "name": "solutionSettings",
-                "label": "Solution",
-                "subLabel": {
-                    "preValidation": "Configure your solution",
-                    "postValidation": "Complete"
-                },
-                "bladeTitle": "Solution Settings",
-                "elements": [
-                    {
-                        "name": "workbookSourceId",
-                        "type": "Microsoft.Common.TextBox",
-                        "label":  "Source Resource Id",
-                        "visible": true
-                    }
-                ]
-            }
         ],
         "outputs": {
-            "workbookSourceId": "[steps('solutionSettings').workbookSourceId]"
         }
     }
 }
