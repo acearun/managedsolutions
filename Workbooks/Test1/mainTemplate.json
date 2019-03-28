@@ -51,20 +51,22 @@
     "outputs": {
         "workbookId": {
             "type": "object",
-            "value": [
-                {
-                    "name": "Simple Template",
-                    "category": "Failures",
-                    "id": "[resourceId( 'microsoft.insights/workbooks', parameters('SimpleTemplateEn'))]",
-                    "localized": {
-                        "es-es": {
-                            "name": "Sencillo Template",
-                            "category": "Fallos",
-                            "id": "[resourceId( 'microsoft.insights/workbooks', parameters('SimpleTemplateEs'))]"
+            "value": {
+                "templates": [
+                    {
+                        "name": "Simple Template",
+                        "category": "Failures",
+                        "id": "[resourceId( 'microsoft.insights/workbooks', parameters('SimpleTemplateEn'))]",
+                        "localized": {
+                            "es-es": {
+                                "name": "Sencillo Template",
+                                "category": "Fallos",
+                                "id": "[resourceId( 'microsoft.insights/workbooks', parameters('SimpleTemplateEs'))]"
+                            }
                         }
                     }
-                }
-            ]
+                ]
+            }
         }
     },
     "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#"
