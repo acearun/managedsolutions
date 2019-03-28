@@ -49,7 +49,7 @@
         }
     ],
     "outputs": {
-        "workbookId": {
+        "templateMetadata": {
             "type": "object",
             "value": {
                 "templates": [
