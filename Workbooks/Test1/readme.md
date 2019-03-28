@@ -22,6 +22,7 @@ roleid=$(az role definition list --name Owner --query [].name --output tsv)
 ```
 
 ## Create the managed app definition
+```bash
 az managedapp definition create \
   --name "ManagedWorkbooks" \
   --location "westcentralus" \
@@ -31,6 +32,7 @@ az managedapp definition create \
   --description "Managed Azure Workbooks" \
   --authorizations "$userid:$roleid" \
   --package-file-uri "http://raw.githubusercontent.com/acearun/managedsolutions/master/Workbooks/Test1/test1.zip"
+  ```
 
 ## Deploy the managed app
 1. Use the deploy option in the Managed App definition.
