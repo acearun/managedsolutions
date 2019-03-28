@@ -46,17 +46,34 @@ This template:
 ### Template Metadata
 ```json
 {
-    "name": "Simple Template",
-    "category": "Failures",
-    "id": "[resourceId( 'microsoft.insights/workbooks', parameters('SimpleTemplateEn'))]",
-    "localized": {
-        "es-es": {
-            "name": "Sencillo Template",
-            "category": "Fallos",
-            "id": "[resourceId( 'microsoft.insights/workbooks', parameters('SimpleTemplateEs'))]"
+    "templates": [
+        {
+            "id": "[resourceId( 'microsoft.insights/workbooks', parameters('SimpleTemplateEn'))]",
+            "galleries": [
+                {
+                    "name": "Simple Template",
+                    "category": "Failures",
+                    "type": "tsg",
+                    "resourceType": "microsoft.insights/components",
+                    "order": 100
+                }
+            ],
+            "localized": {
+                "es-es": {
+                    "id": "[resourceId( 'microsoft.insights/workbooks', parameters('SimpleTemplateEs'))]",
+                    "galleries": [
+                        {
+                            "name": "Sencillo Template",
+                            "category": "Fallos",
+                            "type": "tsg",
+                            "resourceType": "microsoft.insights/components",
+                            "order": 100
+                        }
+                    ]
+                }
+            }
         }
-    }
+    ]
 }
-
 ```
 
