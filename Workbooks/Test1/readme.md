@@ -77,3 +77,8 @@ This template:
 }
 ```
 
+### Deploy using Azure Portal
+Clicking on the button below, will create the Managed Application definition to a Resource Group in your Azure subscription.
+
+[![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Facearun%2Fmanagedsolutions%2Fmaster%2FWorkbooks%2FTest1%2Fazuredeploy.json)
+
