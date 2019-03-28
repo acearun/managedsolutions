@@ -36,7 +36,7 @@
             }
         },
         "authorizations": {
-            "type": "string",
+            "type": "array",
             "metadata": {
                 "description": "Provide the authorization mapping for the managed application."
             }
