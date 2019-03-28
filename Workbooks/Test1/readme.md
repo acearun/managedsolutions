@@ -2,6 +2,7 @@
 
 ## Option 1 - Deploy using Azure Portal
 ### Step 1 - Get authorization info
+Run these commands in the Azure Cloud shell
 ```bash
 > userid=$(az ad user show --upn-or-object-id example@contoso.org --query objectId --output tsv)
 > roleid=$(az role definition list --name Owner --query [].name --output tsv)
