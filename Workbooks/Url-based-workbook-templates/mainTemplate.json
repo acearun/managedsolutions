@@ -1,0 +1,44 @@
+{
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+    },
+    "resources": [
+    ],
+    "outputs": {
+        "templateMetadata": {
+            "type": "object",
+            "value": {
+                "templates": [
+                    {
+                        "source": "url",
+                        "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/FailureAnalysis.workbook",
+                        "galleries": [
+                            {
+                                "name": "Simple Template",
+                                "category": "Failures",
+                                "type": "tsg",
+                                "resourceType": "microsoft.insights/components",
+                                "order": 100
+                            }
+                        ],
+                        "localized": {
+                            "es-es": {
+                                "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/FailureAnalysis.workbook",
+                                "galleries": [
+                                    {
+                                        "name": "Sencillo Template",
+                                        "category": "Fallos",
+                                        "type": "tsg",
+                                        "resourceType": "microsoft.insights/components",
+                                        "order": 100
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#"
+}
