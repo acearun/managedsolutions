@@ -14,7 +14,7 @@ Copy the value of returned by the last command to use in the `authorizations` pa
 ### Step 2 - Deploy
 Clicking on the button below, will create the Managed Application definition to a Resource Group in your Azure subscription.
 
-[![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Facearun%2Fmanagedsolutions%2Fmaster%2FWorkbooks%2FTest1%2Fazuredeploy.json)
+[![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Facearun%2Fmanagedsolutions%2Fmaster%2FWorkbooks%2FUrl-based-workbook-templates%2Fazuredeploy.json)
 
 ## Option 2 - Deploy Using the Azure Cloud Shell
 ### Step 1 - Open Cloud Shell
@@ -47,7 +47,7 @@ az managedapp definition create \
   --display-name "Managed Workbooks" \
   --description "Managed Azure Workbooks" \
   --authorizations "$userid:$roleid" \
-  --package-file-uri "http://raw.githubusercontent.com/acearun/managedsolutions/master/Workbooks/Test1/test1.zip"
+  --package-file-uri "http://raw.githubusercontent.com/acearun/managedsolutions/master/Workbooks/Url-based-workbook-templates/appDef.zip"
   ```
 
 
@@ -60,41 +60,46 @@ Either way you choose to deploy the managed app definition, the next step usuall
 ## Test1
 
 This template:
-1. Deploys two workbooks to the locked resource group. They currently point to no resources - just a static string indicating it is a template. One of the workbooks is supposed to be Spanish while the other is invariant.
-2. Deploys the managed app in the selected resource group. The managed group has template metadata including localization information. This information can be found in the `Parameters and Outputs` section of the Managed App under the output `templateMetadata`. 
+1. Does not deploy anything to the locked resource group. 
+2. Deploys the managed app in the selected resource group. The managed group has template metadata including localization information - including information about the url to get the template payload from. This information can be found in the `Parameters and Outputs` section of the Managed App under the output `templateMetadata`. 
 
 ## Template Metadata
 ```json
 {
-    "templates": [
-        {
-            "source": "arm",
-            "id": "[resourceId( 'microsoft.insights/workbooks', parameters('SimpleTemplateEn'))]",
-            "galleries": [
+    "templateMetadata": {
+        "type": "object",
+        "value": {
+            "templates": [
                 {
-                    "name": "Simple Template",
-                    "category": "Failures",
-                    "type": "tsg",
-                    "resourceType": "microsoft.insights/components",
-                    "order": 100
-                }
-            ],
-            "localized": {
-                "es-es": {
-                    "id": "[resourceId( 'microsoft.insights/workbooks', parameters('SimpleTemplateEs'))]",
+                    "source": "url",
+                    "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/FailureAnalysis.workbook",
                     "galleries": [
                         {
-                            "name": "Sencillo Template",
-                            "category": "Fallos",
+                            "name": "Simple Template",
+                            "category": "Failures",
                             "type": "tsg",
                             "resourceType": "microsoft.insights/components",
                             "order": 100
                         }
-                    ]
+                    ],
+                    "localized": {
+                        "es-es": {
+                            "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/FailureAnalysis.es-es.workbook",
+                            "galleries": [
+                                {
+                                    "name": "Sencillo Template",
+                                    "category": "Fallos",
+                                    "type": "tsg",
+                                    "resourceType": "microsoft.insights/components",
+                                    "order": 100
+                                }
+                            ]
+                        }
+                    }
                 }
-            }
+            ]
         }
-    ]
+    }
 }
 ```
 

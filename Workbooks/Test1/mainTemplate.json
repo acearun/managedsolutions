@@ -54,6 +54,7 @@
             "value": {
                 "templates": [
                     {
+                        "source": "arm",
                         "id": "[resourceId( 'microsoft.insights/workbooks', parameters('SimpleTemplateEn'))]",
                         "galleries": [
                             {
