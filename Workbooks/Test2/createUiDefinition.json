@@ -1,0 +1,50 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/0.1.2-preview/CreateUIDefinition.MultiVm.json#",
+    "handler": "Microsoft.Compute.MultiVm",
+    "version": "0.1.2-preview",
+    "parameters": {
+        "basics": [
+            {}
+        ],
+        "steps": [
+            {
+                "name": "step1",
+                "label": "Solutions config",
+                "subLabel": {
+                    "preValidation": "Set the source and names of the templates",
+                    "postValidation": "Done"
+                },
+                "bladeTitle": "Solution config",
+                "elements": [
+                    {
+                        "name": "solutionName",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Solution name"
+                    },
+                    {
+                        "name": "sourceUri",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Blob uri"
+                    },
+                    {
+                        "name": "templateName",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Name of template"
+                    },
+                    {
+                        "name": "category",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Category"
+                    }
+                ]
+            }
+        ],
+        "outputs": {
+            "solutionName": "[steps('step1').solutionName]",
+            "sourceUri": "[steps('step1').sourceUri]",
+            "templateName": "[steps('step1').templateName]",
+            "category": "[steps('step1').category]",
+            "managedIdentity": "[parse('{\"Type\":\"SystemAssigned\"}')]"
+        }
+    }
+}
