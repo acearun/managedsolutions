@@ -1,20 +1,7 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
-    "parameters": {
-        "sourceUri": {
-            "type": "string"
-        },
-        "templateName": {
-            "type": "string"
-        },
-        "category": {
-            "type": "string"
-        },
-        "solutionName": {
-            "type": "string"
-        }
-    },
+    "parameters": {},
     "variables": {
         "rgId": "[resourceGroup().id]",
         "customRpId": "[concat(resourceGroup().id, '/providers/Microsoft.CustomProviders/resourceProviders/public')]",
@@ -140,26 +127,26 @@
                 "solutionName": "[parameters('solutionName')]",
                 "templates": [
                     {
-                        "id": "[parameters('sourceUri')]",
+                        "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/FailureAnalysis.workbook",
                         "source": "url",
                         "galleries": [
                             {
-                                "type": "tsg",
-                                "name": "[parameters('templateName')]",
+                                "name": "App Failures - Acme Solution",
+                                "category": "Acme analytics",
                                 "order": 100,
-                                "category": "[parameters('category')]",
+                                "type": "tsg",
                                 "resourceType": "microsoft.insights/components"
                             }
                         ],
                         "localized": {
                             "es-es": {
-                                "id": "[parameters('sourceUri')]",
+                                "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/FailureAnalysis.workbook",
                                 "galleries": [
                                     {
-                                        "type": "tsg",
-                                        "name": "[concat(parameters('templateName'), ' (es-es)')]",
+                                        "name": "App Fallos - Acme Solution",
                                         "order": 100,
-                                        "category": "[concat(parameters('category'), ' (es-es)')]",
+                                        "category": "Acme análisis",
+                                        "type": "tsg",
                                         "resourceType": "microsoft.insights/components"
                                     }
                                 ]
