@@ -6,36 +6,7 @@
         "rgId": "[resourceGroup().id]",
         "customRpId": "[concat(resourceGroup().id, '/providers/Microsoft.CustomProviders/resourceProviders/public')]",
         "templateMetadata": {
-            "customRpId": "[variables('customRpId')]",
-            "templates": [
-                {
-                    "id": "[parameters('sourceUri')]",
-                    "source": "url",
-                    "galleries": [
-                        {
-                            "type": "tsg",
-                            "name": "[parameters('templateName')]",
-                            "order": 100,
-                            "category": "[parameters('category')]",
-                            "resourceType": "microsoft.insights/components"
-                        }
-                    ],
-                    "localized": {
-                        "es-es": {
-                            "id": "[parameters('sourceUri')]",
-                            "galleries": [
-                                {
-                                    "type": "tsg",
-                                    "name": "[concat(parameters('templateName'), ' (es-es)')]",
-                                    "order": 100,
-                                    "category": "[concat(parameters('category'), ' (es-es)')]",
-                                    "resourceType": "microsoft.insights/components"
-                                }
-                            ]
-                        }
-                    }
-                }
-            ]
+            "customRpId": "[variables('customRpId')]"
         },
         "managedApplicationId": "[resourceGroup().managedBy]",
         "managedApplicationName": "[last(split(variables('managedApplicationId'), '/'))]",
