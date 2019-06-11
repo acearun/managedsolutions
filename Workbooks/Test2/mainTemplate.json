@@ -95,7 +95,7 @@
             "type": "object",
             "value": {
                 "customRpId": "[variables('customRpId')]",
-                "solutionName": "[parameters('solutionName')]",
+                "solutionName": "Acme App Solution",
                 "templates": [
                     {
                         "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/FailureAnalysis.workbook",
