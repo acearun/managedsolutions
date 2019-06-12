@@ -10,7 +10,9 @@
         },
         "managedApplicationId": "[resourceGroup().managedBy]",
         "managedApplicationName": "[last(split(variables('managedApplicationId'), '/'))]",
-        "applicationResourceGroupName": "[split(variables('managedApplicationId'), '/')[4]]"
+        "applicationResourceGroupName": "[split(variables('managedApplicationId'), '/')[4]]",
+        "solutionDisplayName": "[variables('solutionDisplayName')]",
+        "solutionDescription": "[variables('solutionDescription')]"
     },
     "resources": [
         {
@@ -96,6 +98,8 @@
             "value": {
                 "customRpId": "[variables('customRpId')]",
                 "solutionName": "Acme App Solution",
+                "solutionDisplayName": "[variables('solutionDisplayName')]",
+                "solutionDescription": "[variables('solutionDescription')]",               
                 "templates": [
                     {
                         "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/FailureAnalysis.workbook",

@@ -4,7 +4,7 @@
     "parameters": {
         "name": {
             "type": "string",
-            "defaultValue": "AcmeAppSolution",
+            "defaultValue": "Acme-App-Solution",
             "metadata": {
                 "description": "Provide a name for the managed application."
             }
@@ -43,7 +43,7 @@
         },
         "description": {
             "type": "string",
-            "defaultValue": "Managed Azure Workbooks",
+            "defaultValue": "Acme App Solution provides advanced workbooks for the analysis of your App Services",
             "metadata": {
                 "description": "Provide a brief description of the managed application"
             }
@@ -86,6 +86,14 @@
         "packageFileUri": {
             "type": "string",
             "value": "[variables('packageFileUri')]"
+        },
+        "solutionDisplayName": {
+            "type": "string",
+            "value": "[parameters('displayName')]"
+        },
+        "solutionDescription": {
+            "type": "string",
+            "value": "[parameters('description')]"
         }
     }
 }
