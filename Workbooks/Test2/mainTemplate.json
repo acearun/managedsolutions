@@ -102,8 +102,14 @@
         }
     ],
     "outputs": {
-       "solutionDisplayName": "[variables('solutionDisplayName')]",
-       "solutionDescription": "[variables('solutionDescription')]",
+        "solutionDisplayName": {
+            "type": "string",
+            "value": "[variables('solutionDisplayName')]"
+        },
+        "solutionDescription": {
+            "type": "string",
+            "value": "[variables('solutionDescription')]"
+        },
         "templateMetadata": {
             "type": "object",
             "value": {
