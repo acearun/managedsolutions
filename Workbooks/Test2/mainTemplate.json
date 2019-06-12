@@ -114,6 +114,7 @@
             "type": "object",
             "value": {
                 "customRpId": "[variables('customRpId')]",
+                "solutionName": "[variables('solutionDisplayName')]",
                 "templates": [
                     {
                         "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/FailureAnalysis.workbook",
