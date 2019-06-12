@@ -11,8 +11,8 @@
         "managedApplicationId": "[resourceGroup().managedBy]",
         "managedApplicationName": "[last(split(variables('managedApplicationId'), '/'))]",
         "applicationResourceGroupName": "[split(variables('managedApplicationId'), '/')[4]]",
-        "solutionDisplayName": "[variables('managedApplicationDisplayName')]",
-        "solutionDescription": "[variables('managedApplicationDescription')]"
+        "solutionDisplayName": "Acme App Solution",
+        "solutionDescription": "Acme App Solution provides advanced workbooks for the analysis of your App Services"
     },
     "resources": [
         {
@@ -32,32 +32,41 @@
                         "template": {
                             "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
                             "contentVersion": "1.0.0.0",
-                            "parameters": {
-                                "resourceId": {
-                                    "type": "string"
-                                },
-                                "parentResourceName": {
-                                    "type": "string"
-                                },
-                                "savedQuery": {
-                                    "type": "string"
-                                },
-                                "guidValue": {
-                                    "type": "string",
-                                    "defaultValue": "[[newGuid()]"
-                                }
-                            },
+                            "parameters": {},
                             "resources": [
                                 {
-                                    "apiVersion": "2017-03-15-preview",
-                                    "type": "Microsoft.OperationalInsights/workspaces/savedSearches",
-                                    "name": "[[concat(parameters('parentResourceName'), '/', 'monitoralerts-cputest')]",
+                                    "name": "Acme Availability Alert",
+                                    "type": "Microsoft.Insights/metricAlerts",
+                                    "location": "global",
+                                    "apiVersion": "2018-03-01",
+                                    "tags": {},
                                     "properties": {
-                                        "etag": "*",
-                                        "category": "[[concat('A-', parameters('guidValue'))]",
-                                        "displayName": "monitoralerts-cputest",
-                                        "query": "[[parameters('savedQuery')]",
-                                        "version": 2
+                                        "description": "This is an availability alert from the Acme Solution",
+                                        "severity": "3",
+                                        "enabled": "false",
+                                        "scopes": [
+                                            "/subscriptions/8980832b-9589-4ac2-b322-a6ae6a97f02b/resourceGroups/app/providers/microsoft.insights/components/app"
+                                        ],
+                                        "evaluationFrequency": "PT1M",
+                                        "windowSize": "PT5M",
+                                        "criteria": {
+                                            "odata.type": "Microsoft.Azure.Monitor.SingleResourceMultipleMetricCriteria",
+                                            "allOf": [
+                                                {
+                                                    "name": "1st criterion",
+                                                    "metricName": "Availability",
+                                                    "dimensions": [],
+                                                    "operator": "LessThan",
+                                                    "threshold": "99",
+                                                    "timeAggregation": "Average"
+                                                }
+                                            ]
+                                        },
+                                        "actions": [
+                                            {
+                                                "actionGroupId": "/subscriptions/8980832b-9589-4ac2-b322-a6ae6a97f02b/resourceGroups/Default-ActivityLogAlerts/providers/microsoft.insights/actiongroups/Hellen_Test1109"
+                                            }
+                                        ]
                                     }
                                 }
                             ]
@@ -67,30 +76,30 @@
             }
         },
         {
-			"type": "Microsoft.Resources/deployments",
-			"apiVersion": "2017-05-10",
-			"name": "nestedTemplate",
-			"resourceGroup": "[variables('applicationResourceGroupName')]",
-			"properties": {
-				"mode": "Incremental",
-				"template": {
-					"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-					"contentVersion": "1.0.0.0",
-					"resources": [
-						{
-							"type": "Microsoft.Solutions/applications/providers/roleAssignments",
-							"apiVersion": "2015-07-01",
-							"name": "[concat(variables('managedApplicationName'), '/Microsoft.Authorization/', guid(resourceGroup().id))]",
-							"properties": {
-								"roleDefinitionId": "[concat(subscription().id, '/providers/Microsoft.Authorization/roleDefinitions/', '8e3af657-a8ff-443c-a75c-2fe8c4bcb635')]",
-								"principalId": "[reference('public', '2018-09-01-preview', 'Full').identity.principalId]",
-								"scope": "[variables('managedApplicationId')]"
-							}
-						}
-					]
-				}
-			}
-		}
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2017-05-10",
+            "name": "nestedTemplate",
+            "resourceGroup": "[variables('applicationResourceGroupName')]",
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "resources": [
+                        {
+                            "type": "Microsoft.Solutions/applications/providers/roleAssignments",
+                            "apiVersion": "2015-07-01",
+                            "name": "[concat(variables('managedApplicationName'), '/Microsoft.Authorization/', guid(resourceGroup().id))]",
+                            "properties": {
+                                "roleDefinitionId": "[concat(subscription().id, '/providers/Microsoft.Authorization/roleDefinitions/', '8e3af657-a8ff-443c-a75c-2fe8c4bcb635')]",
+                                "principalId": "[reference('public', '2018-09-01-preview', 'Full').identity.principalId]",
+                                "scope": "[variables('managedApplicationId')]"
+                            }
+                        }
+                    ]
+                }
+            }
+        }
     ],
     "outputs": {
         "templateMetadata": {
@@ -99,7 +108,7 @@
                 "customRpId": "[variables('customRpId')]",
                 "solutionName": "Acme App Solution",
                 "solutionDisplayName": "[variables('solutionDisplayName')]",
-                "solutionDescription": "[variables('solutionDescription')]",               
+                "solutionDescription": "[variables('solutionDescription')]",
                 "templates": [
                     {
                         "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/FailureAnalysis.workbook",

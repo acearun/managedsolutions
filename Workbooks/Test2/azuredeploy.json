@@ -86,14 +86,6 @@
         "packageFileUri": {
             "type": "string",
             "value": "[variables('packageFileUri')]"
-        },
-        "managedApplicationDisplayName": {
-            "type": "string",
-            "value": "[parameters('displayName')]"
-        },
-        "managedApplicationDescription": {
-            "type": "string",
-            "value": "[parameters('description')]"
         }
     }
 }
