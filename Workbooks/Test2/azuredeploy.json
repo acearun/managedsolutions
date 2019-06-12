@@ -4,7 +4,7 @@
     "parameters": {
         "name": {
             "type": "string",
-            "defaultValue": "ManagedWorkbook",
+            "defaultValue": "AcmeAppSolution",
             "metadata": {
                 "description": "Provide a name for the managed application."
             }
@@ -50,7 +50,7 @@
         },
         "displayName": {
             "type": "string",
-            "defaultValue": "Managed Workbooks",
+            "defaultValue": "Acme App Solution",
             "metadata": {
                 "description": "Display name for the managed application"
             }
