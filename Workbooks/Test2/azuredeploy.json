@@ -87,11 +87,11 @@
             "type": "string",
             "value": "[variables('packageFileUri')]"
         },
-        "solutionDisplayName": {
+        "managedApplicationDisplayName": {
             "type": "string",
             "value": "[parameters('displayName')]"
         },
-        "solutionDescription": {
+        "managedApplicationDescription": {
             "type": "string",
             "value": "[parameters('description')]"
         }
