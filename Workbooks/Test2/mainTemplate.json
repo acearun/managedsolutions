@@ -102,13 +102,12 @@
         }
     ],
     "outputs": {
+       "solutionDisplayName": "[variables('solutionDisplayName')]",
+       "solutionDescription": "[variables('solutionDescription')]",
         "templateMetadata": {
             "type": "object",
             "value": {
                 "customRpId": "[variables('customRpId')]",
-                "solutionName": "Acme App Solution",
-                "solutionDisplayName": "[variables('solutionDisplayName')]",
-                "solutionDescription": "[variables('solutionDescription')]",
                 "templates": [
                     {
                         "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/FailureAnalysis.workbook",
