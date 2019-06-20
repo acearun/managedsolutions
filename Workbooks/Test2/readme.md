@@ -2,12 +2,11 @@
 
 ## Option 1 - Deploy using Azure Portal
 ### Step 1 - Get authorization info
-Run these commands in the Azure Cloud shell
+Run these command in the Azure Cloud shell and copy the auth info:
 ```bash
-> userid=$(az ad user show --upn-or-object-id example@contoso.org --query objectId --output tsv)
-> roleid=$(az role definition list --name Owner --query [].name --output tsv)
-> echo [{\"principalId\":\"$userid\", \"roleDefinitionId\":\"$roleid\" }]
+> userid=$(az ad user show --upn-or-object-id example@contoso.org --query objectId --output tsv);roleid=$(az role definition list --name Owner --query [].name --output tsv);echo [{\"principalId\":\"$userid\", \"roleDefinitionId\":\"$roleid\" }]
 ```
+💡 Make sure you change example@contoso.org to your email.
 
 Copy the value of returned by the last command to use in the `authorizations` parameter of the next step.
 
