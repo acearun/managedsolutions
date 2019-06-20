@@ -34,7 +34,7 @@
                             "contentVersion": "1.0.0.0",
                             "parameters": {},
                             "resources": [
-                                // {
+                                //     {
                                 //     "name": "Acme Availability Alert",
                                 //     "type": "Microsoft.Insights/metricAlerts",
                                 //     "location": "global",
@@ -66,9 +66,9 @@
                                 //             {
                                 //                 "actionGroupId": "/subscriptions/8980832b-9589-4ac2-b322-a6ae6a97f02b/resourceGroups/Default-ActivityLogAlerts/providers/microsoft.insights/actiongroups/Hellen_Test1109"
                                 //             }
-                                        ]
-                                    }
-                                }
+                                //         ]
+                                //     }
+                                // }
                             ]
                         }
                     }

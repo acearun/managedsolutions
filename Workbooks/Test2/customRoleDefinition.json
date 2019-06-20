@@ -12,7 +12,7 @@
                         {
                             "actions": [
                                 "Microsoft.Resources/deployments/write",
-                                "Microsoft.AlertsManagement/alerts/write"
+                                //"Microsoft.AlertsManagement/alerts/write"
                             ]
                         }
                     ]
