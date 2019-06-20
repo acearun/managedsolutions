@@ -110,6 +110,14 @@
             "type": "string",
             "value": "[variables('solutionDescription')]"
         },
+        "targetResourceType": {
+            "type": "string",
+            "value": "microsoft.insights/components"
+        },
+        "solutionPublisher": {
+            "type": "string",
+            "value": "Microsoft"
+        },
         "templateMetadata": {
             "type": "object",
             "value": {
