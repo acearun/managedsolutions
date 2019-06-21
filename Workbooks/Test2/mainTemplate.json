@@ -33,43 +33,7 @@
                             "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
                             "contentVersion": "1.0.0.0",
                             "parameters": {},
-                            "resources": [
-                                //     {
-                                //     "name": "Acme Availability Alert",
-                                //     "type": "Microsoft.Insights/metricAlerts",
-                                //     "location": "global",
-                                //     "apiVersion": "2018-03-01",
-                                //     "tags": {},
-                                //     "properties": {
-                                //         "description": "This is an availability alert from the Acme Solution",
-                                //         "severity": "3",
-                                //         "enabled": "false",
-                                //         "scopes": [
-                                //             "/subscriptions/8980832b-9589-4ac2-b322-a6ae6a97f02b/resourceGroups/app/providers/microsoft.insights/components/app"
-                                //         ],
-                                //         "evaluationFrequency": "PT1M",
-                                //         "windowSize": "PT5M",
-                                //         "criteria": {
-                                //             "odata.type": "Microsoft.Azure.Monitor.SingleResourceMultipleMetricCriteria",
-                                //             "allOf": [
-                                //                 {
-                                //                     "name": "1st criterion",
-                                //                     "metricName": "Availability",
-                                //                     "dimensions": [],
-                                //                     "operator": "LessThan",
-                                //                     "threshold": "99",
-                                //                     "timeAggregation": "Average"
-                                //                 }
-                                //             ]
-                                //         },
-                                //         "actions": [
-                                //             {
-                                //                 "actionGroupId": "/subscriptions/8980832b-9589-4ac2-b322-a6ae6a97f02b/resourceGroups/Default-ActivityLogAlerts/providers/microsoft.insights/actiongroups/Hellen_Test1109"
-                                //             }
-                                //         ]
-                                //     }
-                                // }
-                            ]
+                            "resources": []
                         }
                     }
                 ]
