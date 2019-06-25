@@ -1,0 +1,122 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {},
+    "variables": {
+        "rgId": "[resourceGroup().id]",
+        "customRpId": "[concat(resourceGroup().id, '/providers/Microsoft.CustomProviders/resourceProviders/public')]",
+        "templateMetadata": {
+            "customRpId": "[variables('customRpId')]"
+        },
+        "managedApplicationId": "[resourceGroup().managedBy]",
+        "managedApplicationName": "[last(split(variables('managedApplicationId'), '/'))]",
+        "applicationResourceGroupName": "[split(variables('managedApplicationId'), '/')[4]]",
+        "solutionDisplayName": "Acme App Solution",
+        "solutionDescription": "Acme App Solution provides advanced workbooks for the analysis of your App Services"
+    },
+    "resources": [
+        {
+            "name": "public",
+            "id": "[variables('customRpId')]",
+            "location": "eastus",
+            "apiVersion": "2018-09-01-preview",
+            "type": "Microsoft.CustomProviders/resourceProviders",
+            "identity": {
+                "type": "SystemAssigned"
+            },
+            "properties": {
+                "resourceTypes": [
+                    {
+                        "name": "associations",
+                        "routingType": "Template,Extension",
+                        "template": {
+                            "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                            "contentVersion": "1.0.0.0",
+                            "parameters": {},
+                            "resources": []
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2017-05-10",
+            "name": "nestedTemplate",
+            "resourceGroup": "[variables('applicationResourceGroupName')]",
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "resources": [
+                        {
+                            "type": "Microsoft.Solutions/applications/providers/roleAssignments",
+                            "apiVersion": "2015-07-01",
+                            "name": "[concat(variables('managedApplicationName'), '/Microsoft.Authorization/', guid(resourceGroup().id))]",
+                            "properties": {
+                                "roleDefinitionId": "[concat(subscription().id, '/providers/Microsoft.Authorization/roleDefinitions/', '8e3af657-a8ff-443c-a75c-2fe8c4bcb635')]",
+                                "principalId": "[reference('public', '2018-09-01-preview', 'Full').identity.principalId]",
+                                "scope": "[variables('managedApplicationId')]"
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    ],
+    "outputs": {
+        "solutionDisplayName": {
+            "type": "string",
+            "value": "[variables('solutionDisplayName')]"
+        },
+        "solutionDescription": {
+            "type": "string",
+            "value": "[variables('solutionDescription')]"
+        },
+        "targetResourceType": {
+            "type": "string",
+            "value": "microsoft.insights/components"
+        },
+        "solutionPublisher": {
+            "type": "string",
+            "value": "Microsoft"
+        },
+        "templateMetadata": {
+            "type": "object",
+            "value": {
+                "customRpId": "[variables('customRpId')]",
+                "solutionName": "[variables('solutionDisplayName')]",
+                "templates": [
+                    {
+                        "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/FailureAnalysis.workbook",
+                        "source": "url",
+                        "galleries": [
+                            {
+                                "name": "App Failures - Acme Solution",
+                                "category": "Acme analytics",
+                                "order": 100,
+                                "type": "tsg",
+                                "resourceType": "microsoft.insights/components"
+                            }
+                        ],
+                        "localized": {
+                            "es-es": {
+                                "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/FailureAnalysis.workbook",
+                                "galleries": [
+                                    {
+                                        "name": "App Fallos - Acme Solution",
+                                        "order": 100,
+                                        "category": "Acme análisis",
+                                        "type": "tsg",
+                                        "resourceType": "microsoft.insights/components"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}
