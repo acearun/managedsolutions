@@ -13,7 +13,7 @@ Copy the value of returned by the last command to use in the `authorizations` pa
 ### Step 2 - Deploy
 Clicking on the button below, will create the Managed Application definition to a Resource Group in your Azure subscription.
 
-[![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Facearun%2Fmanagedsolutions%2Fmaster%2FWorkbooks%2FAlerts%2Fazuredeploy.json)
+[![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Facearun%2Fmanagedsolutions%2Fmaster%2FWorkbooks%2FTest2%2Fazuredeploy.json)
 
 ## Option 2 - Deploy Using the Azure Cloud Shell
 ### Step 1 - Open Cloud Shell
@@ -46,7 +46,7 @@ az managedapp definition create \
   --display-name "Managed Workbooks" \
   --description "Managed Azure Workbooks" \
   --authorizations "$userid:$roleid" \
-  --package-file-uri "http://raw.githubusercontent.com/acearun/managedsolutions/master/Workbooks/Alerts/Deploy.zip"
+  --package-file-uri "http://raw.githubusercontent.com/acearun/managedsolutions/master/Workbooks/Test2/Deploy.zip"
   ```
 
 
