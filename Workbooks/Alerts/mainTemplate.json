@@ -16,41 +16,6 @@
     },
     "resources": [
         {
-            "name": "Acme-request-alert",
-            "type": "Microsoft.Insights/scheduledQueryRules",
-            "apiVersion": "2018-04-16",
-            "location": "southcentralus",
-            "tags": {
-                "hidden-link:/subscriptions/8980832b-9589-4ac2-b322-a6ae6a97f02b/resourceGroups/app/providers/microsoft.insights/components/app": "Resource"
-            },
-            "properties": {
-                "description": "Sample log search alert",
-                "enabled": "true",
-                "source": {
-                    "query": "requests",
-                    "dataSourceId": "/subscriptions/8980832b-9589-4ac2-b322-a6ae6a97f02b/resourceGroups/app/providers/microsoft.insights/components/app",
-                    "queryType": "ResultCount"
-                },
-                "schedule": {
-                    "frequencyInMinutes": 15,
-                    "timeWindowInMinutes": 60
-                },
-                "action": {
-                    "odata.type": "Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.Microsoft.AppInsights.Nexus.DataContracts.Resources.ScheduledQueryRules.AlertingAction",
-                    "severity": "4",
-                    "aznsAction": {
-                        "actionGroup": ["/subscriptions/8980832b-9589-4ac2-b322-a6ae6a97f02b/resourceGroups/app/providers/microsoft.insights/actiongroups/Arun-action-group"],
-                        "emailSubject": "Customized Email Header",
-                        "customWebhookPayload": "{ \"alertname\":\"#alertrulename\", \"IncludeSearchResults\":true }"
-                    },
-                    "trigger": {
-                        "thresholdOperator": "GreaterThan",
-                        "threshold": 1
-                    }
-                }
-            }
-        },
-        {
             "name": "public",
             "id": "[variables('customRpId')]",
             "location": "eastus",
@@ -70,38 +35,40 @@
                             "parameters": {},
                             "resources": [
                                 {
-                                    "name": "Acme Availability Alert",
-                                    "type": "Microsoft.Insights/metricAlerts",
-                                    "location": "global",
-                                    "apiVersion": "2018-03-01",
-                                    "tags": {},
+                                    "name": "Acme-request-alert",
+                                    "type": "Microsoft.Insights/scheduledQueryRules",
+                                    "apiVersion": "2018-04-16",
+                                    "location": "southcentralus",
+                                    "tags": {
+                                        "hidden-link:/subscriptions/8980832b-9589-4ac2-b322-a6ae6a97f02b/resourceGroups/app/providers/microsoft.insights/components/app": "Resource"
+                                    },
                                     "properties": {
-                                        "description": "This is an availability alert from the Acme Solution",
-                                        "severity": "3",
-                                        "enabled": "false",
-                                        "scopes": [
-                                            "/subscriptions/8980832b-9589-4ac2-b322-a6ae6a97f02b/resourceGroups/app/providers/microsoft.insights/components/app"
-                                        ],
-                                        "evaluationFrequency": "PT1M",
-                                        "windowSize": "PT5M",
-                                        "criteria": {
-                                            "odata.type": "Microsoft.Azure.Monitor.SingleResourceMultipleMetricCriteria",
-                                            "allOf": [
-                                                {
-                                                    "name": "1st criterion",
-                                                    "metricName": "Availability",
-                                                    "dimensions": [],
-                                                    "operator": "LessThan",
-                                                    "threshold": "99",
-                                                    "timeAggregation": "Average"
-                                                }
-                                            ]
+                                        "description": "Sample log search alert",
+                                        "enabled": "true",
+                                        "source": {
+                                            "query": "requests",
+                                            "dataSourceId": "/subscriptions/8980832b-9589-4ac2-b322-a6ae6a97f02b/resourceGroups/app/providers/microsoft.insights/components/app",
+                                            "queryType": "ResultCount"
                                         },
-                                        "actions": [
-                                            {
-                                                "actionGroupId": "/subscriptions/8980832b-9589-4ac2-b322-a6ae6a97f02b/resourceGroups/app/providers/microsoft.insights/actiongroups/Arun-action-group"
+                                        "schedule": {
+                                            "frequencyInMinutes": 15,
+                                            "timeWindowInMinutes": 60
+                                        },
+                                        "action": {
+                                            "odata.type": "Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.Microsoft.AppInsights.Nexus.DataContracts.Resources.ScheduledQueryRules.AlertingAction",
+                                            "severity": "4",
+                                            "aznsAction": {
+                                                "actionGroup": [
+                                                    "/subscriptions/8980832b-9589-4ac2-b322-a6ae6a97f02b/resourceGroups/app/providers/microsoft.insights/actiongroups/Arun-action-group"
+                                                ],
+                                                "emailSubject": "Customized Email Header",
+                                                "customWebhookPayload": "{ \"alertname\":\"#alertrulename\", \"IncludeSearchResults\":true }"
+                                            },
+                                            "trigger": {
+                                                "thresholdOperator": "GreaterThan",
+                                                "threshold": 1
                                             }
-                                        ]
+                                        }
                                     }
                                 }
                             ]
