@@ -12,7 +12,6 @@
                         {
                             "actions": [
                                 "Microsoft.Resources/deployments/write",
-                                //"Microsoft.AlertsManagement/alerts/write"
                             ]
                         }
                     ]
