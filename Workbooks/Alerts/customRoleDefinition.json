@@ -12,7 +12,7 @@
                         {
                             "actions": [
                                 "Microsoft.Resources/deployments/write",
-                                "Microsoft.Insights/MetricAlerts/Write"
+                                "Microsoft.Insights/scheduledqueryrules/write"
                             ]
                         }
                     ]
