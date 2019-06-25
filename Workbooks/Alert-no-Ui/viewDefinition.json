@@ -1,0 +1,53 @@
+{
+	"views": [
+		{
+			"kind": "ResourceCollection",
+			"properties": {
+				"displayName": "Connected Clients",
+				"resourceType": "associations",
+				"targetResourceType": "Microsoft.Compute/virtualMachines",
+				"createUIDefinition": {
+					"parameters": {
+						"steps": [
+							{
+								"name": "add",
+								"label": "Parameters",
+								"subLabel": {
+									"preValidation": "Configure settings",
+									"postValidation": "Done"
+								},
+								"bladeTitle": "Input Parameters",
+								"bladeSubtitle": "Inputs",
+								"elements": [
+									{
+										"name": "savedQuery",
+										"label": "Saved Query",
+										"type": "Microsoft.Common.TextBox",
+										"defaultValue": "",
+										"toolTip": "Provide query.",
+										"constraints": {
+											"required": true
+										}
+									}
+								]
+							}
+						],
+						"outputs": {
+							"authKey": "[steps('add').savedQuery]"
+						}
+					}
+				},
+				"gridViewConfig": {
+					"columns": [
+						{
+							"key": "properties.clientVersion",
+							"displayName": "Client Version",
+							"filterable": true,
+							"sortable": false
+						}
+					]
+				}
+			}
+		}
+	]
+}
