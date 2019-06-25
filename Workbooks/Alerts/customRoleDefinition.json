@@ -12,8 +12,9 @@
                         {
                             "actions": [
                                 "Microsoft.Resources/deployments/write",
-                                "Microsoft.Insights/scheduledqueryrules/*",
-                                "Microsoft.Insights/actiongroups/read"
+                                "Microsoft.Insights/scheduledqueryrules/write",
+                                "Microsoft.Insights/actiongroups/read",
+                                "Microsoft.Insights/components/read"
                             ]
                         }
                     ]
