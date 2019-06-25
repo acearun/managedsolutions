@@ -11,8 +11,8 @@
         "managedApplicationId": "[resourceGroup().managedBy]",
         "managedApplicationName": "[last(split(variables('managedApplicationId'), '/'))]",
         "applicationResourceGroupName": "[split(variables('managedApplicationId'), '/')[4]]",
-        "solutionDisplayName": "Acme App Solution",
-        "solutionDescription": "Acme App Solution provides advanced workbooks for the analysis of your App Services"
+        "solutionDisplayName": "Acme App Alert Solution",
+        "solutionDescription": "Acme App Solution provides advanced workbooks and alerts for the analysis of your App Services"
     },
     "resources": [
         {
@@ -33,90 +33,123 @@
                             "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
                             "contentVersion": "1.0.0.0",
                             "parameters": {},
-                            "resources": []
+                            "resources": [
+                                {
+                                    "name": "Acme Availability Alert",
+                                    "type": "Microsoft.Insights/metricAlerts",
+                                    "location": "global",
+                                    "apiVersion": "2018-03-01",
+                                    "tags": {},
+                                    "properties": {
+                                        "description": "This is an availability alert from the Acme Solution",
+                                        "severity": "3",
+                                        "enabled": "false",
+                                        "scopes": [
+                                            "/subscriptions/8980832b-9589-4ac2-b322-a6ae6a97f02b/resourceGroups/app/providers/microsoft.insights/components/app"
+                                        ],
+                                        "evaluationFrequency": "PT1M",
+                                        "windowSize": "PT5M",
+                                        "criteria": {
+                                            "odata.type": "Microsoft.Azure.Monitor.SingleResourceMultipleMetricCriteria",
+                                            "allOf": [
+                                                {
+                                                    "name": "1st criterion",
+                                                    "metricName": "Availability",
+                                                    "dimensions": [],
+                                                    "operator": "LessThan",
+                                                    "threshold": "99",
+                                                    "timeAggregation": "Average"
+                                                }
+                                            ]
+                                        },
+                                        "actions": [
+                                            {
+                                                "actionGroupId": "/subscriptions/8980832b-9589-4ac2-b322-a6ae6a97f02b/resourceGroups/Default-ActivityLogAlerts/providers/microsoft.insights/actiongroups/Hellen_Test1109"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
                         }
-                    }
-                ]
-            }
-        },
-        {
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2017-05-10",
-            "name": "nestedTemplate",
-            "resourceGroup": "[variables('applicationResourceGroupName')]",
-            "properties": {
-                "mode": "Incremental",
-                "template": {
-                    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-                    "contentVersion": "1.0.0.0",
-                    "resources": [
-                        {
-                            "type": "Microsoft.Solutions/applications/providers/roleAssignments",
-                            "apiVersion": "2015-07-01",
-                            "name": "[concat(variables('managedApplicationName'), '/Microsoft.Authorization/', guid(resourceGroup().id))]",
-                            "properties": {
-                                "roleDefinitionId": "[concat(subscription().id, '/providers/Microsoft.Authorization/roleDefinitions/', '8e3af657-a8ff-443c-a75c-2fe8c4bcb635')]",
-                                "principalId": "[reference('public', '2018-09-01-preview', 'Full').identity.principalId]",
-                                "scope": "[variables('managedApplicationId')]"
-                            }
-                        }
-                    ]
-                }
-            }
-        }
-    ],
-    "outputs": {
-        "solutionDisplayName": {
-            "type": "string",
-            "value": "[variables('solutionDisplayName')]"
-        },
-        "solutionDescription": {
-            "type": "string",
-            "value": "[variables('solutionDescription')]"
-        },
-        "targetResourceType": {
-            "type": "string",
-            "value": "microsoft.insights/components"
-        },
-        "solutionPublisher": {
-            "type": "string",
-            "value": "Microsoft"
-        },
-        "templateMetadata": {
-            "type": "object",
-            "value": {
-                "customRpId": "[variables('customRpId')]",
-                "solutionName": "[variables('solutionDisplayName')]",
-                "templates": [
+                    },
                     {
-                        "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/FailureAnalysis.workbook",
-                        "source": "url",
-                        "galleries": [
-                            {
-                                "name": "App Failures - Acme Solution",
-                                "category": "Acme analytics",
-                                "order": 100,
-                                "type": "tsg",
-                                "resourceType": "microsoft.insights/components"
-                            }
-                        ],
-                        "localized": {
-                            "es-es": {
-                                "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/FailureAnalysis.workbook",
-                                "galleries": [
+                        "type": "Microsoft.Resources/deployments",
+                        "apiVersion": "2017-05-10",
+                        "name": "nestedTemplate",
+                        "resourceGroup": "[variables('applicationResourceGroupName')]",
+                        "properties": {
+                            "mode": "Incremental",
+                            "template": {
+                                "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                                "contentVersion": "1.0.0.0",
+                                "resources": [
                                     {
-                                        "name": "App Fallos - Acme Solution",
-                                        "order": 100,
-                                        "category": "Acme análisis",
-                                        "type": "tsg",
-                                        "resourceType": "microsoft.insights/components"
+                                        "type": "Microsoft.Solutions/applications/providers/roleAssignments",
+                                        "apiVersion": "2015-07-01",
+                                        "name": "[concat(variables('managedApplicationName'), '/Microsoft.Authorization/', guid(resourceGroup().id))]",
+                                        "properties": {
+                                            "roleDefinitionId": "[concat(subscription().id, '/providers/Microsoft.Authorization/roleDefinitions/', '8e3af657-a8ff-443c-a75c-2fe8c4bcb635')]",
+                                            "principalId": "[reference('public', '2018-09-01-preview', 'Full').identity.principalId]",
+                                            "scope": "[variables('managedApplicationId')]"
+                                        }
                                     }
                                 ]
                             }
                         }
                     }
-                ]
+                ],
+                "outputs": {
+                    "solutionDisplayName": {
+                        "type": "string",
+                        "value": "[variables('solutionDisplayName')]"
+                    },
+                    "solutionDescription": {
+                        "type": "string",
+                        "value": "[variables('solutionDescription')]"
+                    },
+                    "targetResourceType": {
+                        "type": "string",
+                        "value": "microsoft.insights/components"
+                    },
+                    "solutionPublisher": {
+                        "type": "string",
+                        "value": "Microsoft"
+                    },
+                    "templateMetadata": {
+                        "type": "object",
+                        "value": {
+                            "customRpId": "[variables('customRpId')]",
+                            "solutionName": "[variables('solutionDisplayName')]",
+                            "templates": [
+                                {
+                                    "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/FailureAnalysis.workbook",
+                                    "source": "url",
+                                    "galleries": [
+                                        {
+                                            "name": "App Failures - Acme Solution",
+                                            "category": "Acme analytics",
+                                            "order": 100,
+                                            "type": "tsg",
+                                            "resourceType": "microsoft.insights/components"
+                                        }
+                                    ],
+                                    "localized": {
+                                        "es-es": {
+                                            "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/FailureAnalysis.workbook",
+                                            "galleries": [
+                                                {
+                                                    "name": "App Fallos - Acme Solution",
+                                                    "order": 100,
+                                                    "category": "Acme análisis",
+                                                    "type": "tsg",
+                                                    "resourceType": "microsoft.insights/components"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
             }
-        }
-    }
-}

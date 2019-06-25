@@ -4,7 +4,7 @@
     "parameters": {
         "name": {
             "type": "string",
-            "defaultValue": "Acme-App-Solution",
+            "defaultValue": "Acme-App-Alert-Solution",
             "metadata": {
                 "description": "Provide a name for the managed application."
             }
@@ -43,7 +43,7 @@
         },
         "description": {
             "type": "string",
-            "defaultValue": "Acme App Solution provides advanced workbooks for the analysis of your App Services",
+            "defaultValue": "Acme App Alert Solution provides advanced workbooks for the analysis of your App Services",
             "metadata": {
                 "description": "Provide a brief description of the managed application"
             }

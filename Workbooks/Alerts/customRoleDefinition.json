@@ -11,7 +11,8 @@
                     "permissions": [
                         {
                             "actions": [
-                                "Microsoft.Resources/deployments/write"
+                                "Microsoft.Resources/deployments/write",
+                                "Microsoft.Insights/MetricAlerts/Write"
                             ]
                         }
                     ]
