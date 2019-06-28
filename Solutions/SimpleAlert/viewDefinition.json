@@ -1,0 +1,24 @@
+{
+	"views": [
+		{
+			"kind": "ResourceCollection",
+			"properties": {
+				"displayName": "Enable Acme Alerts",
+				"resourceType": "associations",
+				"targetResourceType": "Microsoft.Compute/virtualMachines",
+				"createUIDefinition": {
+					"parameters": {
+						"steps": [
+						],
+						"outputs": {
+						}
+					}
+				},
+				"gridViewConfig": {
+					"columns": [
+					]
+				}
+			}
+		}
+	]
+}
