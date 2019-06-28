@@ -32,7 +32,20 @@
                         "template": {
                             "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
                             "contentVersion": "1.0.0.0",
-                            "parameters": {},
+                            "parameters": {
+                                "parentResourceName": {
+                                    "type": "string"
+                                },
+                                "parentResourceId": {
+                                    "type": "string"
+                                },
+                                "resourceName ": {
+                                    "type": "string"
+                                },
+                                "resourceId": {
+                                    "type": "string"
+                                }
+                            },
                             "resources": [
                                 {
                                     "name": "Simple-request-count-alert",
@@ -47,7 +60,7 @@
                                         "enabled": "true",
                                         "source": {
                                             "query": "requests",
-                                            "dataSourceId": "/subscriptions/8980832b-9589-4ac2-b322-a6ae6a97f02b/resourceGroups/app/providers/microsoft.insights/components/app",
+                                            "dataSourceId": "[[parameters('parentResourceId')]",
                                             "queryType": "ResultCount"
                                         },
                                         "schedule": {
