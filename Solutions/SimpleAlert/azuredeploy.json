@@ -4,7 +4,7 @@
     "parameters": {
         "name": {
             "type": "string",
-            "defaultValue": "Acme-App-Alert-Solution",
+            "defaultValue": "Simple-alert-solution",
             "metadata": {
                 "description": "Provide a name for the managed application."
             }
@@ -43,14 +43,14 @@
         },
         "description": {
             "type": "string",
-            "defaultValue": "Acme App Alert Solution provides advanced workbooks for the analysis of your App Services",
+            "defaultValue": "This solution creates a simple alert for an Application Insights resource",
             "metadata": {
                 "description": "Provide a brief description of the managed application"
             }
         },
         "displayName": {
             "type": "string",
-            "defaultValue": "Acme App Solution",
+            "defaultValue": "Simple alert solution",
             "metadata": {
                 "description": "Display name for the managed application"
             }
