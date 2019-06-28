@@ -9,9 +9,9 @@ A solution packages metadata about the templates it exports in the outputs secti
 
 ```json
 {
-    ...
+
     "outputs": {
-        ...
+
         "templateMetadata": {
             "type": "object",
             "value": {
