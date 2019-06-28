@@ -4,6 +4,8 @@ This sample shows how to package a workbook template in a solution and export it
 
 [![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Facearun%2Fmanagedsolutions%2Fmaster%2FSolutions%2FWorkbookExport%2Fazuredeploy.json)
 
+[More info on deploying](../deploy.md)
+
 ## Details
 A solution packages metadata about the templates it exports in the outputs section of its `mainTemplate.json`. Here is a template metadata that this solution exports:
 
