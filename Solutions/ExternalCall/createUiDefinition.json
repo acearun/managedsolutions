@@ -6,18 +6,7 @@
         "basics": [
             {}
         ],
-        "steps": [
-            {
-                "name": "step1",
-                "label": "Solutions config",
-                "subLabel": {
-                    "preValidation": "Set the source and names of the templates",
-                    "postValidation": "Done"
-                },
-                "bladeTitle": "Solution config",
-                "elements": []
-            }
-        ],
+        "steps": [],
         "outputs": {
             "managedIdentity": "[parse('{\"Type\":\"SystemAssigned\"}')]"
         }
