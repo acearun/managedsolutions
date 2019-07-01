@@ -1,0 +1,19 @@
+{
+  "version": "Notebook/1.0",
+  "items": [
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "{\"version\":\"CustomProviderVersion/1.0\",\"actionName\":\"ping\",\"payload\":\"\",\"bodyFormat\":\"text/plain\",\"convertToTable\":true}",
+        "size": 0,
+        "queryType": 6,
+        "resourceType": "microsoft.customproviders/resourceproviders"
+      },
+      "name": "query - 0"
+    }
+  ],
+  "defaultResourceIds": [],
+  "fallbackResourceIds": [],
+  "$schema": "https://github.com/Microsoft/Application-Insights-Workbooks/blob/master/schema/workbook.json"
+}

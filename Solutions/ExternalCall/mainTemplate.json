@@ -1,0 +1,87 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {},
+    "variables": {
+        "rgId": "[resourceGroup().id]",
+        "customRpId": "[concat(resourceGroup().id, '/providers/Microsoft.CustomProviders/resourceProviders/public')]",
+        "managedApplicationId": "[resourceGroup().managedBy]",
+        "managedApplicationName": "[last(split(variables('managedApplicationId'), '/'))]",
+        "applicationResourceGroupName": "[split(variables('managedApplicationId'), '/')[4]]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.CustomProviders/resourceProviders",
+            "apiVersion": "2018-09-01-preview",
+            "name": "public",
+            "location": "eastus",
+            "identity": {
+                "type": "SystemAssigned"
+            },
+            "properties": {
+                "actions": [
+                    {
+                        "name": "ping",
+                        "routingType": "Proxy",
+                        "endpoint": "https://singleapptestfunction1.azurewebsites.net/api/HttpTriggerJS1"
+                    }
+                ],
+                "resourceTypes": [
+                    {
+                        "name": "associations",
+                        "routingType": "Template,Extension",
+                        "template": {
+                            "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                            "contentVersion": "1.0.0.0",
+                            "parameters": {},
+                            "resources": []
+                        }
+                    }
+                ]
+            },
+            "id": "[variables('customRpId')]"
+        }
+    ],
+    "outputs": {
+        "solutionDisplayName": {
+            "type": "string",
+            "value": "External call sample"
+        },
+        "solutionDescription": {
+            "type": "string",
+            "value": "This solution provides templates that fetch data from an en external endpoint"
+        },
+        "customRpId": {
+            "type": "string",
+            "value": "[variables('customRpId')]"
+        },
+        "targetResourceType": {
+            "type": "string",
+            "value": "Microsoft.Insights/components"
+        },
+        "solutionPublisher": {
+            "type": "string",
+            "value": "Microsoft"
+        },
+        "templateMetadata": {
+            "type": "object",
+            "value": {
+                "templates": [
+                    {
+                        "id": "https://geniekbs.blob.core.windows.net/workbooktemplates/externalEndpointTemplate.json",
+                        "source": "url",
+                        "galleries": [
+                            {
+                                "type": "workbook",
+                                "name": "External Source Template",
+                                "order": 100,
+                                "category": "Solution Sample",
+                                "resourceType": "microsoft.insights/components"
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    }
+}

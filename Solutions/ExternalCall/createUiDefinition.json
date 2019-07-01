@@ -1,0 +1,25 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/0.1.2-preview/CreateUIDefinition.MultiVm.json#",
+    "handler": "Microsoft.Compute.MultiVm",
+    "version": "0.1.2-preview",
+    "parameters": {
+        "basics": [
+            {}
+        ],
+        "steps": [
+            {
+                "name": "step1",
+                "label": "Solutions config",
+                "subLabel": {
+                    "preValidation": "Set the source and names of the templates",
+                    "postValidation": "Done"
+                },
+                "bladeTitle": "Solution config",
+                "elements": []
+            }
+        ],
+        "outputs": {
+            "managedIdentity": "[parse('{\"Type\":\"SystemAssigned\"}')]"
+        }
+    }
+}
