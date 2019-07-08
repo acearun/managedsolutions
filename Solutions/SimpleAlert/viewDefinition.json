@@ -5,7 +5,7 @@
 			"properties": {
 				"displayName": "Enable Acme Alerts",
 				"resourceType": "associations",
-				"targetResourceType": "Microsoft.Compute/virtualMachines",
+				"targetResourceType": "Microsoft.insights/components",
 				"createUIDefinition": {
 					"parameters": {
 						"steps": [

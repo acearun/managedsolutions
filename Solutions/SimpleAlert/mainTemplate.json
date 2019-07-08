@@ -38,12 +38,6 @@
                                 },
                                 "parentResourceId": {
                                     "type": "string"
-                                },
-                                "resourceName ": {
-                                    "type": "string"
-                                },
-                                "resourceId": {
-                                    "type": "string"
                                 }
                             },
                             "resources": [
@@ -60,7 +54,7 @@
                                         "enabled": "true",
                                         "source": {
                                             "query": "requests",
-                                            "dataSourceId": "[[parameters('parentResourceId')]",
+                                            "dataSourceId": "[[concat(resourceGroup().id, '/providers/microsoft.insights/components/', parameters('parentResourceName'))]",
                                             "queryType": "ResultCount"
                                         },
                                         "schedule": {
