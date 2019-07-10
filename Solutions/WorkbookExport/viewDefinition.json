@@ -1,23 +1,22 @@
 {
-	"views": [
+	"views": 
+	[
 		{
-			"kind": "ResourceCollection",
-			"properties": {
-				"displayName": "Export workbooks",
-				"resourceType": "associations",
-				"targetResourceType": "microsoft.insights/components",
-				"createUIDefinition": {
-					"parameters": {
-						"steps": [
-						],
-						"outputs": {
-						}
-					}
-				},
-				"gridViewConfig": {
-					"columns": [
-					]
-				}
+			"kind": "Associations",
+			"properties": 
+			{
+				"displayName": "Onboarded Resources",
+				"targetResourceType": "Microsoft.insights/components",
+                
+                "columns": [],
+
+                "createUIDefinition": {
+                    "parameters": {
+                        "steps": [],
+                        "outputs": {
+                        }
+                    }
+                }
 			}
 		}
 	]
