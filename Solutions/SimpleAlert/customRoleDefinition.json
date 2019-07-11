@@ -15,7 +15,7 @@
                                 "Microsoft.Resources/deployments/read",
                                 "Microsoft.Resources/deployments/operations/read",
                                 "Microsoft.Authorization/locks/*",
-                                "Microsoft.Insights/scheduledqueryrules/write",
+                                "Microsoft.Insights/scheduledqueryrules/*",
                                 "Microsoft.Insights/actiongroups/read",
                                 "Microsoft.Insights/components/read"
                             ]
