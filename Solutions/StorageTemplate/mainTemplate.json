@@ -44,7 +44,21 @@
                         "galleries": [
                             {
                                 "name": "Storage failures",
-                                "category": "Solution analytics",
+                                "category": "Storage Solution",
+                                "order": 100,
+                                "type": "workbook",
+                                "resourceType": "microsoft.storage/storageaccounts"
+                            }
+                        ],
+                        "localized": {}
+                    },
+                    {
+                        "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/StorageHeatmap.workbook",
+                        "source": "url",
+                        "galleries": [
+                            {
+                                "name": "Storage failures",
+                                "category": "Storage Solution",
                                 "order": 100,
                                 "type": "storage-insights",
                                 "resourceType": "Azure Monitor"
