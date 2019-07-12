@@ -4,7 +4,7 @@
     "parameters": {
         "name": {
             "type": "string",
-            "defaultValue": "AI-Storage-Workbook-Solution",
+            "defaultValue": "Storage-Solution",
             "metadata": {
                 "description": "Provide a name for the managed application."
             }
@@ -50,7 +50,7 @@
         },
         "displayName": {
             "type": "string",
-            "defaultValue": "App Insights Storage Workbook Export Solution",
+            "defaultValue": "Storage Solution",
             "metadata": {
                 "description": "Display name for the managed application"
             }

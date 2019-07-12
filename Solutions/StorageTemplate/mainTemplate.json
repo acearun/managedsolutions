@@ -11,8 +11,8 @@
         "managedApplicationId": "[resourceGroup().managedBy]",
         "managedApplicationName": "[last(split(variables('managedApplicationId'), '/'))]",
         "applicationResourceGroupName": "[split(variables('managedApplicationId'), '/')[4]]",
-        "solutionDisplayName": "Workbook export sample",
-        "solutionDescription": "This solution adds a workbook template to an Application Insights resource"
+        "solutionDisplayName": "Storage Solution (exports workbooks)",
+        "solutionDescription": "This solution adds a workbook template to Storage Insights"
     },
     "resources": [],
     "outputs": {
