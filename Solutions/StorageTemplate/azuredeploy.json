@@ -4,7 +4,7 @@
     "parameters": {
         "name": {
             "type": "string",
-            "defaultValue": "AI-Storage-Workbook-Export-Solution",
+            "defaultValue": "AI-Storage-Workbook-Solution",
             "metadata": {
                 "description": "Provide a name for the managed application."
             }
