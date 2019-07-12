@@ -1,0 +1,59 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {},
+    "variables": {
+        "rgId": "[resourceGroup().id]",
+        "customRpId": "[concat(resourceGroup().id, '/providers/Microsoft.CustomProviders/resourceProviders/public')]",
+        "templateMetadata": {
+            "customRpId": "[variables('customRpId')]"
+        },
+        "managedApplicationId": "[resourceGroup().managedBy]",
+        "managedApplicationName": "[last(split(variables('managedApplicationId'), '/'))]",
+        "applicationResourceGroupName": "[split(variables('managedApplicationId'), '/')[4]]",
+        "solutionDisplayName": "Workbook export sample",
+        "solutionDescription": "This solution adds a workbook template to an Application Insights resource"
+    },
+    "resources": [],
+    "outputs": {
+        "solutionDisplayName": {
+            "type": "string",
+            "value": "[variables('solutionDisplayName')]"
+        },
+        "solutionDescription": {
+            "type": "string",
+            "value": "[variables('solutionDescription')]"
+        },
+        "targetResourceType": {
+            "type": "string",
+            "value": "microsoft.insights/components"
+        },
+        "solutionPublisher": {
+            "type": "string",
+            "value": "Microsoft"
+        },
+        "templateMetadata": {
+            "type": "object",
+            "value": {
+                "customRpId": "[variables('customRpId')]",
+                "solutionName": "[variables('solutionDisplayName')]",
+                "templates": [
+                    {
+                        "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/StorageHeatmap.workbook",
+                        "source": "url",
+                        "galleries": [
+                            {
+                                "name": "Storage failures",
+                                "category": "Solution analytics",
+                                "order": 100,
+                                "type": "storage-insights",
+                                "resourceType": "Azure Monitor"
+                            }
+                        ],
+                        "localized": {}
+                    }
+                ]
+            }
+        }
+    }
+}

@@ -1,0 +1,23 @@
+{
+	"views": 
+	[
+		{
+			"kind": "Associations",
+			"properties": 
+			{
+				"displayName": "Onboarded Resources",
+				"targetResourceType": "Microsoft.insights/components",
+                
+                "columns": [],
+
+                "createUIDefinition": {
+                    "parameters": {
+                        "steps": [],
+                        "outputs": {
+                        }
+                    }
+                }
+			}
+		}
+	]
+}
