@@ -11,8 +11,8 @@
         "managedApplicationId": "[resourceGroup().managedBy]",
         "managedApplicationName": "[last(split(variables('managedApplicationId'), '/'))]",
         "applicationResourceGroupName": "[split(variables('managedApplicationId'), '/')[4]]",
-        "solutionDisplayName": "Workbook export sample",
-        "solutionDescription": "This solution adds a workbook template to an Application Insights resource"
+        "solutionDisplayName": "Storage Solution (exports workbooks)",
+        "solutionDescription": "This solution adds a workbook template to Storage Insights"
     },
     "resources": [
         {
@@ -64,6 +64,7 @@
                 }
             }
         }
+
     ],
     "outputs": {
         "solutionDisplayName": {
@@ -76,7 +77,7 @@
         },
         "targetResourceType": {
             "type": "string",
-            "value": "microsoft.insights/components"
+            "value": "microsoft.storage/storageaccounts"
         },
         "solutionPublisher": {
             "type": "string",
@@ -89,31 +90,32 @@
                 "solutionName": "[variables('solutionDisplayName')]",
                 "templates": [
                     {
-                        "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/FailureAnalysis.workbook",
+                        "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/StorageHeatmap.workbook",
                         "source": "url",
                         "galleries": [
                             {
-                                "name": "Exported template",
-                                "category": "Solution analytics",
+                                "name": "Storage failures",
+                                "category": "Storage Solution",
                                 "order": 100,
-                                "type": "tsg",
-                                "resourceType": "microsoft.insights/components"
+                                "type": "workbook",
+                                "resourceType": "microsoft.storage/storageaccounts"
                             }
                         ],
-                        "localized": {
-                            "es-es": {
-                                "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/FailureAnalysis.workbook",
-                                "galleries": [
-                                    {
-                                        "name": "Template exportada",
-                                        "order": 100,
-                                        "category": "Solution análisis",
-                                        "type": "tsg",
-                                        "resourceType": "microsoft.insights/components"
-                                    }
-                                ]
+                        "localized": {}
+                    },
+                    {
+                        "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/StorageHeatmap.workbook",
+                        "source": "url",
+                        "galleries": [
+                            {
+                                "name": "Storage failures",
+                                "category": "Storage Solution",
+                                "order": 100,
+                                "type": "storage-insights",
+                                "resourceType": "Azure Monitor"
                             }
-                        }
+                        ],
+                        "localized": {}
                     }
                 ]
             }
