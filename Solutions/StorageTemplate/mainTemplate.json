@@ -11,10 +11,34 @@
         "managedApplicationId": "[resourceGroup().managedBy]",
         "managedApplicationName": "[last(split(variables('managedApplicationId'), '/'))]",
         "applicationResourceGroupName": "[split(variables('managedApplicationId'), '/')[4]]",
-        "solutionDisplayName": "Storage Solution (exports workbooks)",
-        "solutionDescription": "This solution adds a workbook template to Storage Insights"
+        "solutionDisplayName": "Workbook export sample",
+        "solutionDescription": "This solution adds a workbook template to an Application Insights resource"
     },
     "resources": [
+        {
+            "name": "public",
+            "id": "[variables('customRpId')]",
+            "location": "eastus",
+            "apiVersion": "2018-09-01-preview",
+            "type": "Microsoft.CustomProviders/resourceProviders",
+            "identity": {
+                "type": "SystemAssigned"
+            },
+            "properties": {
+                "resourceTypes": [
+                    {
+                        "name": "associations",
+                        "routingType": "Template,Extension",
+                        "template": {
+                            "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                            "contentVersion": "1.0.0.0",
+                            "parameters": {},
+                            "resources": []
+                        }
+                    }
+                ]
+            }
+        },
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2017-05-10",
@@ -52,7 +76,7 @@
         },
         "targetResourceType": {
             "type": "string",
-            "value": "microsoft.storage/storageaccounts"
+            "value": "microsoft.insights/components"
         },
         "solutionPublisher": {
             "type": "string",
@@ -65,32 +89,31 @@
                 "solutionName": "[variables('solutionDisplayName')]",
                 "templates": [
                     {
-                        "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/StorageHeatmap.workbook",
+                        "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/FailureAnalysis.workbook",
                         "source": "url",
                         "galleries": [
                             {
-                                "name": "Storage failures",
-                                "category": "Storage Solution",
+                                "name": "Exported template",
+                                "category": "Solution analytics",
                                 "order": 100,
-                                "type": "workbook",
-                                "resourceType": "microsoft.storage/storageaccounts"
+                                "type": "tsg",
+                                "resourceType": "microsoft.insights/components"
                             }
                         ],
-                        "localized": {}
-                    },
-                    {
-                        "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/StorageHeatmap.workbook",
-                        "source": "url",
-                        "galleries": [
-                            {
-                                "name": "Storage failures",
-                                "category": "Storage Solution",
-                                "order": 100,
-                                "type": "storage-insights",
-                                "resourceType": "Azure Monitor"
+                        "localized": {
+                            "es-es": {
+                                "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/FailureAnalysis.workbook",
+                                "galleries": [
+                                    {
+                                        "name": "Template exportada",
+                                        "order": 100,
+                                        "category": "Solution análisis",
+                                        "type": "tsg",
+                                        "resourceType": "microsoft.insights/components"
+                                    }
+                                ]
                             }
-                        ],
-                        "localized": {}
+                        }
                     }
                 ]
             }
