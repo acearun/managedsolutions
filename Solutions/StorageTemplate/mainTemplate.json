@@ -89,11 +89,11 @@
                 "solutionName": "[variables('solutionDisplayName')]",
                 "templates": [
                     {
-                        "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/StorageHeatmap.workbook",
+                        "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/VhdUse.workbook",
                         "source": "url",
                         "galleries": [
                             {
-                                "name": "Storage failures",
+                                "name": "Virtual hard disk use",
                                 "category": "Storage Solution",
                                 "order": 100,
                                 "type": "workbook",
