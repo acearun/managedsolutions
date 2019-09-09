@@ -76,7 +76,7 @@
         },
         "targetResourceType": {
             "type": "string",
-            "value": "microsoft.storage/storageaccounts"
+            "value": "microsoft.compute/virtualmachines"
         },
         "solutionPublisher": {
             "type": "string",
@@ -89,7 +89,7 @@
                 "solutionName": "[variables('solutionDisplayName')]",
                 "templates": [
                     {
-                        "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/ResourceMonitor.workbook",
+                        "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/Connection.workbook",
                         "source": "url",
                         "galleries": [
                             {
@@ -103,14 +103,28 @@
                         "localized": {}
                     },
                     {
-                        "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/ResourceMonitor.workbook",
+                        "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/Connection.workbook",
+                        "source": "url",
+                        "galleries": [
+                            {
+                                "name": "Resource monitor",
+                                "category": "Virtual machine monitoring solution",
+                                "order": 100,
+                                "type": "vm-insights",
+                                "resourceType": "microsoft.operationalinsights/workspaces"
+                            }
+                        ],
+                        "localized": {}
+                    },
+                    {
+                        "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/Connection.workbook",
                         "source": "url",
                         "galleries": [
                             {
                                 "name": "Virtual machine monitor",
                                 "category": "Virtual machine monitoring solution",
                                 "order": 100,
-                                "type": "m-insights",
+                                "type": "vm-insights",
                                 "resourceType": "microsoft.compute/virtualmachines"
                             }
                         ],
