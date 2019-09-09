@@ -89,11 +89,11 @@
                 "solutionName": "[variables('solutionDisplayName')]",
                 "templates": [
                     {
-                        "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/Connection.workbook",
+                        "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/ResourceMonitor2.workbook",
                         "source": "url",
                         "galleries": [
                             {
-                                "name": "Resource monitor",
+                                "name": "Virtual machine monitor",
                                 "category": "Virtual machine monitoring solution",
                                 "order": 100,
                                 "type": "workbook",
@@ -103,11 +103,11 @@
                         "localized": {}
                     },
                     {
-                        "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/Connection.workbook",
+                        "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/ResourceMonitor2.workbook",
                         "source": "url",
                         "galleries": [
                             {
-                                "name": "Resource monitor",
+                                "name": "Virtual machine monitor",
                                 "category": "Virtual machine monitoring solution",
                                 "order": 100,
                                 "type": "vm-insights",
@@ -117,7 +117,7 @@
                         "localized": {}
                     },
                     {
-                        "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/Connection.workbook",
+                        "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/ResourceMonitor2.workbook",
                         "source": "url",
                         "galleries": [
                             {
