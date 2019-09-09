@@ -2,7 +2,7 @@
 
 A sample VM solution that shows how to deploy a workbook and create a log alert.
 
-[![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Facearun%2Fmanagedsolutions%2Fmaster%2FSolutions%FVmMonitoring%2Fazuredeploy.json)
+[![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Facearun%2Fmanagedsolutions%2Fmaster%2FSolutions%2FVmMonitoring%2Fazuredeploy.json)
 
 [More info on deploying](../deploy.md)
 
