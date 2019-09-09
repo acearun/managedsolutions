@@ -11,8 +11,8 @@
         "managedApplicationId": "[resourceGroup().managedBy]",
         "managedApplicationName": "[last(split(variables('managedApplicationId'), '/'))]",
         "applicationResourceGroupName": "[split(variables('managedApplicationId'), '/')[4]]",
-        "solutionDisplayName": "Storage Solution (exports workbooks)",
-        "solutionDescription": "This solution adds a workbook template to Storage Insights"
+        "solutionDisplayName": "Virtual machine monitoring",
+        "solutionDescription": "This solution adds alerts and workbook templates for VM monitoring"
     },
     "resources": [
         {
@@ -89,34 +89,34 @@
                 "solutionName": "[variables('solutionDisplayName')]",
                 "templates": [
                     {
-                        "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/VhdUse.workbook",
+                        "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/ResourceMonitor.workbook",
                         "source": "url",
                         "galleries": [
                             {
-                                "name": "Virtual hard disk use",
-                                "category": "Storage Solution",
+                                "name": "Resource monitor",
+                                "category": "Virtual machine monitoring solution",
                                 "order": 100,
                                 "type": "workbook",
-                                "resourceType": "microsoft.storage/storageaccounts"
+                                "resourceType": "Azure Monitor"
                             }
                         ],
                         "localized": {}
                     },
                     {
-                        "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/StorageHeatmap.workbook",
+                        "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/ResourceMonitor.workbook",
                         "source": "url",
                         "galleries": [
                             {
-                                "name": "Storage failures",
-                                "category": "Storage Solution",
+                                "name": "Virtual machine monitor",
+                                "category": "Virtual machine monitoring solution",
                                 "order": 100,
-                                "type": "storage-insights",
-                                "resourceType": "Azure Monitor"
+                                "type": "m-insights",
+                                "resourceType": "microsoft.compute/virtualmachines"
                             }
                         ],
                         "localized": {}
-                    }
-                ]
+                    }    
+            ]
             }
         }
     }

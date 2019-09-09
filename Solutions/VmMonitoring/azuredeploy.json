@@ -4,7 +4,7 @@
     "parameters": {
         "name": {
             "type": "string",
-            "defaultValue": "Storage-Solution",
+            "defaultValue": "Virtual-machine-monitoring",
             "metadata": {
                 "description": "Provide a name for the managed application."
             }
@@ -43,14 +43,14 @@
         },
         "description": {
             "type": "string",
-            "defaultValue": "This solution adds a new workbook template to an onboarded Application Insights resource",
+            "defaultValue": "This solution adds alerts and workbook templates for VM monitoring",
             "metadata": {
                 "description": "Provide a brief description of the managed application"
             }
         },
         "displayName": {
             "type": "string",
-            "defaultValue": "Storage Solution",
+            "defaultValue": "Virtual machine monitoring",
             "metadata": {
                 "description": "Display name for the managed application"
             }

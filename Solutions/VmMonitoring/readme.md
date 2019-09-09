@@ -1,8 +1,8 @@
-# Solution that exports workbook templates to Storage Insights
+# Sample VM monitoring solution
 
-This sample shows how to package a workbook template in a solution and export it to a resource.
+A sample VM solution that shows how to deploy a workbook and create a log alert.
 
-[![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Facearun%2Fmanagedsolutions%2Fmaster%2FSolutions%2FStorageTemplate%2Fazuredeploy.json)
+[![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Facearun%2Fmanagedsolutions%2Fmaster%2FSolutions%VmMonitoring%2Fazuredeploy.json)
 
 [More info on deploying](../deploy.md)
 
@@ -21,19 +21,33 @@ A solution packages metadata about the templates it exports in the outputs secti
                 "solutionName": "[variables('solutionDisplayName')]",
                 "templates": [
                     {
-                        "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/StorageHeatmap.workbook",
+                        "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/ResourceMonitor.workbook",
                         "source": "url",
                         "galleries": [
                             {
-                                "name": "Storage failures",
-                                "category": "Solution analytics",
+                                "name": "Resource monitor",
+                                "category": "Virtual machine monitoring solution",
                                 "order": 100,
-                                "type": "storage-insights",
+                                "type": "workbook",
                                 "resourceType": "Azure Monitor"
                             }
                         ],
                         "localized": {}
-                    }
+                    },
+                    {
+                        "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/ResourceMonitor.workbook",
+                        "source": "url",
+                        "galleries": [
+                            {
+                                "name": "Virtual machine monitor",
+                                "category": "Virtual machine monitoring solution",
+                                "order": 100,
+                                "type": "m-insights",
+                                "resourceType": "microsoft.compute/virtualmachines"
+                            }
+                        ],
+                        "localized": {}
+                    }    
                 ]
             }
         }
