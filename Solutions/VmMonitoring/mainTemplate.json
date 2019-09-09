@@ -1,0 +1,123 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {},
+    "variables": {
+        "rgId": "[resourceGroup().id]",
+        "customRpId": "[concat(resourceGroup().id, '/providers/Microsoft.CustomProviders/resourceProviders/public')]",
+        "templateMetadata": {
+            "customRpId": "[variables('customRpId')]"
+        },
+        "managedApplicationId": "[resourceGroup().managedBy]",
+        "managedApplicationName": "[last(split(variables('managedApplicationId'), '/'))]",
+        "applicationResourceGroupName": "[split(variables('managedApplicationId'), '/')[4]]",
+        "solutionDisplayName": "Storage Solution (exports workbooks)",
+        "solutionDescription": "This solution adds a workbook template to Storage Insights"
+    },
+    "resources": [
+        {
+            "name": "public",
+            "id": "[variables('customRpId')]",
+            "location": "eastus",
+            "apiVersion": "2018-09-01-preview",
+            "type": "Microsoft.CustomProviders/resourceProviders",
+            "identity": {
+                "type": "SystemAssigned"
+            },
+            "properties": {
+                "resourceTypes": [
+                    {
+                        "name": "associations",
+                        "routingType": "Template,Extension",
+                        "template": {
+                            "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                            "contentVersion": "1.0.0.0",
+                            "parameters": {},
+                            "resources": []
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2017-05-10",
+            "name": "nestedTemplate",
+            "resourceGroup": "[variables('applicationResourceGroupName')]",
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "resources": [
+                        {
+                            "type": "Microsoft.Solutions/applications/providers/roleAssignments",
+                            "apiVersion": "2015-07-01",
+                            "name": "[concat(variables('managedApplicationName'), '/Microsoft.Authorization/', guid(resourceGroup().id))]",
+                            "properties": {
+                                "roleDefinitionId": "[concat(subscription().id, '/providers/Microsoft.Authorization/roleDefinitions/', '8e3af657-a8ff-443c-a75c-2fe8c4bcb635')]",
+                                "principalId": "[reference('public', '2018-09-01-preview', 'Full').identity.principalId]",
+                                "scope": "[variables('managedApplicationId')]"
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    ],
+    "outputs": {
+        "solutionDisplayName": {
+            "type": "string",
+            "value": "[variables('solutionDisplayName')]"
+        },
+        "solutionDescription": {
+            "type": "string",
+            "value": "[variables('solutionDescription')]"
+        },
+        "targetResourceType": {
+            "type": "string",
+            "value": "microsoft.storage/storageaccounts"
+        },
+        "solutionPublisher": {
+            "type": "string",
+            "value": "Microsoft"
+        },
+        "templateMetadata": {
+            "type": "object",
+            "value": {
+                "customRpId": "[variables('customRpId')]",
+                "solutionName": "[variables('solutionDisplayName')]",
+                "templates": [
+                    {
+                        "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/VhdUse.workbook",
+                        "source": "url",
+                        "galleries": [
+                            {
+                                "name": "Virtual hard disk use",
+                                "category": "Storage Solution",
+                                "order": 100,
+                                "type": "workbook",
+                                "resourceType": "microsoft.storage/storageaccounts"
+                            }
+                        ],
+                        "localized": {}
+                    },
+                    {
+                        "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/StorageHeatmap.workbook",
+                        "source": "url",
+                        "galleries": [
+                            {
+                                "name": "Storage failures",
+                                "category": "Storage Solution",
+                                "order": 100,
+                                "type": "storage-insights",
+                                "resourceType": "Azure Monitor"
+                            }
+                        ],
+                        "localized": {}
+                    }
+                ]
+            }
+        }
+    }
+}
