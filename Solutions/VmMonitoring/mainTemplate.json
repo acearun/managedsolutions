@@ -1,7 +1,10 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
-    "parameters": {},
+    "parameters": {
+        "workspaceId": "[variables('workspaceId')]",
+        "actionGroupId": "[variables('actionGroupId')]",
+    },
     "variables": {
         "rgId": "[resourceGroup().id]",
         "customRpId": "[concat(resourceGroup().id, '/providers/Microsoft.CustomProviders/resourceProviders/public')]",
@@ -11,8 +14,6 @@
         "managedApplicationId": "[resourceGroup().managedBy]",
         "managedApplicationName": "[last(split(variables('managedApplicationId'), '/'))]",
         "applicationResourceGroupName": "[split(variables('managedApplicationId'), '/')[4]]",
-        "workspaceId": "[variables('workspaceId')]",
-        "actionGroupId": "[variables('actionGroupId')]",
         "solutionDisplayName": "Virtual machine monitoring",
         "solutionDescription": "This solution adds alerts and workbook templates for VM monitoring",
         "alertLocation": "eastus",
