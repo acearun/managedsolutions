@@ -14,8 +14,8 @@
                         "name": "workspaceId",
 						"type": "Microsoft.Common.TextBox",
 						"label": "Workspace resource id",
-						"defaultValue": "Fully qualified resource id of the backing workspace",
-						"toolTip": "Use only allowed characters",
+						"defaultValue": "",
+						"toolTip": "Fully qualified resource id of the backing workspace",
 						"visible": true
 											
 					},
@@ -33,7 +33,8 @@
         "outputs": {
             "managedIdentity": "[parse('{\"Type\":\"SystemAssigned\"}')]",
             "workspaceId": "[steps('alertConfig').workspaceId]",
-            "actionGroupId": "[steps('alertConfig').actionGroupId]"
+            "actionGroupId": "[steps('alertConfig').actionGroupId]",
+            "applicationResourceName": "VmMonitoring5"
         }
     }
 }

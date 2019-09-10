@@ -11,6 +11,8 @@
         "managedApplicationId": "[resourceGroup().managedBy]",
         "managedApplicationName": "[last(split(variables('managedApplicationId'), '/'))]",
         "applicationResourceGroupName": "[split(variables('managedApplicationId'), '/')[4]]",
+        "workspaceId": "[variables('workspaceId')]",
+        "actionGroupId": "[variables('actionGroupId')]",
         "solutionDisplayName": "Virtual machine monitoring",
         "solutionDescription": "This solution adds alerts and workbook templates for VM monitoring",
         "alertLocation": "eastus",
