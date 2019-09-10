@@ -4,7 +4,6 @@
     "version": "0.1.2-preview",
     "parameters": {
         "basics": [
-            {}
         ],
         "steps": [
             {
@@ -26,16 +25,15 @@
 						"label": "Action group resource id",
 						"defaultValue": "",
 						"toolTip": "Fully qualified resource id of the action group to use for the created alerts",
-						"visible": true
-											
+						"visible": true											
 					}
                 ]
             }
         ],
         "outputs": {
             "managedIdentity": "[parse('{\"Type\":\"SystemAssigned\"}')]",
-            "workspaceId": "[basics('workspaceId')]",
-            "actionGroupId": "[basics('actionGroupId')]"
+            "workspaceId": "[steps('alertConfig').workspaceId]",
+            "actionGroupId": "[steps('alertConfig').actionGroupId]"
         }
     }
 }
