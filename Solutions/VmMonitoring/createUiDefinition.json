@@ -6,9 +6,36 @@
         "basics": [
             {}
         ],
-        "steps": [],
+        "steps": [
+            {
+                "name": "alertConfig",
+                "label": "Alert settings",
+                "elements": [
+                    {
+                        "name": "workspaceId",
+						"type": "Microsoft.Common.TextBox",
+						"label": "Workspace resource id",
+						"defaultValue": "Fully qualified resource id of the backing workspace",
+						"toolTip": "Use only allowed characters",
+						"visible": true
+											
+					},
+                    {
+                        "name": "actionGroupId",
+						"type": "Microsoft.Common.TextBox",
+						"label": "Action group resource id",
+						"defaultValue": "",
+						"toolTip": "Fully qualified resource id of the action group to use for the created alerts",
+						"visible": true
+											
+					}
+                ]
+            }
+        ],
         "outputs": {
-            "managedIdentity": "[parse('{\"Type\":\"SystemAssigned\"}')]"
+            "managedIdentity": "[parse('{\"Type\":\"SystemAssigned\"}')]",
+            "workspaceId": "[basics('workspaceId')]",
+            "actionGroupId": "[basics('actionGroupId')]"
         }
     }
 }
