@@ -21,14 +21,6 @@
         "solutionDisplayName": "Virtual machine monitoring",
         "solutionDescription": "This solution adds alerts and workbook templates for VM monitoring",
         "alertLocation": "eastus",
-        "alertName": "samplelogalert158",
-        "alertDescription": "Sample log search alert",
-        "alertStatus": "true",
-        "alertSource": {
-            "Query": "Perf | where ( ObjectName == 'Memory' )| where CounterName ==  'Available MBytes' |summarize AggregatedValue = avg(CounterValue) by Computer, bin(TimeGenerated, 5m) | where AggregatedValue < 600 |sort by TimeGenerated desc",
-            "SourceId": "/subscriptions/f9cf50ed-d814-4b95-b76c-c709845f84c9/resourceGroups/mms-eus/providers/Microsoft.OperationalInsights/workspaces/AdmDemo",
-            "Type": "ResultCount"
-        },
         "alertSchedule": {
             "Frequency": 5,
             "Time": 5
@@ -40,10 +32,6 @@
         "alertTrigger": {
             "Operator": "GreaterThan",
             "Threshold": "0"
-        },
-        "actionGrp": {
-            "ActionGroup": "/subscriptions/8980832b-9589-4ac2-b322-a6ae6a97f02b/resourceGroups/app/providers/microsoft.insights/actiongroups/Arun-action-group",
-            "Subject": "SARN-ALerts"
         }
     },
     "resources": [
@@ -57,7 +45,7 @@
                 "enabled": "true",
                 "source": {
                     "query": "Perf | where ObjectName == 'LogicalDisk' and CounterName == '% Free Space'  |summarize FreeDisk = avg(CounterValue) by Computer, bin(TimeGenerated, 15m), InstanceName | where  FreeDisk  <10 | where InstanceName == 'C:' | sort by TimeGenerated desc",
-                    "dataSourceId": "[variables('alertSource').SourceId]",
+                    "dataSourceId": "[parameters('workspaceId')]",
                     "queryType": "ResultCount"
                 },
                 "schedule": {
@@ -69,7 +57,7 @@
                     "severity": "3",
                     "throttlingInMin": "[variables('alertActions').SuppressTimeinMin]",
                     "aznsAction": {
-                        "actionGroup": "[variables('actionGrp').ActionGroup]",
+                        "actionGroup": "[parameters('actionGroupId')]",
                         "emailSubject": "AME_KMC Health Alert - VM DISK Space is less than 10%  over 15 min",
                     },
                     "trigger": {
