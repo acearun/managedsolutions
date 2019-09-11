@@ -11,7 +11,9 @@
                     "permissions": [
                         {
                             "actions": [
-                                "Microsoft.Resources/deployments/write"
+                                "Microsoft.Resources/deployments/write",
+                                "Microsoft.Insights/scheduledqueryrules/*",
+                                "Microsoft.OperationalInsights/workspaces/search/action"
                             ]
                         }
                     ]
