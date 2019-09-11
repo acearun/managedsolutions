@@ -57,7 +57,7 @@
                 "enabled": "true",
                 "source": {
                     "query": "Perf | where ObjectName == 'LogicalDisk' and CounterName == '% Free Space'  |summarize FreeDisk = avg(CounterValue) by Computer, bin(TimeGenerated, 15m), InstanceName | where  FreeDisk  <10 | where InstanceName == 'C:' | sort by TimeGenerated desc",
-                    "dataSourceId": "[variables('alertSource').alertSource]",
+                    "dataSourceId": "[variables('alertSource').SourceId]",
                     "queryType": "ResultCount"
                 },
                 "schedule": {
