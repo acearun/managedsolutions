@@ -1,0 +1,24 @@
+{
+    "properties": {
+        "customRoleTemplates": [
+            {
+                "tags": {
+                    "rolePurpose": "associations"
+                },
+                "properties": {
+                    "roleName": "Custom$Resource$Onboarding$Deployer1",
+                    "description": "Custom Resource Onboarding Deployer",
+                    "permissions": [
+                        {
+                            "actions": [
+                                "Microsoft.Resources/deployments/write",
+                                "Microsoft.Insights/scheduledqueryrules/*",
+                                "Microsoft.OperationalInsights/workspaces/search/action"
+                            ]
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

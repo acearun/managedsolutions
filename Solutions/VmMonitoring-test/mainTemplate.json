@@ -1,0 +1,115 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workspaceId": {
+            "type": "string"
+        },
+        "actionGroupId": {
+            "type": "string"
+        },
+        "alertPrefix": {
+            "type": "string"
+        }                
+    },
+    "variables": {
+        "rgId": "[resourceGroup().id]",
+        "customRpId": "[concat(resourceGroup().id, '/providers/Microsoft.CustomProviders/resourceProviders/public')]",
+        "templateMetadata": {
+            "customRpId": "[variables('customRpId')]"
+        },
+        "managedApplicationId": "[resourceGroup().managedBy]",
+        "managedApplicationName": "[last(split(variables('managedApplicationId'), '/'))]",
+        "applicationResourceGroupName": "[split(variables('managedApplicationId'), '/')[4]]",
+        "solutionDisplayName": "Virtual machine monitoring",
+        "solutionDescription": "This solution adds alerts and workbook templates for VM monitoring",
+        "alertLocation": "westus",
+        "alertSchedule": {
+            "Frequency": 5,
+            "Time": 5
+        },
+        "alertActions": {
+            "SeverityLevel": "4",
+            "SuppressTimeinMin": 30
+        },
+        "alertTrigger": {
+            "Operator": "GreaterThan",
+            "Threshold": "0"
+        }
+    },
+    "resources": [
+        {
+            "name": "[concat(parameters('alertPrefix'), 'AVG_DISK_FREE_SPACE_LESS_THAN_10_PERCENT_OVER_15M')]",
+            "type": "Microsoft.Insights/scheduledQueryRules",
+            "apiVersion": "2018-04-16",
+            "location": "[variables('alertLocation')]",
+            "properties": {
+                "description": "Trigger an Alert  When VM DISK Space is less than 10% ",
+                "enabled": "true",
+                "source": {
+                    "query": "Perf | where ObjectName == 'LogicalDisk' and CounterName == '% Free Space'  |summarize FreeDisk = avg(CounterValue) by Computer, bin(TimeGenerated, 15m), InstanceName | where  FreeDisk  <10 | where InstanceName == 'C:' | sort by TimeGenerated desc",
+                    "dataSourceId": "[parameters('workspaceId')]",
+                    "queryType": "ResultCount"
+                },
+                "schedule": {
+                    "frequencyInMinutes": "[variables('alertSchedule').Frequency]",
+                    "timeWindowInMinutes": "[variables('alertSchedule').Time]"
+                },
+                "action": {
+                    "odata.type": "Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.Microsoft.AppInsights.Nexus.DataContracts.Resources.ScheduledQueryRules.AlertingAction",
+                    "severity": "3",
+                    "throttlingInMin": "[variables('alertActions').SuppressTimeinMin]",
+                    "aznsAction": {
+                        "actionGroup": "[array(parameters('actionGroupId'))]",                        
+                        "emailSubject": "AME_KMC Health Alert - VM DISK Space is less than 10%  over 15 min"
+                    },
+                    "trigger": {
+                        "thresholdOperator": "[variables('alertTrigger').Operator]",
+                        "threshold": "[variables('alertTrigger').Threshold]"
+                    }
+                }
+            }
+        }
+    ],
+    "outputs": {
+        "solutionDisplayName": {
+            "type": "string",
+            "value": "[variables('solutionDisplayName')]"
+        },
+        "solutionDescription": {
+            "type": "string",
+            "value": "[variables('solutionDescription')]"
+        },
+        "targetResourceType": {
+            "type": "string",
+            "value": "microsoft.compute/virtualmachines"
+        },
+        "solutionPublisher": {
+            "type": "string",
+            "value": "Microsoft"
+        },
+        "templateMetadata": {
+            "type": "object",
+            "value": {
+                "customRpId": "[variables('customRpId')]",
+                "solutionName": "[variables('solutionDisplayName')]",
+                "templates": [
+                    {
+                        "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/ResourceMonitor2.workbook",
+                        "source": "url",
+                        "galleries": [
+                            {
+                                "name": "Virtual machine monitor",
+                                "category": "Virtual machine monitoring solution",
+                                "order": 100,
+                                "type": "workbook",
+                                "resourceType": "Azure Monitor"
+                            }
+                        ],
+                        "localized": {}
+                    }                                
+                ]
+            }
+        }
+    }
+}
