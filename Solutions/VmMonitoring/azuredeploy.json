@@ -4,7 +4,7 @@
     "parameters": {
         "name": {
             "type": "string",
-            "defaultValue": "Virtual-machine-monitoring-7",
+            "defaultValue": "Virtual-machine-monitoring-8",
             "metadata": {
                 "description": "Provide a name for the managed application."
             }
