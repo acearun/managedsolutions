@@ -43,7 +43,7 @@
             "workspaceId": "[steps('alertConfig').workspaceId]",
             "actionGroupId": "[steps('alertConfig').actionGroupId]",
             "alertPrefix": "[steps('alertConfig').alertPrefix]",
-            "applicationResourceName": "Virtual-machine-monitoring"
+            "applicationResourceName": "VirtualMachineMonitoring"
         }
     }
 }
