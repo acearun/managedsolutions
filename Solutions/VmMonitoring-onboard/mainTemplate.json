@@ -115,6 +115,20 @@
                             }
                         ],
                         "localized": {}
+                    },
+                    {
+                        "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/ResourceMonitor2.workbook",
+                        "source": "url",
+                        "galleries": [
+                            {
+                                "name": "Virtual machine monitor",
+                                "category": "Virtual machine monitoring solution",
+                                "order": 100,
+                                "type": "workbook",
+                                "resourceType": "Microsoft.OperationalInsights/workspaces"
+                            }
+                        ],
+                        "localized": {}
                     }                                
                 ]
             }
