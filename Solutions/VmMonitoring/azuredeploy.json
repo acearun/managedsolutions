@@ -19,7 +19,7 @@
                 "southcentralus",
                 "northeurope"
             ],
-            "defaultValue": "westus",
+            "defaultValue": "eastus",
             "metadata": {
                 "description": "Specify the Azure region to place the application definition."
             }
