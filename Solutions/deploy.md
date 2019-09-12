@@ -1,7 +1,6 @@
-# Deploying a managed application
-
 > See also: [Debug common issues during deployment](debug.md)
 
+# Deploying a managed application
 ## Deploy the app definition
 ### Option 1 - Deploy using Azure Portal
 The simplest way is to use the Deploy to Azure button next to the samples:
