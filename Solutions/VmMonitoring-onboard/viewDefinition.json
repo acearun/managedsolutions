@@ -1,15 +1,11 @@
 {
-	"views": 
-	[
+	"views": [
 		{
 			"kind": "Associations",
-			"properties": 
-			{
+			"properties": {
 				"displayName": "Onboarded Resources",
-				"targetResourceType": "Microsoft.insights/components",
-                
+				"targetResourceType": "Microsoft.OperationalInsights/workspaces",                
                 "columns": [],
-
                 "createUIDefinition": {
                     "parameters": {
                         "steps": [],

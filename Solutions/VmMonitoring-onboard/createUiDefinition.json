@@ -6,43 +6,9 @@
         "basics": [
         ],
         "steps": [
-            {
-                "name": "alertConfig",
-                "label": "Alert settings",
-                "elements": [
-                    {
-                        "name": "workspaceId",
-						"type": "Microsoft.Common.TextBox",
-						"label": "Workspace resource id",
-						"defaultValue": "/subscriptions/8980832b-9589-4ac2-b322-a6ae6a97f02b/resourceGroups/ArunaWorkspaceRg/providers/Microsoft.OperationalInsights/workspaces/ArunaTestWorkspace",
-						"toolTip": "Fully qualified resource id of the backing workspace",
-						"visible": true
-											
-					},
-                    {
-                        "name": "actionGroupId",
-						"type": "Microsoft.Common.TextBox",
-						"label": "Action group resource id",
-						"defaultValue": "/subscriptions/8980832b-9589-4ac2-b322-a6ae6a97f02b/resourceGroups/app/providers/microsoft.insights/actiongroups/Arun-action-group",
-						"toolTip": "Fully qualified resource id of the action group to use for the created alerts",
-						"visible": true											
-                    },
-                    {
-                        "name": "alertPrefix",
-						"type": "Microsoft.Common.TextBox",
-						"label": "Alert name prefix",
-						"defaultValue": "AME_KMC_",
-						"toolTip": "The prefix to for the created alerts",
-						"visible": true											
-					}                    
-                ]
-            }
         ],
         "outputs": {
             "managedIdentity": "[parse('{\"Type\":\"SystemAssigned\"}')]",
-            "workspaceId": "[steps('alertConfig').workspaceId]",
-            "actionGroupId": "[steps('alertConfig').actionGroupId]",
-            "alertPrefix": "[steps('alertConfig').alertPrefix]",
             "applicationResourceName": "VmMonitoring5"
         }
     }

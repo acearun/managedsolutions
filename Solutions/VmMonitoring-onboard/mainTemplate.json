@@ -2,15 +2,6 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "workspaceId": {
-            "type": "string"
-        },
-        "actionGroupId": {
-            "type": "string"
-        },
-        "alertPrefix": {
-            "type": "string"
-        }                
     },
     "variables": {
         "rgId": "[resourceGroup().id]",
@@ -39,35 +30,51 @@
     },
     "resources": [
         {
-            "name": "[concat(parameters('alertPrefix'), 'AVG_DISK_FREE_SPACE_LESS_THAN_10_PERCENT_OVER_15M')]",
-            "type": "Microsoft.Insights/scheduledQueryRules",
-            "apiVersion": "2018-04-16",
-            "location": "[variables('alertLocation')]",
+            "name": "public",
+            "id": "[variables('customRpId')]",
+            "location": "eastus",
+            "apiVersion": "2018-09-01-preview",
+            "type": "Microsoft.CustomProviders/resourceProviders",
+            "identity": {
+                "type": "SystemAssigned"
+            },
             "properties": {
-                "description": "Trigger an Alert  When VM DISK Space is less than 10% ",
-                "enabled": "true",
-                "source": {
-                    "query": "Perf | where ObjectName == 'LogicalDisk' and CounterName == '% Free Space'  |summarize FreeDisk = avg(CounterValue) by Computer, bin(TimeGenerated, 15m), InstanceName | where  FreeDisk  <10 | where InstanceName == 'C:' | sort by TimeGenerated desc",
-                    "dataSourceId": "[parameters('workspaceId')]",
-                    "queryType": "ResultCount"
-                },
-                "schedule": {
-                    "frequencyInMinutes": "[variables('alertSchedule').Frequency]",
-                    "timeWindowInMinutes": "[variables('alertSchedule').Time]"
-                },
-                "action": {
-                    "odata.type": "Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.Microsoft.AppInsights.Nexus.DataContracts.Resources.ScheduledQueryRules.AlertingAction",
-                    "severity": "3",
-                    "throttlingInMin": "[variables('alertActions').SuppressTimeinMin]",
-                    "aznsAction": {
-                        "actionGroup": "[array(parameters('actionGroupId'))]",
-                        
-                        "emailSubject": "AME_KMC Health Alert - VM DISK Space is less than 10%  over 15 min",
-                    },
-                    "trigger": {
-                        "thresholdOperator": "[variables('alertTrigger').Operator]",
-                        "threshold": "[variables('alertTrigger').Threshold]"
+                "resourceTypes": [
+                    {
+                        "name": "associations",
+                        "routingType": "Template,Extension",
+                        "template": {
+                            "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                            "contentVersion": "1.0.0.0",
+                            "parameters": {},
+                            "resources": []
+                        }
                     }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2017-05-10",
+            "name": "nestedTemplate",
+            "resourceGroup": "[variables('applicationResourceGroupName')]",
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "resources": [
+                        {
+                            "type": "Microsoft.Solutions/applications/providers/roleAssignments",
+                            "apiVersion": "2015-07-01",
+                            "name": "[concat(variables('managedApplicationName'), '/Microsoft.Authorization/', guid(resourceGroup().id))]",
+                            "properties": {
+                                "roleDefinitionId": "[concat(subscription().id, '/providers/Microsoft.Authorization/roleDefinitions/', '8e3af657-a8ff-443c-a75c-2fe8c4bcb635')]",
+                                "principalId": "[reference('public', '2018-09-01-preview', 'Full').identity.principalId]",
+                                "scope": "[variables('managedApplicationId')]"
+                            }
+                        }
+                    ]
                 }
             }
         }
@@ -83,7 +90,7 @@
         },
         "targetResourceType": {
             "type": "string",
-            "value": "microsoft.compute/virtualmachines"
+            "value": "Microsoft.OperationalInsights/workspaces"
         },
         "solutionPublisher": {
             "type": "string",
