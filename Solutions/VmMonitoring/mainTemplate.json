@@ -7,7 +7,10 @@
         },
         "actionGroupId": {
             "type": "string"
-        }
+        },
+        "alertPrefix": {
+            "type": "string"
+        }                
     },
     "variables": {
         "rgId": "[resourceGroup().id]",
@@ -36,7 +39,7 @@
     },
     "resources": [
         {
-            "name": "AME_KMC_AVG_DISK_FREE_SPACE_LESS_THAN_10_PERCENT_OVER_15M",
+            "name": "[concat(parameters('alertPrefix'), 'AVG_DISK_FREE_SPACE_LESS_THAN_10_PERCENT_OVER_15M')]",
             "type": "Microsoft.Insights/scheduledQueryRules",
             "apiVersion": "2018-04-16",
             "location": "[variables('alertLocation')]",
@@ -105,35 +108,7 @@
                             }
                         ],
                         "localized": {}
-                    },
-                    {
-                        "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/ResourceMonitor2.workbook",
-                        "source": "url",
-                        "galleries": [
-                            {
-                                "name": "Virtual machine monitor",
-                                "category": "Virtual machine monitoring solution",
-                                "order": 100,
-                                "type": "vm-insights",
-                                "resourceType": "microsoft.operationalinsights/workspaces"
-                            }
-                        ],
-                        "localized": {}
-                    },
-                    {
-                        "id": "https://arunamanagedappstorage.blob.core.windows.net/managedsolutions/ResourceMonitor2.workbook",
-                        "source": "url",
-                        "galleries": [
-                            {
-                                "name": "Virtual machine monitor",
-                                "category": "Virtual machine monitoring solution",
-                                "order": 100,
-                                "type": "vm-insights",
-                                "resourceType": "microsoft.compute/virtualmachines"
-                            }
-                        ],
-                        "localized": {}
-                    }
+                    }                                
                 ]
             }
         }
