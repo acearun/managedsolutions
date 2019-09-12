@@ -20,7 +20,7 @@
         "applicationResourceGroupName": "[split(variables('managedApplicationId'), '/')[4]]",
         "solutionDisplayName": "Virtual machine monitoring",
         "solutionDescription": "This solution adds alerts and workbook templates for VM monitoring",
-        "alertLocation": "eastus",
+        "alertLocation": "westus",
         "alertSchedule": {
             "Frequency": 5,
             "Time": 5
