@@ -9,7 +9,7 @@
         ],
         "outputs": {
             "managedIdentity": "[parse('{\"Type\":\"SystemAssigned\"}')]",
-            "applicationResourceName": "VmMonitoring5"
+            "applicationResourceName": "VmMonitoring"
         }
     }
 }

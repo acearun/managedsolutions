@@ -60,9 +60,8 @@
                     "severity": "3",
                     "throttlingInMin": "[variables('alertActions').SuppressTimeinMin]",
                     "aznsAction": {
-                        "actionGroup": "[array(parameters('actionGroupId'))]",
-                        
-                        "emailSubject": "AME_KMC Health Alert - VM DISK Space is less than 10%  over 15 min",
+                        "actionGroup": "[array(parameters('actionGroupId'))]",                        
+                        "emailSubject": "AME_KMC Health Alert - VM DISK Space is less than 10%  over 15 min"
                     },
                     "trigger": {
                         "thresholdOperator": "[variables('alertTrigger').Operator]",
