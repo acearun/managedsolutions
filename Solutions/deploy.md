@@ -24,7 +24,7 @@ Select the Cloud Shell button on the menu on the upper-right corner of the [Azur
 az group create --name appDefinitionGroup --location westcentralus
 ```
 
-### #Step 3 - Get User principal
+#### Step 3 - Get User principal
 ```bash
 userid=$(az ad user show --upn-or-object-id example@contoso.org --query objectId --output tsv)
 ```
