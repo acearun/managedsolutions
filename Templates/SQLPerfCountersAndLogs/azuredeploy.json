@@ -39,7 +39,7 @@
                 {
                     "apiVersion": "2015-11-01-preview",
                     "type": "datasources",
-                    "name": "sampleWindowsPerfCounter11",
+                    "name": "SQLServer-Transactions/sec",
                     "dependsOn": [
                         "[concat('Microsoft.OperationalInsights/workspaces/', parameters('workspaceName'))]"
                     ],
@@ -47,8 +47,38 @@
                     "properties": {
                         "objectName": "SQLServer",
                         "instanceName": "*",
-                        "intervalSeconds": 10,
+                        "intervalSeconds": 30,
                         "counterName": "Transactions/sec"
+                    }
+                },
+                {
+                    "apiVersion": "2015-11-01-preview",
+                    "type": "datasources",
+                    "name": "SQLServer-Active-Transactions ",
+                    "dependsOn": [
+                        "[concat('Microsoft.OperationalInsights/workspaces/', parameters('workspaceName'))]"
+                    ],
+                    "kind": "WindowsPerformanceCounter",
+                    "properties": {
+                        "objectName": "SQLServer",
+                        "instanceName": "*",
+                        "intervalSeconds": 30,
+                        "counterName": "Active Transactions"
+                    }
+                },
+                {
+                    "apiVersion": "2015-11-01-preview",
+                    "type": "datasources",
+                    "name": "SQLServer-Log-Growths",
+                    "dependsOn": [
+                        "[concat('Microsoft.OperationalInsights/workspaces/', parameters('workspaceName'))]"
+                    ],
+                    "kind": "WindowsPerformanceCounter",
+                    "properties": {
+                        "objectName": "SQLServer",
+                        "instanceName": "*",
+                        "intervalSeconds": 30,
+                        "counterName": "Log Growths"
                     }
                 }
             ]
