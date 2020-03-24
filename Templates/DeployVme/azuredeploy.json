@@ -1,0 +1,32 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vmName": {
+            "type": "string",
+            "metadata": {
+              "description": "Name of the virtual machine"
+            }
+          }
+    },
+    "resources": [
+        {
+            "name": "[concat('2-linuxworkloads/Workload.InstallerAgent')]",
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "apiVersion": "2018-06-01",
+            "location": "centralus",
+            "dependsOn": [
+                "[concat('Microsoft.Compute/virtualMachines/', parameters('vmName'),copyindex())]"
+              ],
+            "properties": {
+                "publisher": "Microsoft.Azure.Monitor.WorkloadInsights.Test",
+                "type": "Workload.InstallerAgent",
+                "typeHandlerVersion": "11.0",
+                "autoUpgradeMinorVersion": true,
+                "settings": { }
+            }
+        }
+    ],
+    "outputs": {
+    }
+}
