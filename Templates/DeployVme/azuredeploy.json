@@ -15,9 +15,6 @@
             "type": "Microsoft.Compute/virtualMachines/extensions",
             "apiVersion": "2018-06-01",
             "location": "centralus",
-            "dependsOn": [
-                "[concat('Microsoft.Compute/virtualMachines/', parameters('vmName'),copyindex())]"
-              ],
             "properties": {
                 "publisher": "Microsoft.Azure.Monitor.WorkloadInsights.Test",
                 "type": "Workload.InstallerAgent",
