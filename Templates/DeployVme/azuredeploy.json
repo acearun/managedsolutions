@@ -11,7 +11,7 @@
     },
     "resources": [
         {
-            "name": "[concat('2-linuxworkloads/Workload.InstallerAgent')]",
+            "name": "[concat(parameters('vmName'), '/Workload.InstallerAgent')]",
             "type": "Microsoft.Compute/virtualMachines/extensions",
             "apiVersion": "2018-06-01",
             "location": "centralus",
@@ -23,7 +23,7 @@
                 "type": "Workload.InstallerAgent",
                 "typeHandlerVersion": "11.0",
                 "autoUpgradeMinorVersion": true,
-                "settings": { }
+                "settings": {  }
             }
         }
     ],
