@@ -5,9 +5,9 @@
         "vmName": {
             "type": "string",
             "metadata": {
-              "description": "Name of the virtual machine"
+                "description": "Name of the virtual machine"
             }
-          }
+        }
     },
     "resources": [
         {
@@ -20,7 +20,37 @@
                 "type": "Workload.InstallerAgent",
                 "typeHandlerVersion": "11.0",
                 "autoUpgradeMinorVersion": true,
-                "settings": {  }
+                "settings": {
+                }
+            }
+        },
+        {
+            "name": "[concat(parameters('vmName'), '/Workload.LinuxConfigAgent')]",
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "apiVersion": "2018-06-01",
+            "location": "centralus",
+            "properties": {
+                "publisher": "Microsoft.Azure.Monitor.WorkloadInsights.Test",
+                "type": "Workload.LinuxConfigAgent",
+                "typeHandlerVersion": "1.1",
+                "autoUpgradeMinorVersion": true,
+                "settings": {
+                    "id": "cpuusage",
+                    "type": "Telegraf",
+                    "value": {
+                        "inputs": {
+                            "cpu": [
+                                {
+                                    "name_prefix": "configtestinglinux",
+                                    "collect_cpu_time": false,
+                                    "percpu": true,
+                                    "report_active": false,
+                                    "totalcpu": true
+                                }
+                            ]
+                        }
+                    }
+                }
             }
         }
     ],
