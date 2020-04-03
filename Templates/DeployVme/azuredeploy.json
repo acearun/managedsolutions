@@ -24,7 +24,7 @@
     "resources": [
         {
             "type": "Microsoft.Resources/deployments",
-            "name": "[Concat('ContainerInsights', '(', split(parameters('omsWorkspaceId'),'/')[8], ')')]",
+            "name": "[Concat('CI', '(', split(parameters('omsWorkspaceId'),'/')[8], ')')]",
             "apiVersion": "2017-05-10",
             "subscriptionId": "[split(parameters('omsWorkspaceId'),'/')[2]]",
             "resourceGroup": "[split(parameters('omsWorkspaceId'),'/')[4]]",
