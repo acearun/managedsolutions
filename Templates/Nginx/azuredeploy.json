@@ -79,7 +79,7 @@
             "apiVersion": "2018-06-01",
             "location": "centralus",
             "tags": {
-                "azure-monitor-insight": "nginx"
+                "monitoring-insight": "nginx"
             },
             "properties": {
                 "publisher": "Microsoft.Azure.Monitor.WorkloadInsights.Test",
