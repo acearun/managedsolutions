@@ -21,7 +21,7 @@
             }
         },
         "sqlConnectionStrings": {
-            "type": "array",
+            "type": "string",
             "metadata": {
                 "description": "The url for nginx stats endpoint to query"
             }
