@@ -99,7 +99,6 @@
                         "inputs": {
                             "sqlserver": {
                                 "servers": "[split(parameters('sqlConnectionStrings'),',')]",
-                                "query_version": 2,
                                 "exclude_query": [
                                     "Schedulers",
                                     "SqlRequests"
