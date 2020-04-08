@@ -19,6 +19,12 @@
             "metadata": {
                 "description": "Location of the OMS workspace"
             }
+        },
+        "nginxStatsUrls": {
+            "type": "array",
+            "metadata": {
+                "description": "Array of urls for nginx to query"
+            }
         }
     },
     "resources": [
@@ -74,7 +80,7 @@
             }
         },
         {
-            "name": "[concat(parameters('vmName'), '/Workload.LinuxConfigAgent-nginx')]",
+            "name": "[concat(parameters('vmName'), '/Workload.LinuxConfigAgent')]",
             "type": "Microsoft.Compute/virtualMachines/extensions",
             "apiVersion": "2018-06-01",
             "location": "centralus",
@@ -92,9 +98,7 @@
                     "value": {
                         "inputs": {
                             "nginx": {
-                                "urls": [
-                                    "http://127.0.0.1:9090/nginx_status"
-                                ],
+                                "urls": "[parameters('nginxStatsUrls')]",
                                 "response_timeout": "5s"
                             },
                             "cpu": {
