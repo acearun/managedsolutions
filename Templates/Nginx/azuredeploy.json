@@ -21,9 +21,9 @@
             }
         },
         "nginxStatsUrls": {
-            "type": "array",
+            "type": "string",
             "metadata": {
-                "description": "Array of urls for nginx to query"
+                "description": "The url for nginx stats endpoint to query"
             }
         }
     },
@@ -98,7 +98,7 @@
                     "value": {
                         "inputs": {
                             "nginx": {
-                                "urls": "[parameters('nginxStatsUrls')]",
+                                "urls": "[array(parameters('nginxStatsUrls'))]",
                                 "response_timeout": "5s"
                             },
                             "cpu": {
