@@ -20,8 +20,8 @@
                 "description": "Location of the OMS workspace"
             }
         },
-        "nginxStatsUrls": {
-            "type": "string",
+        "sqlConnectionStrings": {
+            "type": "array",
             "metadata": {
                 "description": "The url for nginx stats endpoint to query"
             }
@@ -85,7 +85,7 @@
             "apiVersion": "2018-06-01",
             "location": "centralus",
             "tags": {
-                "monitoring-insight": "nginx"
+                "monitoring-insight": "mssql"
             },
             "properties": {
                 "publisher": "Microsoft.Azure.Monitor.WorkloadInsights.Test",
@@ -93,25 +93,17 @@
                 "typeHandlerVersion": "1.1",
                 "autoUpgradeMinorVersion": true,
                 "settings": {
-                    "id": "cpuusage",
+                    "id": "ms-sql-config",
                     "type": "Telegraf",
                     "value": {
                         "inputs": {
-                            "nginx": {
-                                "urls": "[array(parameters('nginxStatsUrls'))]",
-                                "response_timeout": "5s"
-                            },
-                            "cpu": {
-                                "percpu": true,
-                                "totalcpu": true,
-                                "collect_cpu_time": false,
-                                "report_active": false
-                            },
-                            "mem": {
-                            },
-                            "netstat": {
-                            },
-                            "net": {
+                            "sqlserver": {
+                                "servers": "[split(parameters('sqlConnectionStrings'),',')]",
+                                "query_version": 2,
+                                "exclude_query": [
+                                    "Schedulers",
+                                    "SqlRequests"
+                                ]
                             }
                         }
                     }
