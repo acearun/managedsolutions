@@ -112,6 +112,9 @@
                             "netstat": {
                             },
                             "net": {
+                            },
+                            "procstat": {
+                                "pid_file": "/var/run/nginx.pid"
                             }
                         }
                     }
