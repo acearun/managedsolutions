@@ -105,16 +105,31 @@
                                 "percpu": true,
                                 "totalcpu": true,
                                 "collect_cpu_time": false,
-                                "report_active": false
+                                "report_active": false,
+                                "tags": {
+                                    "insight": "foo"
+                                }
                             },
                             "mem": {
+                                "tags": {
+                                    "insight": "foo"
+                                }
                             },
                             "netstat": {
+                                "tags": {
+                                    "insight": "foo"
+                                }
                             },
                             "net": {
+                                "tags": {
+                                    "insight": "foo"
+                                }
                             },
                             "procstat": {
-                                "pid_file": "/var/run/nginx.pid"
+                                "pid_file": "/var/run/nginx.pid",
+                                "tags": {
+                                    "insight": "foo"
+                                }
                             }
                         }
                     }
