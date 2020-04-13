@@ -95,17 +95,8 @@
                 "settings": {
                     "id": "mssql",
                     "type": "Telegraf",
-                    "value": {
-                        "inputs": {
-                            "sqlserver": {
-                                "servers": "[split(parameters('sqlConnectionStrings'),',')]",
-                                "exclude_query": [
-                                    "Schedulers",
-                                    "SqlRequests"
-                                ]
-                            }
-                        }
-                    }
+                    "format": "toml",
+                    "value": "[concat('[[inputs.sqlserver]]\r\n  servers = [\r\n   ', parameters('sqlConnectionStrings'), ',\r\n  ]\r\n  query_version = 2\r\n  exclude_query = [ ''Schedulers'' , ''SqlRequests'']')]"
                 }
             }
         }
