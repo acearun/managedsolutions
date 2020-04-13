@@ -90,7 +90,7 @@
             "properties": {
                 "publisher": "Microsoft.Azure.Monitor.WorkloadInsights.Test",
                 "type": "Workload.LinuxConfigAgent",
-                "typeHandlerVersion": "1.1",
+                "typeHandlerVersion": "2.0",
                 "autoUpgradeMinorVersion": true,
                 "settings": {
                     "id": "mssql",
