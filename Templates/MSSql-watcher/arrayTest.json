@@ -13,7 +13,7 @@
     ],
     "outputs": {
          "firstOutput": {
-            "type": "array",
+            "type": "string",
             "value": "[concat(parameters('firstString'))]"
         }
     }
