@@ -14,7 +14,7 @@
     "outputs": {
          "firstOutput": {
             "type": "array",
-            "value": "[split(parameters('firstString'),',')]"
+            "value": "[concat(parameters('firstString'))]"
         }
     }
 }
