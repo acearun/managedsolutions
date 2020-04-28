@@ -85,7 +85,7 @@
             "apiVersion": "2018-06-01",
             "location": "centralus",
             "tags": {
-                "monitoring-insight": "mssql"
+                "monitoring-insight": "mysql"
             },
             "properties": {
                 "publisher": "Microsoft.Azure.Monitor.WorkloadInsights.Test",
