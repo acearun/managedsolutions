@@ -96,7 +96,7 @@
                     "id": "mssql",
                     "type": "Telegraf",
                     "format": "toml",
-                    "value": "[concat('[[inputs.sqlserver]]\r\n  servers = [\r\n   ', parameters('sqlConnectionStrings'), ',\r\n  ]\r\n  query_version = 2\r\n  exclude_query = [ ''Schedulers'' , ''SqlRequests'']')]"
+                    "value": "[concat('[[inputs.mysql]]\r\n  servers = [\"', parameters('sqlConnectionStrings'), '\"]\r\n  metric_version = 2')]"
                 }
             }
         }
