@@ -25,6 +25,12 @@
             "metadata": {
                 "description": "The connection strings used to query SQL"
             }
+        },
+        "sqlAzureResourceId": {
+            "type": "string",
+            "metadata": {
+                "description": "The resource id of the monitored SQL Azure instance"
+            }
         }
     },
     "resources": [
@@ -85,7 +91,8 @@
             "apiVersion": "2018-06-01",
             "location": "centralus",
             "tags": {
-                "monitoring-insight": "mssql"
+                "monitoring-insight": "sql-azure",
+                "monitored-resource": "[parameters('sqlAzureResourceId')]"
             },
             "properties": {
                 "publisher": "Microsoft.Azure.Monitor.WorkloadInsights.Test",
