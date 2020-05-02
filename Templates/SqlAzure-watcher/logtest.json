@@ -55,7 +55,7 @@
                             "type": "dataSources",
                             "name": "[concat(substring(split(parameters('omsWorkspaceId'),'/')[8], 0, 20), 'waagentlogs')]",
                             "dependsOn": [
-                                "[concat('Microsoft.OperationalInsights/workspaces/', split(parameters('omsWorkspaceId'),'/')[8])]"
+                                "[concat('Microsoft.OperationalInsights/workspaces/', '/', split(parameters('omsWorkspaceId'),'/')[8])]"
                             ],
                             "kind": "CustomLog",
                             "properties": {
