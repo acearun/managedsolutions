@@ -152,5 +152,9 @@
         }
     ],
     "outputs": {
+        "wsname": {
+            "type": "string",
+            "value": "[concat(split(parameters('omsWorkspaceId'),'/')[8], 'waagentlogs')]"
+        }
     }
 }
