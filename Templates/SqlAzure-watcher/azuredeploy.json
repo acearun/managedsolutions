@@ -14,12 +14,6 @@
                 "description": "Resource id of the OMS workspace"
             }
         },
-        "omsWorkspaceName": {
-            "type": "string",
-            "metadata": {
-                "description": "Workspacename"
-            }
-        },
         "workspaceRegion": {
             "type": "string",
             "metadata": {
@@ -80,9 +74,9 @@
         {
             "apiVersion": "2015-11-01-preview",
             "type": "dataSources",
-            "name": "[concat(parameters('omsWorkspaceName'), 'waagentlogs')]",
+            "name": "[concat(parameters('omsWorkspaceId'), 'waagentlogs')]",
             "dependsOn": [
-                "[concat('Microsoft.OperationalInsights/workspaces/', '/', parameters('omsWorkspaceName'))]"
+                "[concat('Microsoft.OperationalInsights/workspaces/', parameters('omsWorkspaceId'))]"
             ],
             "kind": "CustomLog",
             "properties": {
