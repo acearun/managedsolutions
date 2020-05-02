@@ -76,7 +76,7 @@
             "type": "dataSources",
             "name": "[concat(split(parameters('omsWorkspaceId'),'/')[8], 'waagentlogs')]",
             "dependsOn": [
-                "[concat('Microsoft.OperationalInsights/workspaces/', '/', split(parameters('omsWorkspaceId'),'/')[8])]"
+                "[concat('Microsoft.OperationalInsights/workspaces/', split(parameters('omsWorkspaceId'),'/')[8])]"
             ],
             "kind": "CustomLog",
             "properties": {
@@ -100,49 +100,6 @@
                             "fileSystemLocations": {
                                 "linuxFileTypeLogPaths": [
                                     "/var/log/waagent.log"
-                                ]
-                            }
-                        },
-                        "recordDelimiter": {
-                            "regexDelimiter": {
-                                "pattern": "\\n",
-                                "matchIndex": 0,
-                                "numberdGroup": null
-                            }
-                        }
-                    }
-                ]
-            }
-        },
-        {
-            "apiVersion": "2015-11-01-preview",
-            "type": "dataSources",
-            "name": "[concat(split(parameters('omsWorkspaceId'),'/')[8], 'telegraflogs')]",
-            "dependsOn": [
-                "[concat('Microsoft.OperationalInsights/workspaces/', '/', split(parameters('omsWorkspaceId'),'/')[8])]"
-            ],
-            "kind": "CustomLog",
-            "properties": {
-                "customLogName": "telegraflogs",
-                "description": "Telegraf logs",
-                "extractions": [
-                    {
-                        "extractionName": "TimeGenerated",
-                        "extractionProperties": {
-                            "dateTimeExtraction": {
-                                "regex": null,
-                                "joinStringRegex": null
-                            }
-                        },
-                        "extractionType": "DateTime"
-                    }
-                ],
-                "inputs": [
-                    {
-                        "location": {
-                            "fileSystemLocations": {
-                                "linuxFileTypeLogPaths": [
-                                    "/etc/telegraf/tgf.log"
                                 ]
                             }
                         },
