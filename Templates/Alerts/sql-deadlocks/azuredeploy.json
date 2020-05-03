@@ -39,7 +39,7 @@
                 "description": "Sample log search alert",
                 "enabled": "true",
                 "source": {
-                    "query": "InsightsMetrics | where Namespace =~ 'sqlserver_performance' | extend Tags = todynamic(Tags) | extend Name = tostring(Tags.counter), Database = tostring(Tags.database_name), Instance = tostring(Tags.sql_instance) | where Name =~ 'Number of deadlocks/sec' | summarize Value = sum(Val) by bin(TimeGenerated, 5m), Computer | where Value > 0 | summarize Count = count() by Computer | where Count >= 3",
+                    "query": "InsightsMetrics | where Namespace =~ 'sqlserver_performance' | extend Tags = todynamic(Tags) | extend Name = tostring(Tags.counter), Database = tostring(Tags.database_name), Instance = tostring(Tags.sql_instance) | where Name =~ 'Number of deadlocks/sec' | summarize Value = max(Val) by bin(TimeGenerated, 5m), Computer | where Value > 0 | summarize Count = count() by Computer | where Count >= 3",
                     "dataSourceId": "[parameters('dataSourceId')]",
                     "queryType": "ResultCount"
                 },
