@@ -1,0 +1,75 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "alertName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the alert"
+            }
+        },
+        "alertLocation": {
+            "type": "string",
+            "metadata": {
+                "description": "Location of the alert"
+            }
+        },
+        "dataSourceId": {
+            "type": "string",
+            "metadata": {
+                "description": "Workspace id"
+            }
+        },
+        "actionGroupId": {
+            "type": "string",
+            "metadata": {
+                "description": "Action group id"
+            }
+        },
+        "alertThreshold": {
+            "type": "string",
+            "defaultValue": "0",
+            "metadata": {
+                "description": "Threshold to use for alert evaluation"
+            }
+        }
+    },
+    "variables": {
+        "alertThreshold": "[if(equals(parameters('alertThreshold'), ''), '0', parameters('alertThreshold'))]"
+    },
+    "resources": [
+        {
+            "name": "[parameters('alertName')]",
+            "type": "Microsoft.Insights/scheduledQueryRules",
+            "apiVersion": "2018-04-16",
+            "location": "[parameters('alertLocation')]",
+            "properties": {
+                "description": "Fires if CPU utilization of any CPU exceeds the threshold for three 5-minute windows over the last 30 minutes",
+                "enabled": "true",
+                "source": {
+                    "query": "[concat('InsightsMetrics | where Namespace == \"cpu\" and Name == \"usage_idle\" | extend Cpu = tostring(todynamic(Tags).cpu) | where Cpu != \"cpu-total\" | summarize CpuUsed = avg(100 - Val) by bin(TimeGenerated, 5m), Cpu = strcat(Computer, \"/\", Cpu) | where CpuUsed > ', variables('alertThreshold'), ' | summarize Count = count(), MaxCpu = max(CpuUsed) by Cpu | where Count > 3')]",
+                    "dataSourceId": "[parameters('dataSourceId')]",
+                    "queryType": "ResultCount"
+                },
+                "schedule": {
+                    "frequencyInMinutes": 5,
+                    "timeWindowInMinutes": 30
+                },
+                "action": {
+                    "odata.type": "Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.Microsoft.AppInsights.Nexus.DataContracts.Resources.ScheduledQueryRules.AlertingAction",
+                    "severity": "4",
+                    "aznsAction": {
+                        "actionGroup": [
+                            "[parameters('actionGroupId')]"
+                        ],
+                        "emailSubject": "Host alert: High CPU detected"
+                    },
+                    "trigger": {
+                        "thresholdOperator": "GreaterThan",
+                        "threshold": 0
+                    }
+                }
+            }
+        }
+    ]
+}
