@@ -39,7 +39,7 @@
                 "description": "Sample log search alert",
                 "enabled": "true",
                 "source": {
-                    "query": "requests",
+                    "query": "InsightsMetrics | where Namespace =~ 'sqlserver_performance' | extend Tags = todynamic(Tags) | extend Name = tostring(Tags.counter), Database = tostring(Tags.database_name), Instance = tostring(Tags.sql_instance) | where Name =~ 'Number of deadlocks/sec'| summarize sum(Val) by bin(TimeGenerated, 5m), Computer",
                     "dataSourceId": "[parameters('dataSourceId')]",
                     "queryType": "ResultCount"
                 },
@@ -59,7 +59,7 @@
                     },
                     "trigger": {
                         "thresholdOperator": "GreaterThan",
-                        "threshold": 1
+                        "threshold": 0
                     }
                 }
             }
