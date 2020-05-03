@@ -44,10 +44,10 @@
             "apiVersion": "2018-04-16",
             "location": "[parameters('alertLocation')]",
             "properties": {
-                "description": "Sample log search alert",
+                "description": "Fires if SQL deadlocks occur in at least three 5-minute windows over the last 30 minutes",
                 "enabled": "true",
                 "source": {
-                    "query": "[concat('InsightsMetrics | where Namespace =~ \"sqlserver_performance\" | extend Tags = todynamic(Tags) | extend Name = tostring(Tags.counter), Database = tostring(Tags.database_name), Instance = tostring(Tags.sql_instance) | where Name =~ \"Number of deadlocks/sec\" | summarize Value = max(Val) by bin(TimeGenerated, 5m), Computer | where Value > ', variables('alertThreshold'), ' | summarize Count = count() by Computer | where Count >= 3')]",
+                    "query": "[concat('InsightsMetrics | where Namespace =~ \"sqlserver_performance\" | extend Tags = todynamic(Tags) | extend Name = tostring(Tags.counter), Database = tostring(Tags.database_name), Instance = tostring(Tags.sql_instance) | where Name =~ \"Number of deadlocks/sec\" | summarize Value = sum(Val) by bin(TimeGenerated, 5m), Computer | where Value > ', variables('alertThreshold'), ' | summarize Count = count() by Computer | where Count >= 3')]",
                     "dataSourceId": "[parameters('dataSourceId')]",
                     "queryType": "ResultCount"
                 },
@@ -62,8 +62,7 @@
                         "actionGroup": [
                             "[parameters('actionGroupId')]"
                         ],
-                        "emailSubject": "Customized Email Header",
-                        "customWebhookPayload": "{ \"alertname\":\"#alertrulename\", \"IncludeSearchResults\":true }"
+                        "emailSubject": "SQL deadlocks detected"
                     },
                     "trigger": {
                         "thresholdOperator": "GreaterThan",
