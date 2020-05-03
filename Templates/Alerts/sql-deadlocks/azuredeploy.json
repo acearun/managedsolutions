@@ -1,0 +1,68 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "alertName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the alert"
+            }
+        },
+        "alertLocation": {
+            "type": "string",
+            "metadata": {
+                "description": "Location of the alert"
+            }
+        },
+        "dataSourceId": {
+            "type": "string",
+            "metadata": {
+                "description": "Workspace id"
+            }
+        },
+        "actionGroupId": {
+            "type": "string",
+            "metadata": {
+                "description": "Action group id"
+            }
+        }
+    },
+    "variables": {
+    },
+    "resources": [
+        {
+            "name": "[parameters('alertName')]",
+            "type": "Microsoft.Insights/scheduledQueryRules",
+            "apiVersion": "2018-04-16",
+            "location": "[parameters('alertLocation')]",
+            "properties": {
+                "description": "Sample log search alert",
+                "enabled": "true",
+                "source": {
+                    "query": "requests",
+                    "dataSourceId": "[parameters('dataSourceId')]",
+                    "queryType": "ResultCount"
+                },
+                "schedule": {
+                    "frequencyInMinutes": 5,
+                    "timeWindowInMinutes": 30
+                },
+                "action": {
+                    "odata.type": "Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.Microsoft.AppInsights.Nexus.DataContracts.Resources.ScheduledQueryRules.AlertingAction",
+                    "severity": "4",
+                    "aznsAction": {
+                        "actionGroup": [
+                            "[parameters('actionGroupId')]"
+                        ],
+                        "emailSubject": "Customized Email Header",
+                        "customWebhookPayload": "{ \"alertname\":\"#alertrulename\", \"IncludeSearchResults\":true }"
+                    },
+                    "trigger": {
+                        "thresholdOperator": "GreaterThan",
+                        "threshold": 1
+                    }
+                }
+            }
+        }
+    ]
+}
