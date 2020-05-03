@@ -62,7 +62,7 @@
                         "actionGroup": [
                             "[parameters('actionGroupId')]"
                         ],
-                        "emailSubject": "Blocked SQL processes detected"
+                        "emailSubject": "SQL: Blocked processes detected"
                     },
                     "trigger": {
                         "thresholdOperator": "GreaterThan",
