@@ -44,8 +44,8 @@
                     "queryType": "ResultCount"
                 },
                 "schedule": {
-                    "frequencyInMinutes": 3,
-                    "timeWindowInMinutes": 15
+                    "frequencyInMinutes": 5,
+                    "timeWindowInMinutes": 30
                 },
                 "action": {
                     "odata.type": "Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.Microsoft.AppInsights.Nexus.DataContracts.Resources.ScheduledQueryRules.AlertingAction",
