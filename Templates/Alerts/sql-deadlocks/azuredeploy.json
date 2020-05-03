@@ -39,13 +39,13 @@
                 "description": "Sample log search alert",
                 "enabled": "true",
                 "source": {
-                    "query": "InsightsMetrics | where Namespace =~ 'sqlserver_performance' | extend Tags = todynamic(Tags) | extend Name = tostring(Tags.counter), Database = tostring(Tags.database_name), Instance = tostring(Tags.sql_instance) | where Name =~ 'Number of deadlocks/sec'| summarize sum(Val) by bin(TimeGenerated, 5m), Computer",
+                    "query": "InsightsMetrics | where Namespace =~ 'sqlserver_performance' | extend Tags = todynamic(Tags) | extend Name = tostring(Tags.counter), Database = tostring(Tags.database_name), Instance = tostring(Tags.sql_instance) | where Name =~ 'Number of deadlocks/sec' | summarize Value = sum(Val) by bin(TimeGenerated, 5m), Computer | where Value > 0 | summarize Count = count() by Computer | where Count >= 3",
                     "dataSourceId": "[parameters('dataSourceId')]",
                     "queryType": "ResultCount"
                 },
                 "schedule": {
-                    "frequencyInMinutes": 5,
-                    "timeWindowInMinutes": 30
+                    "frequencyInMinutes": 3,
+                    "timeWindowInMinutes": 15
                 },
                 "action": {
                     "odata.type": "Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.Microsoft.AppInsights.Nexus.DataContracts.Resources.ScheduledQueryRules.AlertingAction",
