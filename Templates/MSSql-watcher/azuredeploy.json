@@ -2,10 +2,10 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "vmName": {
+        "vmId": {
             "type": "string",
             "metadata": {
-                "description": "Name of the virtual machine"
+                "description": "Resource id of the virtual machine"
             }
         },
         "vmRegion": {
@@ -72,7 +72,9 @@
             }
         },
         {
-            "name": "[concat(parameters('vmName'), '/Workload.InstallerAgent')]",
+            "name": "[Concat(split(parameters('vmId'),'/')[8], '/Workload.InstallerAgent')]",
+            "subscriptionId": "[split(parameters('vmId'),'/')[2]]",
+            "resourceGroup": "[split(parameters('vmId'),'/')[4]]",
             "type": "Microsoft.Compute/virtualMachines/extensions",
             "apiVersion": "2018-06-01",
             "location": "[parameters('VmRegion')]",
@@ -86,7 +88,9 @@
             }
         },
         {
-            "name": "[concat(parameters('vmName'), '/Workload.LinuxConfigAgent')]",
+            "name": "[Concat(split(parameters('vmId'),'/')[8], '/Workload.LinuxConfigAgent')]",
+            "subscriptionId": "[split(parameters('vmId'),'/')[2]]",
+            "resourceGroup": "[split(parameters('vmId'),'/')[4]]",
             "type": "Microsoft.Compute/virtualMachines/extensions",
             "apiVersion": "2018-06-01",
             "location": "[parameters('VmRegion')]",
