@@ -8,6 +8,12 @@
                 "description": "Name of the virtual machine"
             }
         },
+        "vmRegion": {
+            "type": "string",
+            "metadata": {
+                "description": "Location of the virtual machine"
+            }
+        },
         "omsWorkspaceId": {
             "type": "string",
             "metadata": {
@@ -69,7 +75,7 @@
             "name": "[concat(parameters('vmName'), '/Workload.InstallerAgent')]",
             "type": "Microsoft.Compute/virtualMachines/extensions",
             "apiVersion": "2018-06-01",
-            "location": "centralus",
+            "location": "[parameters('VmRegion')]",
             "properties": {
                 "publisher": "Microsoft.Azure.Monitor.WorkloadInsights.Test",
                 "type": "Workload.InstallerAgent",
@@ -83,7 +89,7 @@
             "name": "[concat(parameters('vmName'), '/Workload.LinuxConfigAgent')]",
             "type": "Microsoft.Compute/virtualMachines/extensions",
             "apiVersion": "2018-06-01",
-            "location": "centralus",
+            "location": "[parameters('VmRegion')]",
             "tags": {
                 "monitoring-insight": "mssql"
             },
