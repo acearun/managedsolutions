@@ -21,7 +21,7 @@
             }
         },
         "nginxStatsUrls": {
-            "type": "string",
+            "type": "securestring",
             "metadata": {
                 "description": "The url for nginx stats endpoint to query"
             }

@@ -21,7 +21,7 @@
             }
         },
         "RedisServer": {
-            "type": "string",
+            "type": "securestring",
             "metadata": {
                 "description": "The url for the local Redis server"
             }
