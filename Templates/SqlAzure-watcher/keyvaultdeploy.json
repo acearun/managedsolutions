@@ -1,0 +1,59 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vmName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the virtual machine"
+            }
+        },
+        "omsWorkspaceId": {
+            "type": "string",
+            "metadata": {
+                "description": "Resource id of the OMS workspace"
+            }
+        },
+        "workspaceRegion": {
+            "type": "string",
+            "metadata": {
+                "description": "Location of the OMS workspace"
+            }
+        },
+        "sqlServer": {
+            "type": "string",
+            "metadata": {
+                "description": "Sql server name"
+            }
+        },
+        "sqlDatabase": {
+            "type": "string",
+            "metadata": {
+                "description": "Sql database name"
+            }
+        },
+        "sqlUserName": {
+            "type": "string",
+            "metadata": {
+                "description": "Sql user name for connecting to the database"
+            }
+        },
+        "sqlPassword": {
+            "type": "securestring"
+        },
+        "sqlAzureResourceId": {
+            "type": "string",
+            "metadata": {
+                "description": "The resource id of the monitored SQL Azure instance"
+            }
+        }
+    },
+    "resources": [
+    ],
+    "outputs": {
+        "pw": {
+            "type": "string",
+            "value": "[concat('Server=', parameters('sqlServer'), ';Port=1433;database=', parameters('sqlDatabase'), ';User Id=', parameters('sqlUserName'), ';Password=', parameters('sqlPassword'), ';app name=telegraf;log=1;')]"
+        }
+    }
+}
