@@ -21,7 +21,7 @@
             }
         },
         "sqlConnectionStrings": {
-            "type": "securestring",
+            "type": "string",
             "metadata": {
                 "description": "The connection strings used to query SQL"
             }
