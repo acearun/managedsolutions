@@ -10,8 +10,8 @@
     ],
     "outputs": {
          "str": {
-            "type": "object",
-            "value": "[parameters('secureObject')]"
+            "type": "array",
+            "value": "[parameters('secureObject').connectionStrings]"
         }
     }
 }
