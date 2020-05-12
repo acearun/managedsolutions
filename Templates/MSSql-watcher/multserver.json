@@ -11,7 +11,7 @@
     "outputs": {
          "str": {
             "type": "string",
-            "value": "[concat(parameters('secureObject'))]"
+            "value": "[parameters('secureObject').connectionStrings]"
         }
     }
 }
