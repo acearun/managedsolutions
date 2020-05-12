@@ -7,7 +7,7 @@
         }
     },
     "variables": {
-        "items" : "[replace(replace(parameters('secureObject').connectionStrings, ']', ''), '[', '')]"
+        "items" : "[replace(replace(string(parameters('secureObject').connectionStrings), ']', ''), '[', '')]"
     },
     "resources": [
     ],
