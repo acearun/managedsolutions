@@ -10,7 +10,7 @@
     ],
     "outputs": {
          "str": {
-            "type": "string",
+            "type": "object",
             "value": "[parameters('secureObject')]"
         }
     }
