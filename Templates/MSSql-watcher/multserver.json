@@ -7,14 +7,14 @@
         }
     },
     "variables": {
-        "items" : "[replace(replace(string(parameters('secureObject').connectionStrings), ']', ''), '[', '')]"
+        "foo" : "[replace(replace(string(parameters('secureObject').connectionStrings), ']', ''), '[', '')]"
     },
     "resources": [
     ],
     "outputs": {
          "str": {
             "type": "string",
-            "value": "[variables('items')]"
+            "value": "[variables('foo')]"
         }
     }
 }
