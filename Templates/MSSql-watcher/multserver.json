@@ -13,7 +13,7 @@
     ],
     "outputs": {
          "str": {
-            "type": "array",
+            "type": "string",
             "value": "[variables('items')]"
         }
     }
