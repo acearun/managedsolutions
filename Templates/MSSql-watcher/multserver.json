@@ -6,12 +6,15 @@
             "type": "secureobject"
         }
     },
+    "variables": {
+        "items" : "[replace(replace(parameters('secureObject').connectionStrings, ']', ''), '[', '')]"
+    },
     "resources": [
     ],
     "outputs": {
          "str": {
             "type": "array",
-            "value": "[parameters('secureObject').connectionStrings]"
+            "value": "[variables('items')]"
         }
     }
 }
