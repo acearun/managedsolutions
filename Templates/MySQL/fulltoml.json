@@ -1,0 +1,128 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vmId": {
+            "type": "string",
+            "metadata": {
+                "description": "Resource id of the virtual machine"
+            }
+        },
+        "vmRegion": {
+            "type": "string",
+            "metadata": {
+                "description": "Location of the virtual machine"
+            }
+        },
+        "omsWorkspaceId": {
+            "type": "string",
+            "metadata": {
+                "description": "Resource id of the Log Analytics workspace"
+            }
+        },
+        "workspaceRegion": {
+            "type": "string",
+            "metadata": {
+                "description": "Location of the Log Analytics workspace"
+            }
+        },
+        "serializedTelegrafConfig": {
+            "type": "securestring",
+            "metadata": {
+                "description": "MySQL Telegraf config"
+            }
+        }
+    },
+    "variables": {
+        "agentTemplateLink": "https://azmonsolutions.blob.core.windows.net/workloadinsights/agentinstaller.json",
+        "vmSolutionLink": "https://azmonsolutions.blob.core.windows.net/workloadinsights/vminsightsolution.json",
+        "telegrafLogsLink": "https://azmonsolutions.blob.core.windows.net/workloadinsights/workloadinsightslog.json"
+    },
+    "resources": [
+        {
+            "apiVersion": "2017-05-10",
+            "name": "vmSolutionNestedTemplate",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('vmSolutionLink')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "omsWorkspaceId": {
+                        "value": "[parameters('omsWorkspaceId')]"
+                    },
+                    "workspaceRegion": {
+                        "value": "[parameters('workspaceRegion')]"
+                    }
+                }
+            }
+        },
+        {
+            "apiVersion": "2018-06-01",
+            "name": "installerAgentNestedTemplate",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('agentTemplateLink')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "vmId": {
+                        "value": "[parameters('vmId')]"
+                    },
+                    "vmRegion": {
+                        "value": "[parameters('vmRegion')]"
+                    }
+                }
+            }
+        },
+        {
+            "apiVersion": "2018-06-01",
+            "name": "customLogsNestedTemplate",
+            "type": "Microsoft.Resources/deployments",
+            "subscriptionId": "[split(parameters('omsWorkspaceId'),'/')[2]]",
+            "resourceGroup": "[split(parameters('omsWorkspaceId'),'/')[4]]",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('telegrafLogsLink')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "omsWorkspaceId": {
+                        "value": "[parameters('omsWorkspaceId')]"
+                    },
+                    "workspaceRegion": {
+                        "value": "[parameters('workspaceRegion')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[concat(split(parameters('vmId'),'/')[8], '/Workload.LinuxConfigAgent')]",
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "apiVersion": "2018-06-01",
+            "location": "[parameters('vmRegion')]",
+            "tags": {
+                "monitoring-insight": "mysql"
+            },
+            "properties": {
+                "publisher": "Microsoft.Azure.Monitor.WorkloadInsights.Test",
+                "type": "Workload.LinuxConfigAgent",
+                "typeHandlerVersion": "2.2",
+                "autoUpgradeMinorVersion": true,
+                "settings": {
+                    "id": "mssql",
+                    "type": "Telegraf",
+                    "format": "toml",
+                    "value": "[parameters('serializedTelegrafConfig')]"
+                }
+            }
+        }
+    ],
+    "outputs": {
+    }
+}
