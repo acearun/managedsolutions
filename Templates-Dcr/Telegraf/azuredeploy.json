@@ -24,6 +24,12 @@
         },
         "workspaceId": {
             "type": "string"
+        },
+        "serializedTelegrafConfig": {
+            "type": "securestring",
+            "metadata": {
+                "description": "Telegraf config"
+            }
         }
     },
     "resources": [
@@ -42,18 +48,8 @@
                             "extensionSettings": {
                                 "id": "apache",
                                 "type": "Telegraf",
-                                "format": "json",
-                                "value": {
-                                    "inputs": {
-                                        "apache": [
-                                            {
-                                                "urls": [
-                                                    "http://localhost/server-status?auto"
-                                                ]
-                                            }
-                                        ]
-                                    }
-                                }
+                                "format": "toml",
+                                "value": "[parameters('serializedTelegrafConfig')]"
                             }
                         }
                     ]
