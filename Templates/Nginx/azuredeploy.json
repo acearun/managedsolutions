@@ -110,7 +110,8 @@
                                 "collect_cpu_time": false,
                                 "report_active": false,
                                 "tags": {
-                                    "insight": "nginx"
+                                    "insight": "nginx",
+                                    "datasource": "ds2"
                                 }
                             },
                             "mem": {
