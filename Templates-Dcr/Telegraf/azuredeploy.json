@@ -1,0 +1,89 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "resourceName": {
+            "type": "string"
+        },
+        "destinationName": {
+            "type": "string"
+        },
+        "dataSource": {
+            "type": "string",
+            "defaultValue": "DataSource1",
+            "metadata": {
+                "description": "Name of the data source"
+            }
+        },
+        "stream": {
+            "type": "string",
+            "defaultValue": "Microsoft-InsightsMetrics"
+        },
+        "workspaceResourceId": {
+            "type": "string"
+        },
+        "workspaceId": {
+            "type": "string"
+        }
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Insights/dataCollectionRules",
+            "name": "[parameters('resourceName')]",
+            "location": "[resourceGroup().location]",
+            "apiVersion": "2019-11-01-preview",
+            "properties": {
+                "dataSources": {
+                    "extensions": [
+                        {
+                            "name": "[parameters('dataSource')]",
+                            "stream": "[parameters('stream')]",
+                            "extensionName": "WorkloadInsights",
+                            "extensionSettings": {
+                                "id": "apache",
+                                "type": "Telegraf",
+                                "format": "json",
+                                "value": {
+                                    "inputs": {
+                                        "apache": [
+                                            {
+                                                "urls": [
+                                                    "http://localhost/server-status?auto"
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                "destinations": {
+                    "logAnalytics": [
+                        {
+                            "workspaceResourceId": "[parameters('workspaceResourceId')]",
+                            "workspaceId": "[parameters('workspaceId')]",
+                            "name": "[parameters('destinationName')]"
+                        }
+                    ]
+                },
+                "dataFlows": [
+                    {
+                        "streams": [
+                            "[parameters('stream')]"
+                        ],
+                        "destinations": [
+                            "[parameters('destinationName')]"
+                        ]
+                    }
+                ]
+            }
+        }
+    ],
+    "outputs": {
+        "dataCollectionRuleId": {
+            "type": "string",
+            "value": "[resourceId('Microsoft.Insights/dataCollectionRules', parameters('resourceName'))]"
+        }
+    }
+}

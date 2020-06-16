@@ -29,7 +29,7 @@
         "serializedTelegrafConfig": {
             "type": "securestring",
             "metadata": {
-                "description": "Nginx Telegraf config"
+                "description": "Telegraf config"
             }
         }
     },
