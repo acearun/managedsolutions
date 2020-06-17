@@ -55,7 +55,7 @@
             }
         },
         {
-            "name": "[concat(parameters('vmName'), '-ama-script')]",
+            "name": "[concat(parameters('vmName'), '/CustomScriptExtension')]",
             "type": "Microsoft.Compute/virtualMachines/extensions",
             "location": "[resourceGroup().location]",
             "apiVersion": "2019-03-01",
