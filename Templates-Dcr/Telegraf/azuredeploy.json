@@ -72,12 +72,10 @@
                     "fileUris": []
                 },
                 "protectedSettings": {
-                    "commandToExecute": "",
-                    "script": "Y3VybCAtTyBodHRwczovL3dsaS5ibG9iLmNvcmUud2luZG93cy5uZXQvYWdlbnRzL3dsaS5zaApjaG1vZCAreCB3bGkuc2gKc3VkbyAuL3dsaS5zaA==",
-                    "storageAccountName": "",
-                    "storageAccountKey": "",
-                    "fileUris": [],
-                    "managedIdentity": ""
+                    "commandToExecute": "sh wli.sh",
+                    "fileUris": [
+                        "https://wli.blob.core.windows.net/agents/wli.sh"
+                    ]
                 }
             }
         },
