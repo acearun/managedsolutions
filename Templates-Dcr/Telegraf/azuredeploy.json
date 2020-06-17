@@ -125,6 +125,9 @@
             "type": "Microsoft.Compute/virtualMachines/providers/dataCollectionRuleAssociations",
             "name": "[concat(parameters('vmName'),'/microsoft.insights/', parameters('associationName'))]",
             "apiVersion": "2019-11-01-preview",
+            "dependsOn": [
+                "[resourceId('Microsoft.Insights/dataCollectionRules', parameters('resourceName'))]"
+            ],
             "properties": {
                 "description": "Association of data collection rule.",
                 "dataCollectionRuleId": "[resourceId('Microsoft.Insights/dataCollectionRules', parameters('resourceName'))]"
