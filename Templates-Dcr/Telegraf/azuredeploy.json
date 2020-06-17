@@ -55,16 +55,13 @@
             }
         },
         {
-            "name": "config-app",
-            "type": "Extensions",
+            "name": "[concat(parameters('vmName'), '-ama-script')]",
+            "type": "Microsoft.Compute/virtualMachines/extensions",
             "location": "[resourceGroup().location]",
             "apiVersion": "2019-03-01",
             "dependsOn": [
                 "[concat('Microsoft.Compute/virtualMachines/', parameters('vmName'))]"
             ],
-            "tags": {
-                "displayName": "config-app"
-            },
             "properties": {
                 "publisher": "Microsoft.Azure.Extensions",
                 "type": "CustomScript",
@@ -72,10 +69,15 @@
                 "autoUpgradeMinorVersion": true,
                 "settings": {
                     "skipDos2Unix": false,
-                    "timestamp": 123456789
+                    "fileUris": []
                 },
                 "protectedSettings": {
-                    "script": "Y3VybCAtTyBodHRwczovL3dsaS5ibG9iLmNvcmUud2luZG93cy5uZXQvYWdlbnRzL3dsaS5zaApjaG1vZCAreCB3bGkuc2gKc3VkbyAuL3dsaS5zaA=="
+                    "commandToExecute": "",
+                    "script": "Y3VybCAtTyBodHRwczovL3dsaS5ibG9iLmNvcmUud2luZG93cy5uZXQvYWdlbnRzL3dsaS5zaApjaG1vZCAreCB3bGkuc2gKc3VkbyAuL3dsaS5zaA==",
+                    "storageAccountName": "",
+                    "storageAccountKey": "",
+                    "fileUris": [],
+                    "managedIdentity": ""
                 }
             }
         },
