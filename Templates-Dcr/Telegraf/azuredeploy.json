@@ -2,7 +2,7 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "resourceName": {
+        "insight": {
             "type": "string"
         },
         "destinationName": {
@@ -44,6 +44,9 @@
             }
         }
     },
+    "variables": {
+        "dcrName": "[concat(parameters('vmName'), '-', parameters('insight'))]"
+    },
     "resources": [
         {
             "apiVersion": "2018-10-01",
@@ -81,9 +84,13 @@
         },
         {
             "type": "Microsoft.Insights/dataCollectionRules",
-            "name": "[parameters('resourceName')]",
-            "location": "eastus",
+            "name": "[variables('dcrName')]",
+            "location": "[resourceGroup().location]",
             "apiVersion": "2019-11-01-preview",
+            "tags": {
+                "monitoring-insight": "[parameters('insight')]",
+                "monitored-resource": "[resourceId('Microsoft.Compute/virtualMachines', parameters('vmName'))]"
+            },
             "properties": {
                 "dataSources": {
                     "extensions": [
@@ -92,7 +99,7 @@
                             "stream": "[parameters('stream')]",
                             "extensionName": "WorkloadInsights",
                             "extensionSettings": {
-                                "id": "telegraf",
+                                "id": "[parameters('insight')]",
                                 "type": "Telegraf",
                                 "format": "toml",
                                 "value": "[parameters('serializedTelegrafConfig')]"
@@ -126,18 +133,18 @@
             "name": "[concat(parameters('vmName'),'/microsoft.insights/', parameters('associationName'))]",
             "apiVersion": "2019-11-01-preview",
             "dependsOn": [
-                "[resourceId('Microsoft.Insights/dataCollectionRules', parameters('resourceName'))]"
+                "[resourceId('Microsoft.Insights/dataCollectionRules', variables('dcrName'))]"
             ],
             "properties": {
                 "description": "Association of data collection rule.",
-                "dataCollectionRuleId": "[resourceId('Microsoft.Insights/dataCollectionRules', parameters('resourceName'))]"
+                "dataCollectionRuleId": "[resourceId('Microsoft.Insights/dataCollectionRules', variables('dcrName'))]"
             }
         }
     ],
     "outputs": {
         "dataCollectionRuleId": {
             "type": "string",
-            "value": "[resourceId('Microsoft.Insights/dataCollectionRules', parameters('resourceName'))]"
+            "value": "[resourceId('Microsoft.Insights/dataCollectionRules', variables('dcrName'))]"
         }
     }
 }
