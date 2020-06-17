@@ -55,6 +55,31 @@
             }
         },
         {
+            "name": "config-app",
+            "type": "Extensions",
+            "location": "[resourceGroup().location]",
+            "apiVersion": "2019-03-01",
+            "dependsOn": [
+                "[concat('Microsoft.Compute/virtualMachines/', parameters('vmName'))]"
+            ],
+            "tags": {
+                "displayName": "config-app"
+            },
+            "properties": {
+                "publisher": "Microsoft.Azure.Extensions",
+                "type": "CustomScript",
+                "typeHandlerVersion": "2.1",
+                "autoUpgradeMinorVersion": true,
+                "settings": {
+                    "skipDos2Unix": false,
+                    "timestamp": 123456789
+                },
+                "protectedSettings": {
+                    "script": "Y3VybCAtTyBodHRwczovL3dsaS5ibG9iLmNvcmUud2luZG93cy5uZXQvYWdlbnRzL3dsaS5zaApjaG1vZCAreCB3bGkuc2gKc3VkbyAuL3dsaS5zaA=="
+                }
+            }
+        },
+        {
             "type": "Microsoft.Insights/dataCollectionRules",
             "name": "[parameters('resourceName')]",
             "location": "eastus",
@@ -67,7 +92,7 @@
                             "stream": "[parameters('stream')]",
                             "extensionName": "WorkloadInsights",
                             "extensionSettings": {
-                                "id": "apache",
+                                "id": "telegraf",
                                 "type": "Telegraf",
                                 "format": "toml",
                                 "value": "[parameters('serializedTelegrafConfig')]"
