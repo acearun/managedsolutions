@@ -46,6 +46,15 @@
     },
     "resources": [
         {
+            "apiVersion": "2018-10-01",
+            "name": "[parameters('vmName')]",
+            "type": "Microsoft.Compute/virtualMachines",
+            "location": "[resourceGroup().location]",
+            "identity": {
+                "type": "SystemAssigned"
+            }
+        },
+        {
             "type": "Microsoft.Insights/dataCollectionRules",
             "name": "[parameters('resourceName')]",
             "location": "eastus",
