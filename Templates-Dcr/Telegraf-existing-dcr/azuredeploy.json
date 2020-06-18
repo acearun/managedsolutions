@@ -42,7 +42,8 @@
             "tags": {
                 "monitoring-insight": "[parameters('insight')]",
                 "monitored-resource": "[resourceId('Microsoft.Compute/virtualMachines', parameters('vmName'))]"
-            }
+            },
+            "properties": {}
         },
         {
             "name": "[concat(parameters('vmName'), '/CustomScriptExtension')]",
