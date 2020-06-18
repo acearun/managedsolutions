@@ -35,17 +35,6 @@
             }
         },
         {
-            "type": "Microsoft.Insights/dataCollectionRules",
-            "name": "[parameters('dcrName')]",
-            "location": "[resourceGroup().location]",
-            "apiVersion": "2019-11-01-preview",
-            "tags": {
-                "monitoring-insight": "[parameters('insight')]",
-                "monitored-resource": "[resourceId('Microsoft.Compute/virtualMachines', parameters('vmName'))]"
-            },
-            "properties": {}
-        },
-        {
             "name": "[concat(parameters('vmName'), '/CustomScriptExtension')]",
             "type": "Microsoft.Compute/virtualMachines/extensions",
             "location": "[resourceGroup().location]",
