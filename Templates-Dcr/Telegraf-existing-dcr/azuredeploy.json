@@ -2,19 +2,16 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "insight": {
-            "type": "string"
-        },
         "vmName": {
             "type": "string",
             "metadata": {
                 "description": "Specifies the name of the VM to create association for."
             }
         },
-        "dcrName": {
+        "dcrResourceId": {
             "type": "string",
             "metadata": {
-                "description": "Specifies the resource name of an existing DCR"
+                "description": "Specifies the resource id of an existing DCR"
             }
         },
         "associationName": {
@@ -66,7 +63,7 @@
             "apiVersion": "2019-11-01-preview",
             "properties": {
                 "description": "Association of data collection rule.",
-                "dataCollectionRuleId": "[resourceId('Microsoft.Insights/dataCollectionRules', parameters('dcrName'))]"
+                "dataCollectionRuleId": "[parameters('dcrResourceId')]"
             }
         }
     ],
