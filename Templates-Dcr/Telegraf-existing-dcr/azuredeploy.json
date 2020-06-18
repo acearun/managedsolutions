@@ -1,0 +1,88 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "insight": {
+            "type": "string"
+        },
+        "vmName": {
+            "type": "string",
+            "metadata": {
+                "description": "Specifies the name of the VM to create association for."
+            }
+        },
+        "dcrName": {
+            "type": "string",
+            "metadata": {
+                "description": "Specifies the resource name of an existing DCR"
+            }
+        },
+        "associationName": {
+            "type": "string",
+            "metadata": {
+                "description": "Specifies the name of the data collection rule association to create."
+            }
+        }
+    },
+    "resources": [
+        {
+            "apiVersion": "2018-10-01",
+            "name": "[parameters('vmName')]",
+            "type": "Microsoft.Compute/virtualMachines",
+            "location": "[resourceGroup().location]",
+            "identity": {
+                "type": "SystemAssigned"
+            }
+        },
+        {
+            "type": "Microsoft.Insights/dataCollectionRules",
+            "name": "[parameters('dcrName')]",
+            "location": "[resourceGroup().location]",
+            "apiVersion": "2019-11-01-preview",
+            "tags": {
+                "monitoring-insight": "[parameters('insight')]",
+                "monitored-resource": "[resourceId('Microsoft.Compute/virtualMachines', parameters('vmName'))]"
+            }
+        },
+        {
+            "name": "[concat(parameters('vmName'), '/CustomScriptExtension')]",
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "location": "[resourceGroup().location]",
+            "apiVersion": "2019-03-01",
+            "dependsOn": [
+                "[concat('Microsoft.Compute/virtualMachines/', parameters('vmName'))]"
+            ],
+            "properties": {
+                "publisher": "Microsoft.Azure.Extensions",
+                "type": "CustomScript",
+                "typeHandlerVersion": "2.1",
+                "autoUpgradeMinorVersion": true,
+                "settings": {
+                    "skipDos2Unix": false,
+                    "fileUris": [
+                    ]
+                },
+                "protectedSettings": {
+                    "commandToExecute": "sh wli.sh",
+                    "fileUris": [
+                        "https://wli.blob.core.windows.net/agents/wli.sh"
+                    ]
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines/providers/dataCollectionRuleAssociations",
+            "name": "[concat(parameters('vmName'),'/microsoft.insights/', parameters('associationName'))]",
+            "apiVersion": "2019-11-01-preview",
+            "dependsOn": [
+                "[resourceId('Microsoft.Insights/dataCollectionRules', parameters('dcrName'))]"
+            ],
+            "properties": {
+                "description": "Association of data collection rule.",
+                "dataCollectionRuleId": "[resourceId('Microsoft.Insights/dataCollectionRules', parameters('dcrName'))]"
+            }
+        }
+    ],
+    "outputs": {
+    }
+}
