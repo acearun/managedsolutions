@@ -1,0 +1,30 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vmName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the virtual machine"
+            }
+        }
+    },
+    "resources": [
+        {
+            "name": "[concat(parameters('vmName'), '/AzureMonitorLinuxAgent')]",
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "apiVersion": "2018-06-01",
+            "location": "eastus",
+            "properties": {
+                "publisher": "Microsoft.Azure.Monitor",
+                "type": "AzureMonitorLinuxAgent",
+                "typeHandlerVersion": " 0.9.5",
+                "autoUpgradeMinorVersion": true,
+                "settings": {
+                }
+            }
+        }
+    ],
+    "outputs": {
+    }
+}
