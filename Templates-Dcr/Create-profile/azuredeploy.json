@@ -1,0 +1,87 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "dcrName": {
+            "type": "string"
+        },
+        "insight": {
+            "type": "string"
+        },
+        "destinationName": {
+            "type": "string"
+        },
+        "dataSource": {
+            "type": "string",
+            "defaultValue": "DataSource1",
+            "metadata": {
+                "description": "Name of the data source"
+            }
+        },
+        "workspaceResourceId": {
+            "type": "string"
+        },
+        "workspaceId": {
+            "type": "string"
+        },
+        "serializedTelegrafConfig": {
+            "type": "securestring",
+            "metadata": {
+                "description": "Telegraf config"
+            }
+        }
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Insights/dataCollectionRules",
+            "name": "[parameters('dcrName')]",
+            "location": "[resourceGroup().location]",
+            "apiVersion": "2019-11-01-preview",
+            "tags": {
+                "monitoring-insight": "[parameters('insight')]"
+            },
+            "properties": {
+                "dataSources": {
+                    "extensions": [
+                        {
+                            "name": "[parameters('dataSource')]",
+                            "stream": "Microsoft-InsightsMetrics",
+                            "extensionName": "WorkloadInsights",
+                            "extensionSettings": {
+                                "id": "[parameters('insight')]",
+                                "type": "Telegraf",
+                                "format": "toml",
+                                "value": "[parameters('serializedTelegrafConfig')]"
+                            }
+                        }
+                    ]
+                },
+                "destinations": {
+                    "logAnalytics": [
+                        {
+                            "workspaceResourceId": "[parameters('workspaceResourceId')]",
+                            "workspaceId": "[parameters('workspaceId')]",
+                            "name": "[parameters('destinationName')]"
+                        }
+                    ]
+                },
+                "dataFlows": [
+                    {
+                        "streams": [
+                            "Microsoft-InsightsMetrics"
+                        ],
+                        "destinations": [
+                            "[parameters('destinationName')]"
+                        ]
+                    }
+                ]
+            }
+        }
+    ],
+    "outputs": {
+        "dataCollectionRuleId": {
+            "type": "string",
+            "value": "[resourceId('Microsoft.Insights/dataCollectionRules', parameters('dcrName'))]"
+        }
+    }
+}
