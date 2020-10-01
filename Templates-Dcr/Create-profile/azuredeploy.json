@@ -5,6 +5,9 @@
         "dcrName": {
             "type": "string"
         },
+        "dcrLocation": {
+            "type": "string"
+        },
         "insight": {
             "type": "string"
         },
@@ -35,7 +38,7 @@
         {
             "type": "Microsoft.Insights/dataCollectionRules",
             "name": "[parameters('dcrName')]",
-            "location": "[resourceGroup().location]",
+            "location": "[parameters('dcrLocation')]",
             "apiVersion": "2019-11-01-preview",
             "tags": {
                 "monitoring-insight": "[parameters('insight')]"
