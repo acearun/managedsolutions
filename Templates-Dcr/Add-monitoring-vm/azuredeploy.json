@@ -26,6 +26,31 @@
             }
         },
         {
+            "name": "[concat(parameters('vmName'), '/CustomScriptExtension')]",
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "location": "[resourceGroup().location]",
+            "apiVersion": "2019-03-01",
+            "dependsOn": [
+                "[concat('Microsoft.Compute/virtualMachines/', parameters('vmName'))]"
+            ],
+            "properties": {
+                "publisher": "Microsoft.Azure.Extensions",
+                "type": "CustomScript",
+                "typeHandlerVersion": "2.1",
+                "autoUpgradeMinorVersion": true,
+                "settings": {
+                    "skipDos2Unix": false,
+                    "fileUris": []
+                },
+                "protectedSettings": {
+                    "commandToExecute": "sh wli.sh",
+                    "fileUris": [
+                        "https://wli.blob.core.windows.net/agents/wli.sh"
+                    ]
+                }
+            }
+        },
+        {
             "name": "[concat(parameters('vmName'), '/Workload.WLILinuxExtension')]",
             "type": "Microsoft.Compute/virtualMachines/extensions",
             "apiVersion": "2018-06-01",
