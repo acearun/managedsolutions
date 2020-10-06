@@ -13,6 +13,12 @@
             "metadata": {
                 "description": "Specifies the Azure resource ID of the data collection rule to associate."
             }
+        },
+        "workloadConfig": {
+            "type": "object",
+            "metadata": {
+                "description": "The configuration to use with this virtual machine"
+            }
         }
     },
     "resources": [
@@ -60,7 +66,9 @@
                 "type": "Workload.WLILinuxExtension",
                 "typeHandlerVersion": "0.1",
                 "autoUpgradeMinorVersion": true,
-                "settings": { }
+                "settings": {
+                    "workloadConfig": "[parameters('workloadConfig')]"
+                 }
             }
         },
         {
