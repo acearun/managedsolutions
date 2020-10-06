@@ -15,7 +15,7 @@
             }
         },
         "workloadConfig": {
-            "type": "array",
+            "type": "object",
             "metadata": {
                 "description": "The configuration to use with this virtual machine"
             }
