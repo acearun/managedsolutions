@@ -11,7 +11,7 @@
     },
     "outputs": {
         "Object": {
-            "type": "string",
+            "type": "object",
             "value": "[parameters('workloadConfig')]"
         }
     }
