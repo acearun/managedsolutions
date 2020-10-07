@@ -1,0 +1,20 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workloadConfig": {
+            "type": "array",
+            "metadata": {
+                "description": "The configuration to use with this virtual machine"
+            }
+        }
+    },
+    "resources": [
+    ],
+    "outputs": {
+        "Array": {
+            "type": "array",
+            "value": "[parameters('workloadConfig')]"
+        }
+    }
+}
