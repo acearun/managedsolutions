@@ -9,6 +9,8 @@
             }
         }
     },
+    "resources": [
+    ],
     "outputs": {
         "Object": {
             "type": "object",
