@@ -49,7 +49,7 @@
                     "fileUris": []
                 },
                 "protectedSettings": {
-                    "commandToExecute": "sh wli.sh",
+                    "commandToExecute": "sh mdsd.sh",
                     "fileUris": [
                         "https://wli.blob.core.windows.net/agents/mdsd.sh"
                     ]
