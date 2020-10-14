@@ -8,6 +8,12 @@
                 "description": "Specifies the name of the VM to create association for."
             }
         },
+      "vmLocation": {
+            "type": "string",
+            "metadata": {
+                "description": "Location of the VM"
+            }
+        },
         "dataCollectionRuleId": {
             "type": "string",
             "metadata": {
@@ -26,7 +32,7 @@
             "apiVersion": "2018-10-01",
             "name": "[parameters('vmName')]",
             "type": "Microsoft.Compute/virtualMachines",
-            "location": "[resourceGroup().location]",
+            "location": "[parameters('vmLocation')]",
             "identity": {
                 "type": "SystemAssigned"
             }
@@ -34,7 +40,7 @@
         {
             "name": "[concat(parameters('vmName'), '/CustomScriptExtension')]",
             "type": "Microsoft.Compute/virtualMachines/extensions",
-            "location": "[resourceGroup().location]",
+            "location": "[parameters('vmLocation')]",
             "apiVersion": "2019-03-01",
             "dependsOn": [
                 "[concat('Microsoft.Compute/virtualMachines/', parameters('vmName'))]"
@@ -60,7 +66,7 @@
             "name": "[concat(parameters('vmName'), '/Workload.WLILinuxExtension')]",
             "type": "Microsoft.Compute/virtualMachines/extensions",
             "apiVersion": "2018-06-01",
-            "location": "eastus",
+            "location": "[parameters('vmLocation')]",
             "properties": {
                 "publisher": "Microsoft.Azure.Monitor.Workloads",
                 "type": "Workload.WLILinuxExtension",
