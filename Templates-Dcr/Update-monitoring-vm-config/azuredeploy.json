@@ -8,6 +8,12 @@
                 "description": "Specifies the name of the VM to create association for."
             }
         },
+      "vmLocation": {
+            "type": "string",
+            "metadata": {
+                "description": "Location of the VM"
+            }
+        },
         "workloadConfig": {
             "type": "object",
             "metadata": {
@@ -20,7 +26,7 @@
             "name": "[concat(parameters('vmName'), '/Workload.WLILinuxExtension')]",
             "type": "Microsoft.Compute/virtualMachines/extensions",
             "apiVersion": "2018-06-01",
-            "location": "eastus",
+            "location": "[parameters('vmLocation')]",
             "properties": {
                 "publisher": "Microsoft.Azure.Monitor.Workloads",
                 "type": "Workload.WLILinuxExtension",
