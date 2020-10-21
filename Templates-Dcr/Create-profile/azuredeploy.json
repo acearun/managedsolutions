@@ -27,9 +27,6 @@
         "workspaceId": {
             "type": "string"
         },
-        "workspaceRegion": {
-            "type": "string"
-        },
         "serializedTelegrafConfig": {
             "type": "securestring",
             "metadata": {
@@ -56,7 +53,7 @@
                         "value": "[parameters('workspaceId')]"
                     },
                     "workspaceRegion": {
-                        "value": "[parameters('workspaceRegion')]"
+                        "value": "[parameters('dcrLocation')]"
                     }
                 }
             }
