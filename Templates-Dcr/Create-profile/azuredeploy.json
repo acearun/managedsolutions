@@ -50,7 +50,7 @@
                 },
                 "parameters": {
                     "omsWorkspaceId": {
-                        "value": "[parameters('workspaceId')]"
+                        "value": "[parameters('workspaceResourceId')]"
                     },
                     "workspaceRegion": {
                         "value": "[parameters('dcrLocation')]"
