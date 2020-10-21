@@ -95,7 +95,7 @@
                     {
                         "streams": [
                             "Microsoft-InsightsMetrics",
-                            "Microsoft-Operation"
+                            "Microsoft-OperationLog"
                         ],
                         "destinations": [
                             "[parameters('destinationName')]"
