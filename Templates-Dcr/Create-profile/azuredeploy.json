@@ -27,6 +27,9 @@
         "workspaceId": {
             "type": "string"
         },
+        "workspaceRegion": {
+            "type": "string"
+        },
         "serializedTelegrafConfig": {
             "type": "securestring",
             "metadata": {
@@ -34,7 +37,30 @@
             }
         }
     },
+    "variables": {
+        "vmSolutionLink": "https://azmonsolutions.blob.core.windows.net/workloadinsights/vminsightsolution.json"
+    },
     "resources": [
+        {
+            "apiVersion": "2017-05-10",
+            "name": "vmSolutionNestedTemplate",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('vmSolutionLink')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "omsWorkspaceId": {
+                        "value": "[parameters('workspaceId')]"
+                    },
+                    "workspaceRegion": {
+                        "value": "[parameters('workspaceRegion')]"
+                    }
+                }
+            }
+        },
         {
             "type": "Microsoft.Insights/dataCollectionRules",
             "name": "[parameters('dcrName')]",
@@ -71,7 +97,8 @@
                 "dataFlows": [
                     {
                         "streams": [
-                            "Microsoft-InsightsMetrics"
+                            "Microsoft-InsightsMetrics",
+                            "Microsoft-Operation"
                         ],
                         "destinations": [
                             "[parameters('destinationName')]"
