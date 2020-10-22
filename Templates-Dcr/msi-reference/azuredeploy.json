@@ -2,16 +2,28 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "vmId": {
+        "vmName": {
+            "type": "string"
+        },
+        "vmLocation": {
             "type": "string"
         }
     },
     "resources": [
+        {
+            "apiVersion": "2018-10-01",
+            "name": "[parameters('vmName')]",
+            "type": "Microsoft.Compute/virtualMachines",
+            "location": "[parameters('vmLocation')]",
+            "identity": {
+                "type": "SystemAssigned"
+            }
+        }
     ],
     "outputs": {
         "managedIdentityObjectId": {
             "type": "string",
-            "value": "[reference(parameters('vmId'), '2019-03-01', 'full').identity.principalId]"
+            "value": "[reference(resourceId('mirosoft.compute/virtualmachines', parameters('vmName')), '2019-03-01', 'full').identity.principalId]"
         }
     }
 }
