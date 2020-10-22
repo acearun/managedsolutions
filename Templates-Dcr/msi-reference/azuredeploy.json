@@ -11,7 +11,7 @@
     "outputs": {
         "managedIdentityObjectId": {
             "type": "string",
-            "value": "[reference(parameters('vmId'), '2019-08-01', 'full').identity.principalId]"
+            "value": "[reference(parameters('vmId'), '2019-03-01', 'full').identity.principalId]"
         }
     }
 }
