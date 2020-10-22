@@ -23,7 +23,7 @@
     "outputs": {
         "managedIdentityObjectId": {
             "type": "string",
-            "value": "[reference(resourceId('mirosoft.compute/virtualmachines', parameters('vmName')), '2019-03-01', 'full').identity.principalId]"
+            "value": "[reference(resourceId('microsoft.compute/virtualmachines', parameters('vmName')), '2019-03-01', 'full').identity.principalId]"
         }
     }
 }
