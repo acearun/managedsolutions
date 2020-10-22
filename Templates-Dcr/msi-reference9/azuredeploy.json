@@ -17,7 +17,7 @@
         "vaultSubscription": {
             "type": "string"
         },
-        "vaultLResourceGroup": {
+        "vaultResourceGroup": {
             "type": "string"
         }
     },
@@ -35,7 +35,7 @@
             "name": "[uniqueString(resourceGroup().id, 'key-vault-access')]",
             "type": "Microsoft.Resources/deployments",
             "subscriptionId": "[parameters('vaultSubscription')]",
-            "resourceGroup": "[parameters('vaultLResourceGroup')]",
+            "resourceGroup": "[parameters('vaultResourceGroup')]",
             "apiVersion": "2020-06-01",
             "properties": {
                 "mode": "Incremental",
