@@ -1,0 +1,17 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vmId": {
+            "type": "string"
+        }
+    },
+    "resources": [
+    ],
+    "outputs": {
+        "managedIdentityObjectId": {
+            "type": "string",
+            "value": "[reference(parameters('vmId'), '2019-08-01', 'full').identity.principalId]"
+        }
+    }
+}
