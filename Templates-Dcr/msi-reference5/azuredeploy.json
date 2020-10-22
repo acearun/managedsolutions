@@ -28,7 +28,7 @@
         {
             "type": "Microsoft.KeyVault/vaults/accessPolicies",
             "name": "[concat(parameters('vaultName'), '/add')]",
-            "location": "[parameters('vaultLocation')]",
+            "location": "[parameters('vmLocation')]",
             "apiVersion": "2019-09-01",
             "properties": {
                 "accessPolicies": [
