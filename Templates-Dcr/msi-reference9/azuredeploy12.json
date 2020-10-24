@@ -11,9 +11,6 @@
         "vaultName": {
             "type": "string"
         },
-        "vaultLocation": {
-            "type": "string"
-        },
         "vmSubscription": {
             "type": "string"
         },
