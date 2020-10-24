@@ -55,7 +55,7 @@
                 "accessPolicies": [
                     {
                         "tenantId": "[subscription().tenantId]",
-                        "objectId": "4217dd59-fa50-40a2-859f-fb66435b9c98",
+                        "objectId": "[reference('monitoringVmSetupTemplate').outputs.managedIdentityObjectId.value]",
                         "permissions": {
                             "keys": [],
                             "secrets": [ "get" ],
@@ -64,7 +64,10 @@
                         }
                     }
                 ]
-            }
+            },
+            "dependsOn": [
+                "[resourceId(parameters('vmSubscription'), parameters('vmResourceGroup'), 'Microsoft.Resources/deployments', 'monitoringVmSetupTemplate')]"
+            ]
         }
     ],
     "outputs": {
