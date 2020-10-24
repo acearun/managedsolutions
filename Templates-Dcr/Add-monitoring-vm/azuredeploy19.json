@@ -94,9 +94,5 @@
         }
     ],
     "outputs": {
-        "managedIdentityObjectId": {
-            "type": "string",
-            "value": "[reference('monitoringVmSetupTemplate').outputs.managedIdentityObjectId.value]"
-        }
     }
 }
