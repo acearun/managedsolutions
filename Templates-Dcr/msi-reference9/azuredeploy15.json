@@ -8,8 +8,8 @@
         "vmLocation": {
             "type": "string"
         },
-        "vaultNames": {
-            "type": "array"
+        "vaultName": {
+            "type": "string"
         },
         "vmSubscription": {
             "type": "string"
@@ -46,7 +46,7 @@
         },
         {
             "type": "Microsoft.KeyVault/vaults/accessPolicies",
-            "name": "[concat(parameters('vaultNames')[copyIndex()], '/add')]",
+            "name": "[concat(parameters('vaultName'), '/add')]",
             "apiVersion": "2019-09-01",
             "properties": {
                 "accessPolicies": [
@@ -61,10 +61,6 @@
                         }
                     }
                 ]
-            },
-            "copy": {
-                "name": "vaultCopy",
-                "count": "[length(parameters('vaultNames'))]"
             },
             "dependsOn": [
                 "[resourceId(parameters('vmSubscription'), parameters('vmResourceGroup'), 'Microsoft.Resources/deployments', 'monitoringVmSetupTemplate')]"
