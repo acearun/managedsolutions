@@ -77,7 +77,7 @@
                                 ]
                             },
                             "dependsOn": [
-                                "[resourceId('Microsoft.Resources/deployments', 'monitoringVmSetupTemplate')]"
+                                "[reference('Microsoft.Resources/deployments', 'monitoringVmSetupTemplate')]"
                             ]
                         }
                     ]
