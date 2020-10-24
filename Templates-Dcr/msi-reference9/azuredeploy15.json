@@ -19,7 +19,8 @@
         }
     },
     "variables": {
-        "vmTemplateLink": "https://raw.githubusercontent.com/acearun/managedsolutions/master/Templates-Dcr/msi-reference9/msideploy2.json"
+        "vmTemplateLink": "https://raw.githubusercontent.com/acearun/managedsolutions/master/Templates-Dcr/msi-reference9/msideploy2.json",
+        "kvTemplateLink": "https://raw.githubusercontent.com/acearun/managedsolutions/master/Templates-Dcr/msi-reference9/kvdeploy.json"
     },
     "resources": [
         {
@@ -45,22 +46,25 @@
             }
         },
         {
-            "type": "Microsoft.KeyVault/vaults/accessPolicies",
-            "name": "[concat(parameters('vaultName'), '/add')]",
-            "apiVersion": "2019-09-01",
+            "apiVersion": "2017-05-10",
+            "name": "monitoringVmSetupTemplate",
+            "type": "Microsoft.Resources/deployments",
+            "subscriptionId": "[parameters('vmSubscription')]",
+            "resourceGroup": "[parameters('vmResourceGroup')]",
             "properties": {
-                "accessPolicies": [
-                    {
-                        "tenantId": "[subscription().tenantId]",
-                        "objectId": "[reference('monitoringVmSetupTemplate').outputs.managedIdentityObjectId.value]",
-                        "permissions": {
-                            "keys": [],
-                            "secrets": [ "get" ],
-                            "certificates": [],
-                            "storage": []
-                        }
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('kvTemplateLink')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "vaultName": {
+                        "value": "[parameters('vaultName')]"
+                    },
+                    "managedIdentityObjectId": {
+                        "value": "[reference('monitoringVmSetupTemplate').outputs.managedIdentityObjectId.value]"
                     }
-                ]
+                }
             },
             "dependsOn": [
                 "[resourceId(parameters('vmSubscription'), parameters('vmResourceGroup'), 'Microsoft.Resources/deployments', 'monitoringVmSetupTemplate')]"
