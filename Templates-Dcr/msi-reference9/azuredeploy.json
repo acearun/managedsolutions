@@ -14,28 +14,46 @@
         "vaultLocation": {
             "type": "string"
         },
-        "vaultSubscription": {
+        "vmSubscription": {
             "type": "string"
         },
-        "vaultResourceGroup": {
+        "vmResourceGroup": {
             "type": "string"
         }
     },
+    "variables": {
+        "vmTemplateLink": "https://raw.githubusercontent.com/acearun/managedsolutions/master/Templates-Dcr/msi-reference9/msideploy.json"
+    },
     "resources": [
         {
-            "apiVersion": "2018-10-01",
-            "name": "[parameters('vmName')]",
-            "type": "Microsoft.Compute/virtualMachines",
-            "location": "[parameters('vmLocation')]",
-            "identity": {
-                "type": "SystemAssigned"
+            "apiVersion": "2017-05-10",
+            "name": "monitoringVmSetupTemplate",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('vmTemplateLink')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "vmName": {
+                        "value": "[parameters('vmName')]"
+                    },
+                    "vmLocation": {
+                        "value": "[parameters('vmLocation')]"
+                    },
+                    "vmSubscription": {
+                        "value": "[parameters('vmSubscription')]"
+                    },
+                    "vmResourceGroup": {
+                        "value": "[parameters('vmResourceGroup')]"
+                    }
+                }
             }
         },
         {
-            "name": "[uniqueString(resourceGroup().id, 'key-vault-access')]",
+            "name": "[concat(parameters('vmName'), '-access-policy')]",
             "type": "Microsoft.Resources/deployments",
-            "subscriptionId": "[parameters('vaultSubscription')]",
-            "resourceGroup": "[parameters('vaultResourceGroup')]",
             "apiVersion": "2020-06-01",
             "properties": {
                 "mode": "Incremental",
@@ -43,7 +61,6 @@
                     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
                     "contentVersion": "1.0.0.0",
                     "resources": [
-
                         {
                             "type": "Microsoft.KeyVault/vaults/accessPolicies",
                             "name": "[concat(parameters('vaultName'), '/add')]",
@@ -53,7 +70,7 @@
                                 "accessPolicies": [
                                     {
                                         "tenantId": "[subscription().tenantId]",
-                                        "objectId": "[reference(resourceId('microsoft.compute/virtualmachines', parameters('vmName')), '2019-03-01', 'full').identity.principalId]",
+                                        "objectId": "[reference('monitoringVmSetupTemplate').outputs.managedIdentityObjectId.value]",
                                         "permissions": {
                                             "keys": [],
                                             "secrets": [ "get" ],
@@ -64,7 +81,7 @@
                                 ]
                             },
                             "dependsOn": [
-                                "[resourceId('microsoft.compute/virtualmachines', parameters('vmName'))]"
+                                "[resourceId('Microsoft.Resources/deployments', 'monitoringVmSetupTemplate')]"
                             ]
                         }
                     ]
@@ -73,9 +90,5 @@
         }
     ],
     "outputs": {
-        "managedIdentityObjectId": {
-            "type": "string",
-            "value": "[reference(resourceId('microsoft.compute/virtualmachines', parameters('vmName')), '2019-03-01', 'full').identity.principalId]"
-        }
     }
 }
