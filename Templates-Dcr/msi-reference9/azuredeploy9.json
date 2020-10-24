@@ -46,30 +46,12 @@
                     }
                 }
             }
-        },
-        {
-            "type": "Microsoft.KeyVault/vaults/accessPolicies",
-            "name": "[concat(parameters('vaultName'), '/add')]",
-            "apiVersion": "2019-09-01",
-            "properties": {
-                "accessPolicies": [
-                    {
-                        "tenantId": "[subscription().tenantId]",
-                        "objectId": "[reference('monitoringVmSetupTemplate').outputs.managedIdentityObjectId.value]",
-                        "permissions": {
-                            "keys": [],
-                            "secrets": [ "get" ],
-                            "certificates": [],
-                            "storage": []
-                        }
-                    }
-                ]
-            },
-            "dependsOn": [
-                "[reference('Microsoft.Resources/deployments', 'monitoringVmSetupTemplate')]"
-            ]
         }
     ],
     "outputs": {
+        "managedIdentityObjectId": {
+            "type": "string",
+            "value": "[reference('monitoringVmSetupTemplate').outputs.managedIdentityObjectId.value]"
+        }
     }
 }
