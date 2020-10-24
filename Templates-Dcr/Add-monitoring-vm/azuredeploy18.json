@@ -16,11 +16,23 @@
         },
         "vmResourceGroup": {
             "type": "string"
+        },
+        "dataCollectionRuleId": {
+            "type": "string",
+            "metadata": {
+                "description": "Specifies the Azure resource ID of the data collection rule to associate."
+            }
+        },
+        "workloadConfig": {
+            "type": "object",
+            "metadata": {
+                "description": "The configuration to use with this virtual machine"
+            }
         }
     },
     "variables": {
-        "vmTemplateLink": "https://raw.githubusercontent.com/acearun/managedsolutions/master/Templates-Dcr/msi-reference9/msideploy2.json",
-        "kvTemplateLink": "https://raw.githubusercontent.com/acearun/managedsolutions/master/Templates-Dcr/msi-reference9/kvdeploy.json"
+        "vmTemplateLink": "https://raw.githubusercontent.com/acearun/managedsolutions/master/Templates-Dcr/Add-monitoring-vm/vmsetup2.json",
+        "kvTemplateLink": "https://raw.githubusercontent.com/acearun/managedsolutions/master/Templates-Dcr/Add-monitoring-vm/kvdeploy.json"
     },
     "resources": [
         {
@@ -41,6 +53,12 @@
                     },
                     "vmLocation": {
                         "value": "[parameters('vmLocation')]"
+                    },
+                    "dataCollectionRuleId": {
+                        "value": "[parameters('dataCollectionRuleId')]"
+                    },
+                    "workloadConfig": {
+                        "value": "[parameters('workloadConfig')]"
                     }
                 }
             }

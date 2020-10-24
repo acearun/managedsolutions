@@ -1,0 +1,90 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vmName": {
+            "type": "string"
+        },
+        "vmLocation": {
+            "type": "string"
+        },
+        "dataCollectionRuleId": {
+            "type": "string",
+            "metadata": {
+                "description": "Specifies the Azure resource ID of the data collection rule to associate."
+            }
+        },
+        "workloadConfig": {
+            "type": "object",
+            "metadata": {
+                "description": "The configuration to use with this virtual machine"
+            }
+        }
+    },
+    "resources": [
+        {
+            "apiVersion": "2018-10-01",
+            "name": "[parameters('vmName')]",
+            "type": "Microsoft.Compute/virtualMachines",
+            "location": "[parameters('vmLocation')]",
+            "identity": {
+                "type": "SystemAssigned"
+            }
+        },
+        {
+            "name": "[concat(parameters('vmName'), '/CustomScriptExtension')]",
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "location": "[parameters('vmLocation')]",
+            "apiVersion": "2019-03-01",
+            "dependsOn": [
+                "[concat('Microsoft.Compute/virtualMachines/', parameters('vmName'))]"
+            ],
+            "properties": {
+                "publisher": "Microsoft.Azure.Extensions",
+                "type": "CustomScript",
+                "typeHandlerVersion": "2.1",
+                "autoUpgradeMinorVersion": true,
+                "settings": {
+                    "skipDos2Unix": false,
+                    "fileUris": []
+                },
+                "protectedSettings": {
+                    "commandToExecute": "sh mdsd.sh",
+                    "fileUris": [
+                        "https://wli.blob.core.windows.net/agents/mdsd.sh"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "[concat(parameters('vmName'), '/Workload.WLILinuxExtension')]",
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "apiVersion": "2018-06-01",
+            "location": "[parameters('vmLocation')]",
+            "properties": {
+                "publisher": "Microsoft.Azure.Monitor.Workloads",
+                "type": "Workload.WLILinuxExtension",
+                "typeHandlerVersion": "0.1",
+                "autoUpgradeMinorVersion": true,
+                "settings": {
+                    "workloadConfig": "[parameters('workloadConfig')]"
+                 }
+            }
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines/providers/dataCollectionRuleAssociations",
+            "name": "[concat(parameters('vmName'),'/microsoft.insights/sql-insights-association')]",
+            "apiVersion": "2019-11-01-preview",
+            "properties": {
+                "description": "Association of data collection rule for Azure Security Center. Deleting this association will break the detection of security vulnerabilities for this virtual machine.",
+                "dataCollectionRuleId": "[parameters('dataCollectionRuleId')]"
+            }
+        }
+    ],
+    "outputs": {
+        "managedIdentityObjectId": {
+            "type": "string",
+            "value": "[reference(resourceId('microsoft.compute/virtualmachines', parameters('vmName')), '2019-03-01', 'full').identity.principalId]"
+        }
+    }
+}
