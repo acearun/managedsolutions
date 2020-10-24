@@ -8,8 +8,8 @@
         "vmLocation": {
             "type": "string"
         },
-        "vaultName": {
-            "type": "string"
+        "linkedVaults": {
+            "type": "array"
         },
         "vmSubscription": {
             "type": "string"
@@ -49,6 +49,8 @@
             "apiVersion": "2017-05-10",
             "name": "KvAccessPlicyTemplate",
             "type": "Microsoft.Resources/deployments",
+            "subscriptionId": "[parameters('linkedVaults')[copyIndex()].subscription]",
+            "resourceGroup": "[parameters('linkedVaults')[copyIndex()].resourceGroup]",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
@@ -57,12 +59,16 @@
                 },
                 "parameters": {
                     "vaultName": {
-                        "value": "[parameters('vaultName')]"
+                        "value": "[parameters('linkedVaults')[copyIndex()].name]"
                     },
                     "managedIdentityObjectId": {
                         "value": "[reference('monitoringVmSetupTemplate').outputs.managedIdentityObjectId.value]"
                     }
                 }
+            },
+            "copy": {
+                "name": "kvpolicycopy",
+                "count": "[length(parameters('linkedVaults'))]"
             },
             "dependsOn": [
                 "[resourceId(parameters('vmSubscription'), parameters('vmResourceGroup'), 'Microsoft.Resources/deployments', 'monitoringVmSetupTemplate')]"
