@@ -65,7 +65,7 @@
         },
         {
             "apiVersion": "2017-05-10",
-            "name": "[concat('KVAccess', newGuid())]",
+            "name": "[concat('KVAccess-', uniqueString(resourceGroup().id))]",
             "type": "Microsoft.Resources/deployments",
             "subscriptionId": "[if(equals(length(parameters('linkedVaults')), 0), parameters('vmSubscription'), parameters('linkedVaults')[copyIndex()].subscription)]",
             "resourceGroup": "[if(equals(length(parameters('linkedVaults')), 0), parameters('vmResourceGroup'), parameters('linkedVaults')[copyIndex()].resourceGroup)]",
