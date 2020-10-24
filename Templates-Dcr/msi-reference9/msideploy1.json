@@ -7,12 +7,6 @@
         },
         "vmLocation": {
             "type": "string"
-        },
-        "vmSubscription": {
-            "type": "string"
-        },
-        "vmResourceGroup": {
-            "type": "string"
         }
     },
     "resources": [
@@ -20,8 +14,6 @@
             "apiVersion": "2018-10-01",
             "name": "[parameters('vmName')]",
             "type": "Microsoft.Compute/virtualMachines",
-            "subscriptionId": "[parameters('vmSubscription')]",
-            "resourceGroup": "[parameters('vmResourceGroup')]",
             "location": "[parameters('vmLocation')]",
             "identity": {
                 "type": "SystemAssigned"
