@@ -64,10 +64,7 @@
                         }
                     }
                 ]
-            },
-            "dependsOn": [
-                "[reference('Microsoft.Resources/deployments', 'monitoringVmSetupTemplate')]"
-            ]
+            }
         }
     ],
     "outputs": {
