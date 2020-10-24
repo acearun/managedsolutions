@@ -49,8 +49,6 @@
             "apiVersion": "2017-05-10",
             "name": "KvAccessPlicyTemplate",
             "type": "Microsoft.Resources/deployments",
-            "subscriptionId": "[parameters('vmSubscription')]",
-            "resourceGroup": "[parameters('vmResourceGroup')]",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
