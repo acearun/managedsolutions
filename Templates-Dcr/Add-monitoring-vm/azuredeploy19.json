@@ -65,7 +65,7 @@
         },
         {
             "apiVersion": "2017-05-10",
-            "name": "KvAccessPolicyTemplate",
+            "name": "[concat('KVAccess', newGuid())]",
             "type": "Microsoft.Resources/deployments",
             "subscriptionId": "[if(equals(length(parameters('linkedVaults')), 0), parameters('vmSubscription'), parameters('linkedVaults')[copyIndex()].subscription)]",
             "resourceGroup": "[if(equals(length(parameters('linkedVaults')), 0), parameters('vmResourceGroup'), parameters('linkedVaults')[copyIndex()].resourceGroup)]",
