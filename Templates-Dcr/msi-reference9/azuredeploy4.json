@@ -22,7 +22,7 @@
         }
     },
     "variables": {
-        "vmTemplateLink": "https://raw.githubusercontent.com/acearun/managedsolutions/master/Templates-Dcr/msi-reference9/msideploy1.json"
+        "vmTemplateLink": "https://raw.githubusercontent.com/acearun/managedsolutions/master/Templates-Dcr/msi-reference9/msideploy2.json"
     },
     "resources": [
         {
