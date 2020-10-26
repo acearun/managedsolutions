@@ -1,0 +1,41 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vmName": {
+            "type": "string"
+        },
+        "vmLocation": {
+            "type": "string"
+        },
+        "workloadConfig": {
+            "type": "object",
+            "metadata": {
+                "description": "The configuration to use with this virtual machine"
+            }
+        }
+    },
+    "resources": [
+        {
+            "name": "[concat(parameters('vmName'), '/Workload.WLILinuxExtension')]",
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "apiVersion": "2018-06-01",
+            "location": "[parameters('vmLocation')]",
+            "properties": {
+                "publisher": "Microsoft.Azure.Monitor.Workloads",
+                "type": "Workload.WLILinuxExtension",
+                "typeHandlerVersion": "0.1",
+                "autoUpgradeMinorVersion": true,
+                "settings": {
+                    "workloadConfig": "[parameters('workloadConfig')]"
+                 }
+            }
+        }
+    ],
+    "outputs": {
+        "managedIdentityObjectId": {
+            "type": "string",
+            "value": "[reference(resourceId('microsoft.compute/virtualmachines', parameters('vmName')), '2019-03-01', 'full').identity.principalId]"
+        }
+    }
+}

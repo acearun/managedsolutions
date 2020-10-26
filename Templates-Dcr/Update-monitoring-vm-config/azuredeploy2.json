@@ -1,0 +1,89 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vmName": {
+            "type": "string"
+        },
+        "vmLocation": {
+            "type": "string"
+        },
+        "linkedVaults": {
+            "type": "array"
+        },
+        "vmSubscription": {
+            "type": "string"
+        },
+        "vmResourceGroup": {
+            "type": "string"
+        },
+        "workloadConfig": {
+            "type": "object",
+            "metadata": {
+                "description": "The configuration to use with this virtual machine"
+            }
+        }
+    },
+    "variables": {
+        "vmTemplateLink": "https://raw.githubusercontent.com/acearun/managedsolutions/master/Templates-Dcr/Update-monitoring-vm-config/vmsetup.json",
+        "kvTemplateLink": "https://raw.githubusercontent.com/acearun/managedsolutions/master/Templates-Dcr/Update-monitoring-vm-config/kvdeploy.json"
+    },
+    "resources": [
+        {
+            "apiVersion": "2017-05-10",
+            "name": "MonitoringVmSetupTemplate",
+            "type": "Microsoft.Resources/deployments",
+            "subscriptionId": "[parameters('vmSubscription')]",
+            "resourceGroup": "[parameters('vmResourceGroup')]",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('vmTemplateLink')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "vmName": {
+                        "value": "[parameters('vmName')]"
+                    },
+                    "vmLocation": {
+                        "value": "[parameters('vmLocation')]"
+                    },
+                    "workloadConfig": {
+                        "value": "[parameters('workloadConfig')]"
+                    }
+                }
+            }
+        },
+        {
+            "apiVersion": "2017-05-10",
+            "name": "[concat('KVAccess-', uniqueString(resourceGroup().id))]",
+            "type": "Microsoft.Resources/deployments",
+            "subscriptionId": "[if(equals(length(parameters('linkedVaults')), 0), parameters('vmSubscription'), parameters('linkedVaults')[copyIndex()].subscription)]",
+            "resourceGroup": "[if(equals(length(parameters('linkedVaults')), 0), parameters('vmResourceGroup'), parameters('linkedVaults')[copyIndex()].resourceGroup)]",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('kvTemplateLink')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "vaultName": {
+                        "value": "[parameters('linkedVaults')[copyIndex()].name]"
+                    },
+                    "managedIdentityObjectId": {
+                        "value": "[reference('monitoringVmSetupTemplate').outputs.managedIdentityObjectId.value]"
+                    }
+                }
+            },
+            "copy": {
+                "name": "kvpolicycopy",
+                "count": "[length(parameters('linkedVaults'))]"
+            },
+            "dependsOn": [
+                "[resourceId(parameters('vmSubscription'), parameters('vmResourceGroup'), 'Microsoft.Resources/deployments', 'monitoringVmSetupTemplate')]"
+            ]
+        }
+    ],
+    "outputs": {
+    }
+}
