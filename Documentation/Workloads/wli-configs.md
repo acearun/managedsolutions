@@ -53,26 +53,23 @@ Here is the per-machine config corresponding to the profile config above:
         }
     },
     "parameters": {
-        "telegrafUsername": "telegraf",
         "connections": [
-            "Server=mysqlserver.database.windows.net;Port=1433;Database=mydatabase;User Id=$telegrafUsername;Password=$telegrafPassword;"
+            "Server=mysqlserver.database.windows.net;Port=1433;Database=mydatabase;User Id=telegraf;Password=$telegrafPassword;"
         ]
     }
 }
 ```
 
-The key replacement token is the parameter `connections`. It specifies the skeleton of a connection string array which itself references other parameters and secrets. The resolved values of all tokens will generate a true connection string that will be merged with the profile config as specified in the templating code. 
+The key replacement token is the parameter `connections`. It specifies the skeleton of a connection string array which itself references other secrets. The resolved values of all tokens will generate a true connection string that will be merged with the profile config as specified in the templating code. 
 
-For instance, the `connections` parameter references another parameter `telegrafUsername` which itself has a hard coded value `telegraf` set in the config. It also references `telegrafPassword` which happens to be a secret referece, whose value is retrieved by looking into the Azure Key Vault `https://mykeyvault.vault.azure.net` for secret name `sqlPassword`. 
+For instance, the `connections` parameter references `telegrafPassword` which happens to be a secret referece, whose value is retrieved by looking into the Azure Key Vault `https://mykeyvault.vault.azure.net` for secret name `sqlPassword`. 
 
 The per-machine config when combined with the profile config, generates a fully resolved configuration for the current machine, which has information of both `what` to collect and `where` to collect it from.
 
 ### Parameters
 Parameters are basically tokens that can be referenced in the profile configuration via JSON templating. Parameters have a name and a value; values can be any JSON type including objects and arrays. A parameter is referenced in the profile config using its name in this convention `.Parameters.<name>`. 
 
-Parameters values can reference other parameters. In the example above, the parameter `connections` references the parameter `telegrafUsername` using the convention `$telegrafUsername`. You can use as many levels of references as needed for your scenario, the only requirement is that referenced parameters need to be defined above the ones using it. 
-
-Parameters can also reference secrets in Key Vault using the same convention. For example, `connections` also references the secret `telegrafPassword` using the convention `$telegrafPassword`. 
+Parameters can reference secrets in Key Vault using the same convention. For example, `connections` references the secret `telegrafPassword` using the convention `$telegrafPassword`. 
 
 At run time, all parameters/secrets will be resolved and merged with the profile config to construct the actual config to be used on the machine. 
 
@@ -97,4 +94,4 @@ You can define as many secrets as needed in the config, including to seperate Ke
 The permissions to access the Key Vault is provided to a Managed Service Identity on the VM (usually at onboarding time). Azure Monitor expects the Key Vault to provide at least secrets `get` permission to the VM. You can enable it from the [Azure portal](https://docs.microsoft.com/en-us/azure/key-vault/general/assign-access-policy-portal), [PowerShell](https://docs.microsoft.com/en-us/azure/key-vault/general/assign-access-policy-powershell), [CLI](https://docs.microsoft.com/en-us/azure/key-vault/general/assign-access-policy-cli) or [ARM template](https://github.com/acearun/managedsolutions/blob/master/Templates-Dcr/Add-monitoring-vm/kvdeploy.json)
 
 ### Config update frequency
-Azure Monitor refreshes and resolves both configs every 5 minutes. This allows for new configs, tokens and configs to take effect without the need for a redeploy within a relatively short window. 
+Azure Monitor refreshes and resolves both configs every 5 minutes. This allows for new configs, tokens and configs to take effect within a short window without the need for a redeploy . 
