@@ -97,4 +97,4 @@ You can define as many secrets as needed in the config, including to seperate Ke
 The permissions to access the Key Vault is provided to a Managed Service Identity on the VM (usually at onboarding time). Azure Monitor expects the Key Vault to provide at least secrets `get` permission to the VM. You can enable it from the [Azure portal](https://docs.microsoft.com/en-us/azure/key-vault/general/assign-access-policy-portal), [PowerShell](https://docs.microsoft.com/en-us/azure/key-vault/general/assign-access-policy-powershell), [CLI](https://docs.microsoft.com/en-us/azure/key-vault/general/assign-access-policy-cli) or [ARM template](https://github.com/acearun/managedsolutions/blob/master/Templates-Dcr/Add-monitoring-vm/kvdeploy.json)
 
 ### Config update frequency
-Azure Monitor refreshes and resolves both configs every 5 minutes by default. This allows for new configs, tokens and configs to take effect without the need for a redeploy within a relatively short window. 
+Azure Monitor refreshes and resolves both configs every 5 minutes. This allows for new configs, tokens and configs to take effect without the need for a redeploy within a relatively short window. 
