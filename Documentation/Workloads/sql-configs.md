@@ -2,7 +2,7 @@
 
 Azure Monitor for SQL provides a flexible mechanism to specify the instances to monitor using per-machine configs. It is as simple as specifying a set of connection strings to monitor and any secrets references needed to do so.
 
-Here is an example of a SQL monitoring config for a monitoring virtual machine:
+Here is an example of a SQL monitoring config:
 
 ```json
 {
@@ -26,7 +26,7 @@ Here is an example of a SQL monitoring config for a monitoring virtual machine:
 }
 ```
 
-The config specifies 2 connection strings in the parameter `sqlAzureConnections` - which correspond to the Azure SQL databases to monitor. You can as many connection strings as instances you want to monitor - just ensure that your virtual machine is powerful enough to handle the load. 
+The config specifies 2 connection strings in the parameter `sqlAzureConnections` - which correspond to the Azure SQL databases to monitor. You can as many connection strings as instances or databases you want to monitor - just ensure that your virtual machine is powerful enough to handle the load. 
 
 In addition, the config allows to specify connection strings for Azure SQL Managed Instances and virtual-machine based SQL Servers using these paramters: 
 
@@ -36,17 +36,14 @@ In addition, the config allows to specify connection strings for Azure SQL Manag
 | sqlManagedInstanceConnections | Azure SQL Managed Instances                 |
 | sqlVmConnections              | SQL Servers (virtual machine or on-premise) |
 
-Notice that the strings in the config are not raw connection strings, but contain references to parameters and secrets in the config. This provides some important benefits:
-
-1. Allows the configs to be free of secrets. All secrets can be stored in an Azure Key Vault and the dynamic values are retrieved at run time. This enables scenarios like `config-as-code`. 
-2. Reusability of tokens. For instance, the user name is referenced as a parameter, not a static value. This means you can change its value in one place and all references will auto-update their values. 
+Notice that the strings in the config are not raw connection strings, but contain references to secrets in the config. This allows the configs to be free of secrets. All secrets can be stored in an Azure Key Vault and the dynamic values are retrieved at run time. This enables scenarios like `config-as-code`. 
 
 Once you have setup the connection string and deployed it, Azure Monitor will combine the tokens with your SQL profile config and create a unique monitoring config for the virtual machine. See [Workload monitoring configuration](wli-configs.md) for more information.
 
-The net effect is that the monitoring VM will begin collecting SQL metrics from the two SQL instances corresponding to the connection strings.
+The net effect is that the monitoring VM will begin collecting SQL metrics from the two Azure SQL databases corresponding to the connection strings.
 
 ### Parameters
-Parameters are basically tokens that can be referenced in the profile configuration via templating. Parameters have a name and a value; values can be any JSON type including objects and arrays. In the SQL config, the required parameters include `sqlAzureConnections`, `sqlManagedInstanceConnections` and `sqlVmConnections` and each expects zero or more connection strings as an array.  
+Parameters are basically tokens that can be referenced in the profile configuration via templating. In the SQL config, the required parameters include `sqlAzureConnections`, `sqlManagedInstanceConnections` and `sqlVmConnections` and each expects zero or more connection strings as a JSON array.  
 
 Parameters can also reference secrets in Key Vault using the same convention. For example, `sqlAzureConnections` also references the secret `telegrafPassword` using the convention `$telegrafPassword`. 
 
