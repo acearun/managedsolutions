@@ -6,7 +6,9 @@ Azure Monitor workload monitoring supports two types of configs - which together
 
 2. Per-machine configuration - allows you to specify `where` to collect the data from. This can be unique based on the setup of your workloads per machine. For instance, the workload may need info about machine name, ip-address or a connection string that is unique to the machine. 
 
-Azure Monitor allows you to merge the per-machine config with the profile config using [ Go’s text template syntax](https://golang.org/pkg/text/template/). You can use  these together to specify Telegraf inputs configuration in TOML format. 
+Azure Monitor allows you to merge the per-machine config with the profile config using [Go’s text template syntax](https://golang.org/pkg/text/template/).
+
+The profile config and per-machine config can be used in combination to specify Telegraf inputs configuration in TOML format. 
 
 To see the two configs working together, let's construct a config that allows you to monitoring SQL workloads. 
 
@@ -31,7 +33,11 @@ In this example, it specifies:
 
 These kinds of settings are usually common for all workload instances in the profile. 
 
-Note that it does not specify the details of the specific workload, e.g. its connection string. Instead, it uses a Go-style templating snippet to setup a merge from the per-machine config at run time. This allows you to have one profile config + *K* per-machine configs - which together specify your monitoring settings.
+The profile config uses Go’s text template syntax in order to generate the Telegraf input config. This templating syntax enables text to carry out actions such as conditions, functions, and control loops delimited by `{{}}`. The template syntax also evaluates arguments by binding to the per-machine JSON configuration. In the example above, `.Perameters.connections` is an argument reference to the per-machine config and initialized to a variable called `$connections`. 
+
+For more information on Go's text template syntax, please refer to the [documentation](https://golang.org/pkg/text/template/).
+
+Note that the profile config does not specify the details of the specific workload, e.g. its connection string. Instead, it uses the Go-style templating snippet to setup a merge from the per-machine config at run time. This allows you to have one profile config + *K* per-machine configs - which together specify your monitoring settings.
 
 ## Per-machine config
 This config essentially specifies the replacement tokens to be used in your profile config. It also allows you to reference secrets from Azure Key Vault so you don't have keep secret values in any config.
