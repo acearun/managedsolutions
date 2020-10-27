@@ -1,6 +1,6 @@
 # SQL monitoring configuration
 
-Azure Monitor for SQL provides you with a flexible way to specify the instances to monitor it's per-machine config. It really amounts down to specifying a collection of connection strings to the remote SQL instances to monitor and any secret/parameter required to do so.
+Azure Monitor for SQL provides a flexible mechanism to specify the instances to monitor using per-machine configs. It is as simple as specifying a collection of connection strings of remote SQL instances to monitor and any secret/parameter required to do so.
 
 Here is an example of a SQL monitoring config for a monitoring virtual machine:
 
