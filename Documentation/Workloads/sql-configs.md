@@ -35,9 +35,9 @@ Once you have setup the connection string and deployed it, Azure Monitor will co
 The net effect is that the monitoring VM will begin collecting SQL metrics from the two SQL instances corresponding to the connection strings.
 
 ### Parameters
-Parameters are basically tokens that can be referenced in the profile configuration via templating. Parameters have a name and a value; values can be any JSON type including objects and arrays. In the SQL config, the only  required parameter is `connections` and expects an array of connection strings.  
+Parameters are basically tokens that can be referenced in the profile configuration via JSON templating. Parameters have a name and a value; values can be any JSON type including objects and arrays. In the SQL config, the only  required parameter is `connections` and expects an array of connection strings.  
 
-Parameters values can reference other paramters. In the example above, the parameter `connections` references the parameter `telegrafUsername` using the convention `$telegrafUsername`. You can use as many levels of references as needed for your scenario, the only requirement is that referenced parameters need to be defined above the ones using it. 
+Parameters values can reference other parameters. In the example above, the parameter `connections` references the parameter `telegrafUsername` using the convention `$telegrafUsername`. You can use as many levels of references as needed for your scenario, the only requirement is that referenced parameters need to be defined above the ones using it. 
 
 Parameters can also reference secrets in Key Vault using the same convention. For example, `connections` also references the secret `telegrafPassword` using the convention `$telegrafPassword`. 
 
@@ -61,7 +61,7 @@ You can define as many secrets as needed in the config, including to seperate Ke
     }
 ```
 
-The permissions to access the Key Vault is provided to a Managed Service Identity on the VM (usually at onboarding time). Azure Monitor expect at least `get` permission to secrets in the Key Vault. You can enable it from the [Azure portal](https://docs.microsoft.com/en-us/azure/key-vault/general/assign-access-policy-portal), [PowerShell](https://docs.microsoft.com/en-us/azure/key-vault/general/assign-access-policy-powershell), [CLI](https://docs.microsoft.com/en-us/azure/key-vault/general/assign-access-policy-cli) or [ARM template](https://github.com/acearun/managedsolutions/blob/master/Templates-Dcr/Add-monitoring-vm/kvdeploy.json)
+The permissions to access the Key Vault is provided to a Managed Service Identity on the VM (usually at onboarding time). Azure Monitor expects the Key Vault to provide at least secrets `get` permission to the VM. You can enable it from the [Azure portal](https://docs.microsoft.com/en-us/azure/key-vault/general/assign-access-policy-portal), [PowerShell](https://docs.microsoft.com/en-us/azure/key-vault/general/assign-access-policy-powershell), [CLI](https://docs.microsoft.com/en-us/azure/key-vault/general/assign-access-policy-cli) or [ARM template](https://github.com/acearun/managedsolutions/blob/master/Templates-Dcr/Add-monitoring-vm/kvdeploy.json)
 
 ### Config update frequency
 Azure Monitor refreshes and resolves both configs every 5 minutes. This allows for new configs, tokens and configs to take effect without the need for a redeploy within a relatively short window. 
