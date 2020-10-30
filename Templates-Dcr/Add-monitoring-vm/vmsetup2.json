@@ -32,28 +32,17 @@
             }
         },
         {
-            "name": "[concat(parameters('vmName'), '/CustomScriptExtension')]",
             "type": "Microsoft.Compute/virtualMachines/extensions",
+            "apiVersion": "2019-12-01",
+            "name": "[concat(parameters('vmName'),'/', 'AzureMonitorLinuxAgent')]",
             "location": "[parameters('vmLocation')]",
-            "apiVersion": "2019-03-01",
             "dependsOn": [
-                "[concat('Microsoft.Compute/virtualMachines/', parameters('vmName'))]"
             ],
             "properties": {
-                "publisher": "Microsoft.Azure.Extensions",
-                "type": "CustomScript",
-                "typeHandlerVersion": "2.1",
-                "autoUpgradeMinorVersion": true,
-                "settings": {
-                    "skipDos2Unix": false,
-                    "fileUris": []
-                },
-                "protectedSettings": {
-                    "commandToExecute": "sh mdsd.sh",
-                    "fileUris": [
-                        "https://wli.blob.core.windows.net/agents/mdsd.sh"
-                    ]
-                }
+                "publisher": "Microsoft.Azure.Monitor",
+                "type": "AzureMonitorLinuxAgent",
+                "typeHandlerVersion": "1.5.133",
+                "autoUpgradeMinorVersion": true
             }
         },
         {
@@ -68,7 +57,7 @@
                 "autoUpgradeMinorVersion": true,
                 "settings": {
                     "workloadConfig": "[parameters('workloadConfig')]"
-                 }
+                }
             }
         },
         {
