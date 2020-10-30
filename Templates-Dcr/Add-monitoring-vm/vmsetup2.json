@@ -41,7 +41,6 @@
             "properties": {
                 "publisher": "Microsoft.Azure.Monitor",
                 "type": "AzureMonitorLinuxAgent",
-                "typeHandlerVersion": "1.5.133",
                 "autoUpgradeMinorVersion": true
             }
         },
