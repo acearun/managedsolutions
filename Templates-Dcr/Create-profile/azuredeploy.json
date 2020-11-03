@@ -28,7 +28,7 @@
             "type": "string"
         },
         "serializedTelegrafConfig": {
-            "type": "securestring",
+            "type": "string",
             "metadata": {
                 "description": "Telegraf config"
             }
