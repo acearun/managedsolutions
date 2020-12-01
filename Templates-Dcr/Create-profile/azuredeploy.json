@@ -71,7 +71,10 @@
                     "extensions": [
                         {
                             "name": "[parameters('dataSource')]",
-                            "stream": "Microsoft-InsightsMetrics",
+                            "streams": [
+                                "Microsoft-InsightsMetrics",
+                                "Microsoft-OperationLog"
+                            ],
                             "extensionName": "WorkloadInsights",
                             "extensionSettings": {
                                 "id": "[parameters('insight')]",
