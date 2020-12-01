@@ -105,41 +105,7 @@
                         ]
                     }
                 ],
-                "alertPacks": [
-                    {
-                        "name": "Microsoft",
-                        "alertTemplates": [
-                            {
-                                "name": "Processes blocked",
-                                "description": "Fired when the number of blocked processes exceeds a threshold",
-                                "uniqueTag": "sql-processes-blocked",
-                                "recommendationLevel": 2,
-                                "applyTo": [],
-                                "alertTemplate": {
-                                    "type": "log-threshold",
-                                    "metricNamespace": "sqlserver_performance",
-                                    "metricName": "Processes blocked",
-                                    "thresholdOperator": ">",
-                                    "defaultThreshold": 0.0
-                                }
-                            },
-                            {
-                                "name": "Deadlocks per second",
-                                "description": "Fired when the rate of deadlocks in SQL exceeds a threshold",
-                                "uniqueTag": "sql-deadlocks-per-second",
-                                "recommendationLevel": 2,
-                                "applyTo": [],
-                                "alertTemplate": {
-                                    "type": "log-threshold",
-                                    "metricNamespace": "sqlserver_performance",
-                                    "metricName": "Number of deadlocks/sec",
-                                    "thresholdOperator": ">",
-                                    "defaultThreshold": 0.0
-                                }
-                            }
-                        ]
-                    }
-                ]
+                "testProperty": "foo" 
             }
         }
     ],
