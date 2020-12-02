@@ -104,8 +104,7 @@
                             "[parameters('destinationName')]"
                         ]
                     }
-                ],
-                "testProperty": "foo" 
+                ]
             }
         }
     ],
