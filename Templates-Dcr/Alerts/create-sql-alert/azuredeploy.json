@@ -36,8 +36,52 @@
         "alertOperator": {
             "type": "string",
             "defaultValue": "0",
+            "allowedValues": [
+                "Equals",
+                "NotEquals",
+                "GreaterThan",
+                "GreaterThanOrEqual",
+                "LessThan",
+                "LessThanOrEqual"
+            ],
             "metadata": {
                 "description": "Operator to use for alert evaluation"
+            }
+        },
+        "alertMetricThreshold": {
+            "type": "int",
+            "defaultValue": 0,
+            "metadata": {
+                "description": "Metric threshold to use for alert evaluation"
+            }
+        },
+        "alertMetricOperator": {
+            "type": "string",
+            "defaultValue": "0",
+            "allowedValues": [
+                "Equals",
+                "NotEquals",
+                "GreaterThan",
+                "GreaterThanOrEqual",
+                "LessThan",
+                "LessThanOrEqual"
+            ],
+            "metadata": {
+                "description": "Metric operator to use for alert evaluation"
+            }
+        },
+        "alertMetricType": {
+            "type": "string",
+            "defaultValue": "0",
+            "metadata": {
+                "description": "Trigger type for alert metrics"
+            }
+        },
+        "alertMetricColumn": {
+            "type": "string",
+            "defaultValue": "0",
+            "metadata": {
+                "description": "Trigger column for alert metrics"
             }
         },
         "alertQuery": {
@@ -70,7 +114,8 @@
         }
     },
     "variables": {
-        "alertThreshold": "[if(equals(parameters('alertThreshold'), ''), '0', parameters('alertThreshold'))]"
+        "alertThreshold": "[if(equals(parameters('alertThreshold'), ''), '0', parameters('alertThreshold'))]",
+        "alertMetricThreshold": "[if(equals(parameters('alertMetricThreshold'), ''), '0', parameters('alertMetricThreshold'))]"
     },
     "resources": [
         {
@@ -101,11 +146,17 @@
                         "actionGroup": [
                             "[parameters('actionGroupId')]"
                         ],
-                        "emailSubject": "[concat('SQL: ', parameters('alertName'))]"
+                        "emailSubject": "[concat('Alert Triggered', parameters('alertName'))]"
                     },
                     "trigger": {
                         "thresholdOperator": "[parameters('alertOperator')]",
-                        "threshold": "[int(variables('alertThreshold'))]"
+                        "threshold": "[int(variables('alertThreshold'))]",
+                        "metricTrigger": {
+                            "thresholdOperator": "[parameters('alertMetricOperator')]",
+                            "threshold": "[int(variables('alertMetricThreshold'))]",
+                            "metricTriggerType": "[parameters('alertMetricType')]",
+                            "metricColumn": "[parameters('alertMetricColumn')]"
+                        }                        
                     }
                 }
             }
