@@ -27,8 +27,8 @@
             }
         },
         "alertThreshold": {
-            "type": "string",
-            "defaultValue": "0",
+            "type": "int",
+            "defaultValue": 0,
             "metadata": {
                 "description": "Threshold to use for alert evaluation"
             }
