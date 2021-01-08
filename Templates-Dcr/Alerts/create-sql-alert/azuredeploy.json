@@ -27,7 +27,7 @@
             }
         },
         "alertThreshold": {
-            "type": "int",
+            "type": "string",
             "defaultValue": 0,
             "metadata": {
                 "description": "Threshold to use for alert evaluation"
@@ -49,7 +49,7 @@
             }
         },
         "alertMetricThreshold": {
-            "type": "int",
+            "type": "string",
             "defaultValue": 0,
             "metadata": {
                 "description": "Metric threshold to use for alert evaluation"
@@ -113,10 +113,6 @@
             }
         }
     },
-    "variables": {
-        "alertThreshold": "[if(equals(parameters('alertThreshold'), ''), '0', parameters('alertThreshold'))]",
-        "alertMetricThreshold": "[if(equals(parameters('alertMetricThreshold'), ''), '0', parameters('alertMetricThreshold'))]"
-    },
     "resources": [
         {
             "name": "[parameters('alertName')]",
@@ -150,11 +146,11 @@
                     },
                     "trigger": {
                         "thresholdOperator": "[parameters('alertOperator')]",
-                        "threshold": "[int(variables('alertThreshold'))]",
+                        "threshold": "[parameters('alertThreshold')]",
                         "metricTrigger": {
-                            "thresholdOperator": "[parameters('alertMetricOperator')]",
-                            "threshold": "[int(variables('alertMetricThreshold'))]",
                             "metricTriggerType": "[parameters('alertMetricType')]",
+                            "thresholdOperator": "[parameters('alertMetricOperator')]",
+                            "threshold": "[parameters('alertMetricThreshold')]",
                             "metricColumn": "[parameters('alertMetricColumn')]"
                         }                        
                     }
