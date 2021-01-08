@@ -108,6 +108,13 @@
             }
         }
     },
+    "variables": {
+        "aznActionGroup": {
+            "actionGroup": "[array(parameters('actionGroupId'))]",
+            "emailSubject": "[concat('Alert Triggered - ', parameters('alertName'))]"
+        },
+        "actionGroup": "[if(equals(parameters('actionGroupId'), ''), json('null'), variables('aznActionGroup'))]"
+    },
     "resources": [
         {
             "name": "[parameters('alertName')]",
@@ -133,10 +140,7 @@
                 "action": {
                     "odata.type": "Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.Microsoft.AppInsights.Nexus.DataContracts.Resources.ScheduledQueryRules.AlertingAction",
                     "severity": "4",
-                    "aznsAction": {
-                        "actionGroup": "[array(parameters('actionGroupId'))]",
-                        "emailSubject": "[concat('Alert Triggered - ', parameters('alertName'))]"
-                    },
+                    "aznsAction": "[variables('actionGroup')]",
                     "trigger": {
                         "thresholdOperator": "[parameters('alertOperator')]",
                         "threshold": "[parameters('alertThreshold')]",
