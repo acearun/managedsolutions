@@ -3,35 +3,20 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "alertName": {
-            "type": "string",
-            "metadata": {
-                "description": "Name of the alert"
-            }
+            "type": "string"
         },
         "alertLocation": {
-            "type": "string",
-            "metadata": {
-                "description": "Location of the alert"
-            }
+            "type": "string"
         },
         "dataSourceId": {
-            "type": "string",
-            "metadata": {
-                "description": "Workspace id"
-            }
+            "type": "string"
         },
         "actionGroupId": {
-            "type": "string",
-            "metadata": {
-                "description": "Action group id"
-            }
+            "type": "string"
         },
         "alertThreshold": {
             "type": "string",
-            "defaultValue": "0",
-            "metadata": {
-                "description": "Threshold to use for alert evaluation"
-            }
+            "defaultValue": "0"
         },
         "alertOperator": {
             "type": "string",
@@ -42,17 +27,11 @@
                 "GreaterThanOrEqual",
                 "LessThan",
                 "LessThanOrEqual"
-            ],
-            "metadata": {
-                "description": "Operator to use for alert evaluation"
-            }
+            ]
         },
         "alertMetricThreshold": {
             "type": "string",
-            "defaultValue": "0",
-            "metadata": {
-                "description": "Metric threshold to use for alert evaluation"
-            }
+            "defaultValue": "0"
         },
         "alertMetricOperator": {
             "type": "string",
@@ -63,46 +42,25 @@
                 "GreaterThanOrEqual",
                 "LessThan",
                 "LessThanOrEqual"
-            ],
-            "metadata": {
-                "description": "Metric operator to use for alert evaluation"
-            }
+            ]
         },
         "alertMetricType": {
-            "type": "string",
-            "metadata": {
-                "description": "Trigger type for alert metrics"
-            }
+            "type": "string"
         },
         "alertMetricColumn": {
-            "type": "string",
-            "metadata": {
-                "description": "Trigger column for alert metrics"
-            }
+            "type": "string"
         },
         "alertQuery": {
-            "type": "string",
-            "metadata": {
-                "description": "Query filter for alert"
-            }
+            "type": "string"
         },
         "alertDescription": {
-            "type": "string",
-            "metadata": {
-                "description": "Description of what the alert does"
-            }
+            "type": "string"
         },
         "profileId": {
-            "type": "string",
-            "metadata": {
-                "description": "profile-id tag to set on alert rule"
-            }
+            "type": "string"
         },
         "alertTemplateTag": {
-            "type": "string",
-            "metadata": {
-                "description": "alert-template-tag tag to set on alert rule"
-            }
+            "type": "string"
         }
     },
     "resources": [
@@ -112,7 +70,11 @@
             "apiVersion": "2018-04-16",
             "tags": {
                 "profile-id": "[parameters('profileId')]",
-                "alert-template-tag": "[parameters('alertTemplateTag')]"
+                "alert-template-tag": "[parameters('alertTemplateTag')]",
+                "metricTriggerType": "[parameters('alertMetricType')]",
+                "thresholdOperator": "[parameters('alertMetricOperator')]",
+                "threshold": "[parameters('alertMetricThreshold')]",
+                "metricColumn": "[parameters('alertMetricColumn')]"
             },
             "location": "[parameters('alertLocation')]",
             "properties": {
@@ -138,13 +100,7 @@
                     },
                     "trigger": {
                         "thresholdOperator": "[parameters('alertOperator')]",
-                        "threshold": "[parameters('alertThreshold')]",
-                        "metricTrigger": {
-                            "metricTriggerType": "[parameters('alertMetricType')]",
-                            "thresholdOperator": "[parameters('alertMetricOperator')]",
-                            "threshold": "[parameters('alertMetricThreshold')]",
-                            "metricColumn": "[parameters('alertMetricColumn')]"
-                        }                        
+                        "threshold": "[parameters('alertThreshold')]"
                     }
                 }
             }
