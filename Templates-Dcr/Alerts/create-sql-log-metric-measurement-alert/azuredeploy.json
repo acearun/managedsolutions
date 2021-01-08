@@ -134,9 +134,7 @@
                     "odata.type": "Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.Microsoft.AppInsights.Nexus.DataContracts.Resources.ScheduledQueryRules.AlertingAction",
                     "severity": "4",
                     "aznsAction": {
-                        "actionGroup": [
-                            "[parameters('actionGroupId')]"
-                        ],
+                        "actionGroup": "[array(parameters('actionGroupId'))]",
                         "emailSubject": "[concat('Alert Triggered - ', parameters('alertName'))]"
                     },
                     "trigger": {
