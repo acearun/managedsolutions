@@ -108,15 +108,9 @@
             }
         }
     },
-    "variables": {
-        "aznActionGroup": {
-            "actionGroup": "[array(parameters('actionGroupId'))]",
-            "emailSubject": "[concat('Alert Triggered - ', parameters('alertName'))]"
-        },
-        "actionGroup": "[if(equals(parameters('actionGroupId'), ''), json('null'), variables('aznActionGroup'))]"
-    },
     "resources": [
         {
+            "condition": "[not(empty(parameters('actionGroupId')))]",
             "name": "[parameters('alertName')]",
             "type": "Microsoft.Insights/scheduledQueryRules",
             "apiVersion": "2018-04-16",
@@ -140,7 +134,50 @@
                 "action": {
                     "odata.type": "Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.Microsoft.AppInsights.Nexus.DataContracts.Resources.ScheduledQueryRules.AlertingAction",
                     "severity": "4",
-                    "aznsAction": "[variables('actionGroup')]",
+                    "aznsAction": {
+                        "actionGroup": [
+                            "[parameters('actionGroupId')]"
+                        ],
+                        "emailSubject": "[concat('Alert Triggered - ', parameters('alertName'))]"
+                    },
+                    "trigger": {
+                        "thresholdOperator": "[parameters('alertOperator')]",
+                        "threshold": "[parameters('alertThreshold')]",
+                        "metricTrigger": {
+                            "thresholdOperator": "[parameters('alertMetricOperator')]",
+                            "threshold": "[parameters('alertMetricThreshold')]",
+                            "metricColumn": "[parameters('alertMetricColumn')]",
+                            "metricTriggerType": "[parameters('alertMetricType')]"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "condition": "[empty(parameters('actionGroupId'))]",
+            "name": "[parameters('alertName')]",
+            "type": "Microsoft.Insights/scheduledQueryRules",
+            "apiVersion": "2018-04-16",
+            "tags": {
+                "profile-id": "[parameters('profileId')]",
+                "alert-template-tag": "[parameters('alertTemplateTag')]"
+            },
+            "location": "[parameters('alertLocation')]",
+            "properties": {
+                "description": "[parameters('alertDescription')]",
+                "enabled": "true",
+                "source": {
+                    "query": "[parameters('alertQuery')]",
+                    "dataSourceId": "[parameters('dataSourceId')]",
+                    "queryType": "ResultCount"
+                },
+                "schedule": {
+                    "frequencyInMinutes": 5,
+                    "timeWindowInMinutes": 30
+                },
+                "action": {
+                    "odata.type": "Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.Microsoft.AppInsights.Nexus.DataContracts.Resources.ScheduledQueryRules.AlertingAction",
+                    "severity": "4",
                     "trigger": {
                         "thresholdOperator": "[parameters('alertOperator')]",
                         "threshold": "[parameters('alertThreshold')]",
