@@ -28,14 +28,13 @@
         },
         "alertThreshold": {
             "type": "string",
-            "defaultValue": 0,
+            "defaultValue": "0",
             "metadata": {
                 "description": "Threshold to use for alert evaluation"
             }
         },
         "alertOperator": {
             "type": "string",
-            "defaultValue": "0",
             "allowedValues": [
                 "Equals",
                 "NotEquals",
@@ -50,14 +49,13 @@
         },
         "alertMetricThreshold": {
             "type": "string",
-            "defaultValue": 0,
+            "defaultValue": "0",
             "metadata": {
                 "description": "Metric threshold to use for alert evaluation"
             }
         },
         "alertMetricOperator": {
             "type": "string",
-            "defaultValue": "0",
             "allowedValues": [
                 "Equals",
                 "NotEquals",
@@ -72,42 +70,36 @@
         },
         "alertMetricType": {
             "type": "string",
-            "defaultValue": "0",
             "metadata": {
                 "description": "Trigger type for alert metrics"
             }
         },
         "alertMetricColumn": {
             "type": "string",
-            "defaultValue": "0",
             "metadata": {
                 "description": "Trigger column for alert metrics"
             }
         },
         "alertQuery": {
             "type": "string",
-            "defaultValue": "0",
             "metadata": {
                 "description": "Query filter for alert"
             }
         },
         "alertDescription": {
             "type": "string",
-            "defaultValue": "0",
             "metadata": {
                 "description": "Description of what the alert does"
             }
         },
         "profileId": {
             "type": "string",
-            "defaultValue": "0",
             "metadata": {
                 "description": "profile-id tag to set on alert rule"
             }
         },
         "alertTemplateTag": {
             "type": "string",
-            "defaultValue": "0",
             "metadata": {
                 "description": "alert-template-tag tag to set on alert rule"
             }
