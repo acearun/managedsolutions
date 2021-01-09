@@ -20,13 +20,6 @@
                 "description": "Workspace id"
             }
         },
-        "actionGroupId": {
-            "type": "string",
-            "defaultValue": "",
-            "metadata": {
-                "description": "Action group id"
-            }
-        },
         "alertThreshold": {
             "type": "string",
             "defaultValue": "0",
@@ -133,12 +126,6 @@
                 "action": {
                     "odata.type": "Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.Microsoft.AppInsights.Nexus.DataContracts.Resources.ScheduledQueryRules.AlertingAction",
                     "severity": "4",
-                    "aznsAction": {
-                        "actionGroup": [
-                            "[parameters('actionGroupId')]"
-                        ],
-                        "emailSubject": "[concat('Alert Triggered - ', parameters('alertName'))]"
-                    },
                     "trigger": {
                         "thresholdOperator": "[parameters('alertOperator')]",
                         "threshold": "[parameters('alertThreshold')]",
