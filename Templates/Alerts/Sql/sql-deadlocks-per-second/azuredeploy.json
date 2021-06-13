@@ -1,5 +1,5 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
         "alertName": {
@@ -27,15 +27,14 @@
             }
         },
         "alertThreshold": {
-            "type": "string",
-            "defaultValue": "0",
+            "type": "int",
+            "defaultValue": 0,
             "metadata": {
                 "description": "Threshold to use for alert evaluation"
             }
         }
     },
     "variables": {
-        "alertThreshold": "[if(equals(parameters('alertThreshold'), ''), '0', parameters('alertThreshold'))]"
     },
     "resources": [
         {
@@ -47,7 +46,7 @@
                 "description": "Fires if SQL deadlocks occur in at least three 5-minute windows over the last 30 minutes",
                 "enabled": "true",
                 "source": {
-                    "query": "[concat('InsightsMetrics | where Namespace =~ \"sqlserver_performance\" | extend Tags = todynamic(Tags) | extend Name = tostring(Tags.counter), Database = strcat(Tags.sql_instance, \"/\", Tags.database_name, \" monitored by \", Computer) | where Name =~ \"Number of deadlocks/sec\" | summarize Value = sum(Val) by bin(TimeGenerated, 5m), Database | where Value > ', variables('alertThreshold'), ' | summarize Count = count() by Database | where Count >= 3')]",
+                    "query": "InsightsMetrics\n| where Namespace =~ \"sqlserver_performance\"\n| extend Tags = todynamic(Tags)\n| extend Name = tostring(Tags.counter), Database = strcat(Tags.sql_instance, \"/\", Tags.database_name, \" monitored by \", Computer)\n| where Name =~ \"Number of deadlocks/sec\"\n| summarize AggregatedValue = avg(Val) by bin(TimeGenerated, 5m), Database",
                     "dataSourceId": "[parameters('dataSourceId')]",
                     "queryType": "ResultCount"
                 },
@@ -66,7 +65,13 @@
                     },
                     "trigger": {
                         "thresholdOperator": "GreaterThan",
-                        "threshold": 0
+                        "threshold": "[parameters('alertThreshold')]",
+                        "metricTrigger": {
+                            "thresholdOperator": "GreaterThan",
+                            "threshold": 3,
+                            "metricTriggerType": "Consecutive",
+                            "metricColumn": "Database"
+                        }
                     }
                 }
             }
